@@ -1,0 +1,7 @@
+.wrapper_fluid {
+	display: flex;
+	justify-content: space-between;
+	flex-direction: column;
+	min-height: 100vh;
+	margin: 0 auto;
+}

@@ -1,0 +1,35 @@
+.list_block {
+	min-height: 500px;
+	max-height: 500px;
+}
+
+.list_block ::-webkit-scrollbar {
+	background-color: rgba(255, 255, 255, 0.3);
+	border-left: 1px solid #333;
+	border-radius: 0 0.25rem 0 0;
+}
+
+.list_block ::-webkit-scrollbar-thumb {
+	background-color: rgba(255, 255, 255, 0.3);
+	border-radius: 0 0.25rem 0 0;
+	border: 1px solid #333;
+}
+
+.list_block ::-webkit-scrollbar-thumb:hover {
+	background-color: rgba(255, 255, 255, 0.8);
+}
+
+.list_block li {
+	cursor: pointer;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow-x: hidden;
+}
+
+.list_block li:nth-child(even) {
+	background-color: rgba(228, 228, 228, 0.5);
+}
+
+.list_block li:nth-child(odd) {
+	background-color: rgba(255, 255, 255, 1);
+}

@@ -1,0 +1,31 @@
+.wrapper {
+	min-height: 100vh;
+	max-width: 800px !important;
+}
+
+.wrapper_inner {
+	width: 600px;
+}
+
+.horizontal_line {
+	position: relative;
+}
+
+.horizontal_line::after {
+	content: "";
+	position: absolute;
+	display: block;
+	top: 50%;
+	right: 0;
+	width: 45%;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.horizontal_line::before {
+	content: "";
+	position: absolute;
+	display: block;
+	top: 50%;
+	width: 45%;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+}

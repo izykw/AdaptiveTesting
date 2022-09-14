@@ -1,0 +1,17 @@
+.list_group_column {
+	display: inline-block !important;
+	column-count: 2;
+}
+
+.vertical_line {
+	position: relative;
+}
+
+.vertical_line::before {
+	content: "";
+	position: absolute;
+	left: 80%;
+	background-color: rgba(0, 0, 0, 0.4);
+	width: 2px;
+	height: 100%;
+}
