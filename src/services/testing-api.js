@@ -2,62 +2,72 @@ import axios from 'axios';
 
 export default class TestingApi {
 	constructor() {
-		this.apiBase = 'http://localhost:8000';
+		this.URL = 'http://localhost:8000';
 	}
 
 	getQuestion = async (pk) => {
-		return await axios.get(`${this.apiBase}/questions/${pk}/`);
+		return await axios.get(`${this.URL}/questions/${pk}`);
 	};
 
 	getQuestions = async () => {
-		return await axios.get(`${this.apiBase}/questions/`);
+		return await axios.get(`${this.URL}/questions`);
 	};
 
 	getThemeQuestions = async (pk) => {
-		return await axios.get(`${this.apiBase}/questions/?theme=${pk}`);
+		return await axios.get(`${this.URL}/questions/?theme=${pk}`);
 	};
 
 	getTestQuestion = async (pk) => {
-		return await axios.get(`${this.apiBase}/algorithm/${pk}/`);
+		return await axios.get(`${this.URL}/algorithm/${pk}`);
 	};
 
 	getTestQuestions = async () => {
-		return await axios.get(`${this.apiBase}/testing/`);
+		return await axios.get(`${this.URL}/testing`);
 	};
 
 	deleteQuestion = async (pk) => {
-		return await axios.delete(`${this.apiBase}/questions/${pk}/`);
+		await axios.delete(`${this.URL}/questions/${pk}`);
 	};
 
 	postQuestion = async (question) => {
-		return await axios.post(`${this.apiBase}/questions/`, question);
+		await axios.post(`${this.URL}/questions`, question);
 	};
 
 	getTheme = async (pk) => {
-		return await axios.get(`${this.apiBase}/themes/${pk}/`);
+		return await axios.get(`${this.URL}/themes/${pk}`);
 	};
 
 	getThemes = async () => {
-		return await axios.get(`${this.apiBase}/themes/`);
+		return await axios.get(`${this.URL}/themes`);
 	};
 
 	deleteTheme = async (pk) => {
-		return await axios.delete(`${this.apiBase}/themes/${pk}/`);
+		await axios.delete(`${this.URL}/themes/${pk}`);
 	};
 
 	postTheme = async (theme) => {
-		return await axios.post(`${this.apiBase}/themes/`, theme);
+		await axios.post(`${this.URL}/themes`, theme);
 	};
 
 	getUser = async (pk) => {
-		return await axios.get(`${this.apiBase}/users/${pk}/`);
+		const res = await axios.get(`${this.URL}/users/${pk}/`);
+		return res.data;
 	};
 
 	getUsers = async () => {
-		return await axios.get(`${this.apiBase}/users/`);
+		return await axios.get(`${this.URL}/users`);
 	};
 
 	updateUser = async (user, pk) => {
-		return await axios.put(`${this.apiBase}/users/${pk}/`, user);
+		await axios.put(`${this.URL}/users/${pk}`, user);
+	};
+
+	getTestResult = async (pk) => {
+		const res = await axios.get(`${this.URL}/test_result/${pk}/`);
+		return res.data;
+	};
+
+	postTestResult = async (pk, testingResult) => {
+		await axios.post(`${this.URL}/testing_result/${pk}`, testingResult);
 	};
 }

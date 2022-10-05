@@ -43,8 +43,9 @@ function createListItems(list) {
 		return (
 			<ListGroupItem id={pk} key={pk} className="ps-2">
 				<SvgIcons id={`${level}-star`} size="72" color="dark"/>
-				<span style={{verticalAlign: 'middle'}}>{name ??
-					question}</span>
+				<span style={{verticalAlign: 'middle'}}>
+					{name ?? question}
+				</span>
 			</ListGroupItem>);
 	});
 }
