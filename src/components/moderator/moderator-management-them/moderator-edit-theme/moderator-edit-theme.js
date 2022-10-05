@@ -27,7 +27,9 @@ export default function ModeratorEditTheme() {
 		api.getThemes().then(({data}) => {
 			return data.results;
 		}).then(themes => {
+			console.log(themes);
 			api.getThemeQuestions(themes[0].pk).then(({data: {results}}) => {
+				console.log(themes, results);
 				setThemes(themes);
 				setQuestions(results);
 			});

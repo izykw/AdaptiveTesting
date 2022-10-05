@@ -1,7 +1,10 @@
-import React, {useState, useEffect} from 'react';
-import {ListGroup, ListGroupItem, Row} from 'reactstrap';
-import styles from './test-info.module.css';
+import React, { useState, useEffect } from 'react';
+import { ListGroup, ListGroupItem, Row } from 'reactstrap';
+
 import SvgIcons from '../../second-components/svg-icons/svg-icons';
+import TestingApi from '../../../services/testing-api';
+
+import styles from './test-info.module.css';
 
 const {vertical_line, list_group_column} = styles;
 
@@ -9,57 +12,111 @@ export default function TestInfo() {
 	const [info, setInfo] = useState({});
 
 	useEffect(() => {
-
+		const api = new TestingApi();
+		const fetchInfo = async () => {
+			const testInfo = await api.getTestResult(1);
+			const user = await api.getUser(testInfo.user_id);
+			const {user: userInfo} = user;
+			return {
+				...testInfo,
+				userInfo
+			};
+		};
+		fetchInfo().then(info => setInfo(info));
 	}, []);
+
+	const convertTimeToSeconds = (time) => {
+		if (!time) {
+			return;
+		}
+		const temp = time.split(':');
+		return Math.floor((temp[0] * 3600)) + Math.floor(temp[1] * 60) +
+			Number.parseInt(temp[2]);
+	};
+
+	const convertToCorrectTime = (time) => {
+		const hours = `${Math.floor(((time / 3600) % 24) / 10)}${Math.floor(
+			((time / 3600) % 24) % 10)}`;
+		const minutes = `${Math.floor(((time / 60) % 60) / 10)}${Math.floor(
+			((time / 60) % 60) % 10)}`;
+		const seconds = `${Math.floor((time % 60) / 10)}${Math.floor(
+			(time % 60) % 10)}`;
+
+		return `${hours}:${minutes}:${seconds}`;
+	};
+
+	const {
+		question_summary: totalQuestions,
+		skipped_question_summary: skippedQuestions,
+		time_spent: timeSpent,
+		time_summary: totalTime,
+		wrong_questions: wrongAnswers,
+		userInfo,
+	} = info;
+
+	const totalTimeInSeconds = convertTimeToSeconds(totalTime);
+	const timeSpentInSeconds = convertTimeToSeconds(timeSpent);
 
 	return (
 		<>
 			<Row className="ps-1 mb-4">
-				<h4 className="h4 py-4">ИМЯ ПОЛЬЗОВАТЕЛЯ</h4>
+				<h4 className="h4 py-4">{userInfo?.first_name} {userInfo?.last_name}</h4>
 				<h5 className="h5">
 					<SvgIcons id="arrow-right" color="primary" size="20"/>
 					<span className="ms-1">Результаты последнего тестирования</span>
 				</h5>
-				<ListGroup className={`${list_group_column} ps-4 my-2 `}>
+				<ListGroup className={`${list_group_column} ps-4 my-2`}>
 					<div className={`${vertical_line} text-primary`}>
-						<ListGroupItem className="bg-transparent border-0 text-primary pt-0">Всего
-							вопрсов - 100</ListGroupItem>
-						<ListGroupItem className="bg-transparent border-0 text-primary">Верно
-							отвчено - 100</ListGroupItem>
-						<ListGroupItem className="bg-transparent border-0 text-primary">Неверно
-							отвечено - 100</ListGroupItem>
-						<ListGroupItem className="bg-transparent border-0 text-primary pb-0">Пропущено
-							- 100</ListGroupItem>
+						<ListGroupItem className="bg-transparent border-0 text-primary pt-0">
+							Всего вопрсов - {totalQuestions}
+						</ListGroupItem>
+						<ListGroupItem className="bg-transparent border-0 text-primary">
+							Верно отвчено - {totalQuestions - wrongAnswers}
+						</ListGroupItem>
+						<ListGroupItem className="bg-transparent border-0 text-primary">
+							Неверно отвечено - {wrongAnswers}
+						</ListGroupItem>
+						<ListGroupItem className="bg-transparent border-0 text-primary pb-0">
+							Пропущено - {skippedQuestions}
+						</ListGroupItem>
 					</div>
 					<div>
-						<ListGroupItem className="bg-transparent border-0 text-primary pt-0">Всего
-							времени - 100 минут</ListGroupItem>
-						<ListGroupItem className="bg-transparent border-0 text-primary">Прошедшее
-							время - 100 минут</ListGroupItem>
-						<ListGroupItem className="bg-transparent border-0 text-primary">Оставшееся
-							время - 100 минут</ListGroupItem>
-						<ListGroupItem className="bg-transparent border-0 text-primary pb-0">Дополнительное
-							время - 100 минут</ListGroupItem>
+						<ListGroupItem className="bg-transparent border-0 text-primary pt-0">
+							Всего времени - {convertToCorrectTime(totalTimeInSeconds)}
+						</ListGroupItem>
+						<ListGroupItem className="bg-transparent border-0 text-primary">
+							Прошедшее время - {convertToCorrectTime(timeSpentInSeconds)}
+						</ListGroupItem>
+						<ListGroupItem className="bg-transparent border-0 text-primary">
+							Оставшееся время - {convertToCorrectTime(totalTimeInSeconds - timeSpentInSeconds)}
+						</ListGroupItem>
+						<ListGroupItem className="bg-transparent border-0 text-primary pb-0">
+							Дополнительное время - 100 минут (Удалить?!)
+						</ListGroupItem>
 					</div>
 				</ListGroup>
 			</Row>
 			<Row className="ps-1 mb-4">
 				<h5 className="h5">
 					<SvgIcons id="arrow-right" color="primary" size="20"/>
-					<span className="ms-1">Общая статистика</span>
+					<span className="ms-1">Общая статистика (УДАЛИТЬ?!)</span>
 				</h5>
 				<ListGroup className={`${list_group_column} ps-4`}>
 					<div className={`${vertical_line}`}>
-						<ListGroupItem className="bg-transparent border-0 text-primary">Всего
-							вопрсов - 100</ListGroupItem>
-						<ListGroupItem className="bg-transparent border-0 text-primary">Верно
-							отвчено - 100</ListGroupItem>
+						<ListGroupItem className="bg-transparent border-0 text-primary">
+							Всего вопрсов - 100
+						</ListGroupItem>
+						<ListGroupItem className="bg-transparent border-0 text-primary">
+							Верно отвчено - 100
+						</ListGroupItem>
 					</div>
 					<div>
-						<ListGroupItem className="bg-transparent border-0 text-primary">Неверно
-							отвечено - 100</ListGroupItem>
-						<ListGroupItem className="bg-transparent border-0 text-primary">Пропущено
-							- 100</ListGroupItem>
+						<ListGroupItem className="bg-transparent border-0 text-primary">
+							Неверно отвечено - 100
+						</ListGroupItem>
+						<ListGroupItem className="bg-transparent border-0 text-primary">
+							Пропущено - 100
+						</ListGroupItem>
 					</div>
 				</ListGroup>
 			</Row>
