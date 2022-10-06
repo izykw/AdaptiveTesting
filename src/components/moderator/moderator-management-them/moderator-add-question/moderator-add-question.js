@@ -59,7 +59,7 @@ export default function ModeratorAddQuestion() {
 						<option value="alphabet">Алфавиту</option>
 						<option value="level">Сложности</option>
 					</select>
-					<Link to="/moderator-cabinet/create-question"
+					<Link to="/moderator/create-question"
 						  className="shadow_element bg-transparent btn border border-2">
 						Создание вопроса
 					</Link>

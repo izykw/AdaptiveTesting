@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Container, Row } from 'reactstrap';
+import { Container, Row } from 'reactstrap';
 import Wrapper from '../second-components/wrapper/wrapper';
 import Header from '../header/header';
 import UserInfo from './user-info/user-info';
@@ -16,26 +16,32 @@ export default function UserCabinet({header: {title, isFluid}}) {
 		<Wrapper>
 			<Header title={title} isFluid={isFluid}></Header>
 			<Container
-				className="shadow_element bg-light border border-2 rounded-3"
-				style={{flexGrow: 1}}>
+				className="shadow_element bg-light border border-2 rounded-3 flex-grow-1">
 				<Row>
 					<NavButton text="Личная информация"
-
+										 icon={<SvgIcons id="person"
+																		 color="primary"
+																		 size="20"/>}
 										 handler={() => setActiveBtn('user-info')}
 										 isActive={isUserInfoActive}/>
 					<NavButton text="Сведения о тестах"
-
+										 icon={<SvgIcons id="bookmark-two-dash"
+																		 color="primary"
+																		 size="20"/>}
 										 handler={() => setActiveBtn('test-info')}
 										 isActive={!isUserInfoActive}/>
 				</Row>
 				{isUserInfoActive ? <UserInfo/> : <TestInfo/>}
 				<Row className="d-flex justify-content-center mt-5">
 					<div className="d-flex flex-column w-75">
-						<Link to="/testing"
-									className="btn bg-transparent border border-2 mb-2">Начать
-							тестирование</Link>
+						<Link to="/user/tests-list"
+									className="btn bg-transparent border border-2 mb-2">
+							Начать тестирование
+						</Link>
 						<Link to="/"
-									className="btn bg-transparent border border-2 mt-2">Выход</Link>
+									className="btn bg-transparent border border-2 mt-2">
+							Выход
+						</Link>
 					</div>
 				</Row>
 			</Container>

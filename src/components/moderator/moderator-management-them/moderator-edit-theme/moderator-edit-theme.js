@@ -16,24 +16,28 @@ import {
 } from '../moderator-management-them.services';
 
 export default function ModeratorEditTheme() {
-	const api = new TestingApi();
-	const [themes, setThemes] = useState(null);
+	const [themes, setThemes] = useState([]);
 
 	// questions current theme
-	const [questions, setQuestions] = useState(null);
-	const [inputValue, setInputValue] = useState('');
+	const [questions, setQuestions] = useState([]);
+	const [newTheme, setNewTheme] = useState('');
 
 	useEffect(() => {
-		api.getThemes().then(({data}) => {
-			return data.results;
-		}).then(themes => {
-			console.log(themes);
-			api.getThemeQuestions(themes[0].pk).then(({data: {results}}) => {
-				console.log(themes, results);
-				setThemes(themes);
-				setQuestions(results);
-			});
-		});
+		const fetchData = async () => {
+			const api = new TestingApi();
+			const themes = await  api.getThemes();
+			const questions = await  api.getQuestions();
+			return {
+				themes,
+				questions,
+			}
+		}
+
+		fetchData().then(res => {
+			console.log(res);
+			setThemes(res.themes);
+			setQuestions(questions);
+		})
 	}, []);
 
 	return (
@@ -60,14 +64,13 @@ export default function ModeratorEditTheme() {
 				<div style={{minHeight: '500px'}}
 					 className="d-flex justify-content-between flex-column">
 					<Input
-						onChange={(e) => setInputValue(e.target.value)}
-						value={inputValue}
+						onChange={(e) => setNewTheme(e.target.value)}
+						value={newTheme}
 						className="border-secondary bg-transparent"
 						placeholder="Введите название"
 					/>
 					<ButtonCustom text="Создать тему" handler={createTheme}/>
-					<ButtonCustom text="Отменить действие"
-								  handler={undoAction}/>
+					<ButtonCustom text="Отменить действие" handler={undoAction}/>
 					<img src="/"
 						 style={{height: '350px'}}
 						 className="border border-secondary rounded-3"
