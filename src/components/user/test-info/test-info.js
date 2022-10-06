@@ -16,34 +16,17 @@ export default function TestInfo() {
 		const fetchInfo = async () => {
 			const testInfo = await api.getTestResult(1);
 			const user = await api.getUser(testInfo.user_id);
-			const {user: userInfo} = user;
+			const {first_name, last_name} = user.user;
 			return {
 				...testInfo,
-				userInfo
+				user: {
+					first_name,
+					last_name
+				}
 			};
 		};
 		fetchInfo().then(info => setInfo(info));
 	}, []);
-
-	const convertTimeToSeconds = (time) => {
-		if (!time) {
-			return;
-		}
-		const temp = time.split(':');
-		return Math.floor((temp[0] * 3600)) + Math.floor(temp[1] * 60) +
-			Number.parseInt(temp[2]);
-	};
-
-	const convertToCorrectTime = (time) => {
-		const hours = `${Math.floor(((time / 3600) % 24) / 10)}${Math.floor(
-			((time / 3600) % 24) % 10)}`;
-		const minutes = `${Math.floor(((time / 60) % 60) / 10)}${Math.floor(
-			((time / 60) % 60) % 10)}`;
-		const seconds = `${Math.floor((time % 60) / 10)}${Math.floor(
-			(time % 60) % 10)}`;
-
-		return `${hours}:${minutes}:${seconds}`;
-	};
 
 	const {
 		question_summary: totalQuestions,
@@ -51,16 +34,17 @@ export default function TestInfo() {
 		time_spent: timeSpent,
 		time_summary: totalTime,
 		wrong_questions: wrongAnswers,
-		userInfo,
+		user,
 	} = info;
 
 	const totalTimeInSeconds = convertTimeToSeconds(totalTime);
 	const timeSpentInSeconds = convertTimeToSeconds(timeSpent);
 
+	const unknown = 'неизвестно';
 	return (
 		<>
 			<Row className="ps-1 mb-4">
-				<h4 className="h4 py-4">{userInfo?.first_name} {userInfo?.last_name}</h4>
+				<h4 className="h4 py-4">{user?.first_name} {user?.last_name}</h4>
 				<h5 className="h5">
 					<SvgIcons id="arrow-right" color="primary" size="20"/>
 					<span className="ms-1">Результаты последнего тестирования</span>
@@ -68,16 +52,16 @@ export default function TestInfo() {
 				<ListGroup className={`${list_group_column} ps-4 my-2`}>
 					<div className={`${vertical_line} text-primary`}>
 						<ListGroupItem className="bg-transparent border-0 text-primary pt-0">
-							Всего вопрсов - {totalQuestions}
+							Всего вопрсов - {totalQuestions || unknown}
 						</ListGroupItem>
 						<ListGroupItem className="bg-transparent border-0 text-primary">
-							Верно отвчено - {totalQuestions - wrongAnswers}
+							Верно отвчено - {(totalQuestions - wrongAnswers) || unknown}
 						</ListGroupItem>
 						<ListGroupItem className="bg-transparent border-0 text-primary">
-							Неверно отвечено - {wrongAnswers}
+							Неверно отвечено - {wrongAnswers || unknown}
 						</ListGroupItem>
 						<ListGroupItem className="bg-transparent border-0 text-primary pb-0">
-							Пропущено - {skippedQuestions}
+							Пропущено - {skippedQuestions || unknown}
 						</ListGroupItem>
 					</div>
 					<div>
@@ -90,36 +74,33 @@ export default function TestInfo() {
 						<ListGroupItem className="bg-transparent border-0 text-primary">
 							Оставшееся время - {convertToCorrectTime(totalTimeInSeconds - timeSpentInSeconds)}
 						</ListGroupItem>
-						<ListGroupItem className="bg-transparent border-0 text-primary pb-0">
-							Дополнительное время - 100 минут (Удалить?!)
-						</ListGroupItem>
 					</div>
 				</ListGroup>
 			</Row>
 			<Row className="ps-1 mb-4">
-				<h5 className="h5">
-					<SvgIcons id="arrow-right" color="primary" size="20"/>
-					<span className="ms-1">Общая статистика (УДАЛИТЬ?!)</span>
-				</h5>
-				<ListGroup className={`${list_group_column} ps-4`}>
-					<div className={`${vertical_line}`}>
-						<ListGroupItem className="bg-transparent border-0 text-primary">
-							Всего вопрсов - 100
-						</ListGroupItem>
-						<ListGroupItem className="bg-transparent border-0 text-primary">
-							Верно отвчено - 100
-						</ListGroupItem>
-					</div>
-					<div>
-						<ListGroupItem className="bg-transparent border-0 text-primary">
-							Неверно отвечено - 100
-						</ListGroupItem>
-						<ListGroupItem className="bg-transparent border-0 text-primary">
-							Пропущено - 100
-						</ListGroupItem>
-					</div>
-				</ListGroup>
+				Some stats
 			</Row>
 		</>
 	);
+}
+
+function convertTimeToSeconds(time) {
+	if (!time) {
+		return 0;
+	}
+	console.info('next', time);
+	const temp = time.split(':');
+	return Math.floor((temp[0] * 3600)) + Math.floor(temp[1] * 60) +
+		Number.parseInt(temp[2]);
+};
+
+function convertToCorrectTime(time) {
+	const hours = `${Math.floor(((time / 3600) % 24) / 10)}${Math.floor(
+		((time / 3600) % 24) % 10)}`;
+	const minutes = `${Math.floor(((time / 60) % 60) / 10)}${Math.floor(
+		((time / 60) % 60) % 10)}`;
+	const seconds = `${Math.floor((time % 60) / 10)}${Math.floor(
+		(time % 60) % 10)}`;
+
+	return `${hours}:${minutes}:${seconds}`;
 }
