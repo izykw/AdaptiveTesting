@@ -1,6 +1,7 @@
 import React from 'react';
-import {Button, Col, Container, Form, FormGroup, Row} from 'reactstrap';
-import {Link} from 'react-router-dom';
+import { Button, Col, Container, FormGroup, Row } from 'reactstrap';
+import { Form } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import WrapperFluid
 	from '../../../second-components/wrapper-fluid/wrapper-fluid';
 import Header from '../../../header/header';
@@ -11,30 +12,35 @@ import SvgIcons from '../../../second-components/svg-icons/svg-icons';
 
 const {text_field, image} = styles;
 
+export function action({params, request}) {
+	console.log('params', params);
+	console.log('request', request);
+}
+
 export default function ModeratorCreateQuestion({header: {title, isFluid}}) {
 	return (
 		<WrapperFluid>
 			<Header title={title} isFluid={isFluid}/>
 			<Container fluid
-					   className="d-flex flex-column flex-grow-1 bg-light border border-2 rounded-3">
+								 className="d-flex flex-column flex-grow-1 bg-light border border-2 rounded-3">
 				<Row>
 					<span className="fs-5 text-primary">
 						<SvgIcons id="bookmark-two-dash" color="primary" size="20"/>
 						<span style={{verticalAlign: 'middle'}} className="ms-1">Создание вопроса</span>
 					</span>
 				</Row>
-				<Form onSubmit={null}
-					  className="d-flex flex-column justify-content-around flex-grow-1">
+				<Form method="post"
+							className="d-flex flex-column justify-content-around flex-grow-1">
 					<FormGroup>
 						<Row>
 							<SelectCustom title="Выберите тип вопроса"
-										  handler={null}
-										  options={[{'name': 'value'},
-											  {'name': 'value'}]}/>
+														handler={null}
+														options={[{'name': 'value'},
+															{'name': 'value'}]}/>
 							<SelectCustom title="Выберите уровень сложности"
-										  handler={null}
-										  options={[{'name': 'value'},
-											  {'name': 'value'}]}/>
+														handler={null}
+														options={[{'name': 'value'},
+															{'name': 'value'}]}/>
 						</Row>
 					</FormGroup>
 					<FormGroup>
@@ -49,23 +55,23 @@ export default function ModeratorCreateQuestion({header: {title, isFluid}}) {
 							<Col>
 								<span className="fs-5">Варианты ответов</span>
 								<a href="/"
-								   className="link-secondary ms-3"
-								   onClick={null}>
+									 className="link-secondary ms-3"
+									 onClick={null}>
 									Добавить вариант ответа
 								</a>
 								<a href="/"
-								   className="link-secondary ms-3"
-								   onClick={null}>
+									 className="link-secondary ms-3"
+									 onClick={null}>
 									Удалить вариант ответа
 								</a>
 							</Col>
 							<Col className="d-flex justify-content-end">
 								<div className={image}>
 									<img src="/"
-										 className="border border-secondary rounded-3 w-25`"
-										 alt="Изображение к вопросу"/>
+											 className="border border-secondary rounded-3 w-25`"
+											 alt="Изображение к вопросу"/>
 									<a href="/"
-									   className="link-secondary border border-secondary rounded-top py-1 px-2">
+										 className="link-secondary border border-secondary rounded-top py-1 px-2">
 										Удалить
 									</a>
 								</div>
@@ -76,13 +82,13 @@ export default function ModeratorCreateQuestion({header: {title, isFluid}}) {
 						<Row>
 							<Col>
 								<Link to="/moderator-cabinet/management-theme"
-									  className="shadow_element bg-transparent btn text-dark border border-2 w-50">
+											className="shadow_element bg-transparent btn text-dark border border-2 w-50">
 									Выход
 								</Link>
 							</Col>
 							<Col className="d-flex justify-content-end">
 								<Button type="submit"
-										className="shadow_element bg-transparent btn text-dark border border-2 w-50">
+												className="shadow_element bg-transparent btn text-dark border border-2 w-50">
 									Добавить
 								</Button>
 							</Col>

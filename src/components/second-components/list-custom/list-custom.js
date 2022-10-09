@@ -1,8 +1,8 @@
 import React from 'react';
 import {Col, ListGroup, ListGroupItem} from 'reactstrap';
 import SvgIcons from '../svg-icons/svg-icons';
-import styles from './list-custom.module.css';
 
+import styles from './list-custom.module.css';
 
 const {list_block} = styles;
 
@@ -38,13 +38,13 @@ function createListItems(list) {
 		return;
 	}
 	return list.map(el => {
-		// Theme list include name. Question list include question
-		const {pk, name, question, level} = el;
+		// Theme list include name. Question list include question. Competencies Theme include competence
+		const {pk, name, question, competence, level} = el;
 		return (
 			<ListGroupItem id={pk} key={pk} className="ps-2">
 				<SvgIcons id={`${level}-star`} size="72" color="dark"/>
 				<span style={{verticalAlign: 'middle'}}>
-					{name ?? question}
+					{name ?? question ?? competence}
 				</span>
 			</ListGroupItem>);
 	});

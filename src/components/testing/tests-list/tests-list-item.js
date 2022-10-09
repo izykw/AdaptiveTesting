@@ -2,7 +2,8 @@ import React from 'react';
 import { Col, Row } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
-export default function TestsListItem({isModerator,}) {
+//TODO: Использовать URL параметры для
+export default function TestsListItem({role}) {
 	return (
 		<Row className="shadow_element bg-light border rounded mb-3">
 			<h4 className="h4">Название теста</h4>
@@ -14,9 +15,9 @@ export default function TestsListItem({isModerator,}) {
 			</Col>
 			<Col>
 				<p>Осбоые указания для прохождения данного тестирования</p>
-				<Link to={isModerator ? '/moderator/edit-test' : '/testing'}
+				<Link to={role === 'moderator' ? '/moderator/edit-test' : '/testing'}
 							className="btn border w-50">
-					{isModerator ? 'Редактировать тест' : 'Начать тест'}
+					{role === 'moderator' ? 'Редактировать тест' : 'Начать тест'}
 				</Link>
 			</Col>
 		</Row>);

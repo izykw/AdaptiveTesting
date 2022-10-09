@@ -4,7 +4,7 @@ export default class TestingApi {
 	constructor() {
 		this.URL = 'http://localhost:8000';
 	}
-
+	// Questions
 	getQuestion = async (pk) => {
 		const res = await axios.get(`${this.URL}/questions/${pk}/`);
 		return res.data;
@@ -15,8 +15,8 @@ export default class TestingApi {
 		return res.data;
 	};
 
-	getThemeQuestions = async (pk) => {
-		const res = await axios.get(`${this.URL}/questions/?theme=${pk}/`);
+	getThemeQuestions = async (themeId) => {
+		const res = await axios.get(`${this.URL}/questions_theme?theme=${themeId}`);
 		return res.data;
 	};
 
@@ -36,6 +36,7 @@ export default class TestingApi {
 		await axios.post(`${this.URL}/questions/`, question);
 	};
 
+	// Themes
 	getTheme = async (pk) => {
 		const res = await axios.get(`${this.URL}/themes/${pk}/`);
 		return res.data;
@@ -54,6 +55,13 @@ export default class TestingApi {
 		await axios.post(`${this.URL}/themes/`, theme);
 	};
 
+	// Competencies
+	getCompetencies = async () => {
+		const res = await axios.get(`${this.URL}/competence`);
+		return res.data;
+	}
+
+	// Users
 	getUser = async (pk) => {
 		const res = await axios.get(`${this.URL}/users/${pk}/`);
 		return res.data;
@@ -67,6 +75,7 @@ export default class TestingApi {
 		await axios.put(`${this.URL}/users/${userId}/`, user);
 	};
 
+	// Test result
 	getTestResult = async (pk) => {
 		const res = await axios.get(`${this.URL}/test_result/${pk}/`);
 		return res.data;

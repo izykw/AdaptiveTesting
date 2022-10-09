@@ -22,11 +22,11 @@ export default function ModeratorManagementThem({header: {title, isFluid}}) {
 			<Container fluid
 					   className="d-flex flex-column justify-content-between flex-grow-1 bg-light border border-2 rounded-3">
 				<Row className="mb-xxl-0 mb-4">
-					<NavButton text="Создание и редактирование темы"
+					<NavButton text="Добавление вопросов в тему"
 							   icon={<SvgIcons id="bookmark-dash" color="primary" size="24"/>}
 							   handler={() => setActiveBtn('edit')}
 							   isActive={isEditActive}/>
-					<NavButton text="Добавление вопросов из базы"
+					<NavButton text="Добавление темы в компетенцию"
 							   icon={<SvgIcons id="file-plus" color="primary" size="24"/>}
 							   handler={() => setActiveBtn('add')}
 							   isActive={!isEditActive}/>
