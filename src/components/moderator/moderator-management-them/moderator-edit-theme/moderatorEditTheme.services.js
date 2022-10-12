@@ -69,6 +69,7 @@ export function addItemIdToDeleteList(e, selectedIds, filed) {
 	li.classList.toggle('text-light');
 
 	const id = li.id;
+	console.log(id);
 	if(!selectedIds[filed].find((el) => el === id)) {
 		selectedIds[filed].push(id);
 	} else {

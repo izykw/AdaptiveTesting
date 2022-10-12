@@ -94,8 +94,7 @@ export default function PersonalInfo({info, updateInfo}) {
 				<span className="ms-1">Адрес:</span>
 				<ListItemInput
 					value={address}
-					handler={(e) => updateInfo(
-						{user: {...user, email: e.target.value}})}
+					handler={(e) => updateInfo({address: e.target.value})}
 					isEdit={isEdit}/>
 			</ListGroupItem>
 		</ListGroup>

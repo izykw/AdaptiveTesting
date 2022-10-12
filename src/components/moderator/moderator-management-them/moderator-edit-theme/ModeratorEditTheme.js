@@ -25,16 +25,15 @@ export default function ModeratorEditTheme() {
 		themes: [],
 	}
 
-	useEffect(() => {
-		const fetchData = async () => {
-			const themes = await api.getThemes();
-			const questions = await api.getThemeQuestions(themes[0].pk);
-			return {
-				themes,
-				questions,
-			};
+	const fetchData = async () => {
+		const themes = await api.getThemes();
+		const questions = await api.getThemeQuestions(themes[0].pk);
+		return {
+			themes,
+			questions,
 		};
-
+	}
+	useEffect(() => {
 		fetchData().then(({themes, questions}) => {
 			setThemes(themes);
 			setQuestions(questions);
@@ -49,7 +48,12 @@ export default function ModeratorEditTheme() {
 			}
 			case 'themes': {
 				if (isDeleteTheme) {
-					// api.deleteThemes(selectedIds.themes)
+					api.deleteThemes(selectedIds.themes).then(() => {
+						fetchData().then(({themes, questions}) => {
+							setThemes(themes);
+							setQuestions(questions);
+						});
+					});
 					console.log(selectedIds.themes);
 					e.target.textContent = 'Удалить тему';
 				} else {
@@ -60,8 +64,12 @@ export default function ModeratorEditTheme() {
 			}
 			case 'questions': {
 				if (isDeleteQuestion) {
-					api.deleteQuestions(selectedIds.questions)
-					console.log(selectedIds.questions);
+					api.deleteQuestions(selectedIds.questions).then(() => {
+						fetchData().then(({themes, questions}) => {
+							setThemes(themes);
+							setQuestions(questions);
+						});
+					});
 					e.target.textContent = 'Удалить вопрос';
 				} else {
 					e.target.textContent = 'Удалить выбранные вопросы';

@@ -14,34 +14,38 @@ import TestingApi from '../../../../services/testingApi';
 
 const {text_field, image} = styles;
 
-export async function action({params, request}) {
-	console.log('params', params);
+export async function action({request}) {
 	const formData = await request.formData();
 	formDataToRequestData(formData);
 	// return redirect(`/moderator/management-theme`);
 }
 
-function formDataToRequestData(data) {
-	console.log(Object.fromEntries(data));
+function formDataToRequestData(formData) {
+	const {level, theme, type, question, ...otherData} = Object.fromEntries(
+		formData);
+	console.log(otherData)
 }
 
 export default function ModeratorCreateQuestion({header: {title, isFluid}}) {
 	const [countAnswers, setCountAnswers] = useState(4);
 	const [themes, setThemes] = useState([]);
+	const [levels, setLevels] = useState([]);
 	const navigate = useNavigate();
 
 	useEffect(() => {
 		const fetchData = async () => {
 			const api = new TestingApi();
 			const themes = await api.getThemes();
-			return themes.map(theme => {
-				const {pk, name} = theme;
-				return {
-					[pk]: name,
-				};
-			});
+			const levels = await api.getLevels();
+			return {
+				themes,
+				levels: levels.results,
+			};
 		};
-		fetchData().then(themes => setThemes(themes));
+		fetchData().then(({themes, levels}) => {
+			setThemes(themes);
+			setLevels(levels);
+		});
 	}, []);
 
 	const changeCountAnswers = (e, type) => {
@@ -68,19 +72,10 @@ export default function ModeratorCreateQuestion({header: {title, isFluid}}) {
 	const getQuestionOptions = () => {
 		return (
 			[
-				{'1': 'Один ответ'},
-				{'2': 'Несколько ответов'},
-				{'3': 'Ответ вводится в ручную'},
+				{id: 1, name: 'Один ответ'},
+				{id: 2, name: 'Несколько ответов'},
 			]
 		);
-	};
-
-	const getQuestionLevels = () => {
-		return ([
-			{'1': 'Базовый'},
-			{'2': 'Уровень знания'},
-			{'3': 'Сложный'},
-		]);
 	};
 
 	return (
@@ -104,20 +99,21 @@ export default function ModeratorCreateQuestion({header: {title, isFluid}}) {
 															title="Выберите тему"
 															handler={null}
 															options={themes}/>
-							<SelectWithIcon name="question"
+							<SelectWithIcon name="type"
 															title="Выберите тип вопроса"
 															handler={null}
 															options={getQuestionOptions()}/>
 							<SelectWithIcon name="level"
 															title="Выберите уровень сложности"
 															handler={null}
-															options={getQuestionLevels()}/>
+															options={levels}/>
 						</Row>
 					</FormGroup>
 					<FormGroup>
 						<Row className="mx-0">
 							<textarea
-								name="text"
+								defaultValue="test"
+								name="question"
 								className={`${text_field} form-control bg-transparent border-secondary rounded-3 w-100 p-2`}
 								placeholder="Введите текст"/>
 						</Row>

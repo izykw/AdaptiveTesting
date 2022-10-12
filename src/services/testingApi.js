@@ -29,11 +29,13 @@ export default class TestingApi {
 	};
 
 	deleteQuestions = async (ids) => {
-		await axios.delete(`${this.URL}/questions`, ids);
+		await axios.delete(`${this.URL}/questions`, {
+			data: ids,
+		});
 	};
 
 	postQuestion = async (question) => {
-		await axios.post(`${this.URL}/questions/`, question);
+		await axios.post(`${this.URL}/questions`, question);
 	};
 
 	// Themes
@@ -48,11 +50,13 @@ export default class TestingApi {
 	};
 
 	deleteThemes = async (ids) => {
-		await axios.delete(`${this.URL}/themes/`, ids);
+		await axios.delete(`${this.URL}/themes`, {
+			data: ids,
+		});
 	};
 
 	postTheme = async (theme) => {
-		await axios.post(`${this.URL}/themes/`, theme);
+		await axios.post(`${this.URL}/themes`, theme);
 	};
 
 	// Competencies
@@ -72,7 +76,7 @@ export default class TestingApi {
 	};
 
 	updateUser = async (user, id) => {
-		await axios.put(`${this.URL}/users/${id}/`, user);
+		await axios.put(`${this.URL}/users/${id}`, user);
 	};
 
 	// Test result
@@ -80,4 +84,9 @@ export default class TestingApi {
 		const res = await axios.get(`${this.URL}/test_result/${id}`);
 		return res.data;
 	};
+
+	getLevels = async () => {
+		const res = await axios.get(`${this.URL}/level`);
+		return res.data;
+	}
 }
