@@ -17,8 +17,12 @@ const {text_field, image} = styles;
 export async function action({params, request}) {
 	console.log('params', params);
 	const formData = await request.formData();
-	console.log('request', Object.fromEntries(formData));
+	formDataToRequestData(formData);
 	// return redirect(`/moderator/management-theme`);
+}
+
+function formDataToRequestData(data) {
+	console.log(Object.fromEntries(data));
 }
 
 export default function ModeratorCreateQuestion({header: {title, isFluid}}) {
@@ -93,7 +97,6 @@ export default function ModeratorCreateQuestion({header: {title, isFluid}}) {
 					</span>
 				</Row>
 				<Form method="post"
-							action="."
 							className="d-flex flex-column justify-content-around flex-grow-1">
 					<FormGroup>
 						<Row>

@@ -31,7 +31,7 @@ export default function ModeratorEditTheme() {
 			const questions = await api.getThemeQuestions(themes[0].pk);
 			return {
 				themes,
-				questions: questions.results,
+				questions,
 			};
 		};
 
@@ -60,7 +60,7 @@ export default function ModeratorEditTheme() {
 			}
 			case 'questions': {
 				if (isDeleteQuestion) {
-					// api.deleteQuestions(selectedIds.questions)
+					api.deleteQuestions(selectedIds.questions)
 					console.log(selectedIds.questions);
 					e.target.textContent = 'Удалить вопрос';
 				} else {
