@@ -19,6 +19,8 @@ export default function ModeratorEditTheme() {
 
 	const [isDeleteTheme, setIsDeleteTheme] = useState(false);
 	const [isDeleteQuestion, setIsDeleteQuestion] = useState(false);
+	const [currentTheme, setCurrentTheme] = useState();
+	const [currentQuestion, setCurrentQuestion] = useState();
 
 	const selectedIds = {
 		questions: [],
@@ -33,28 +35,25 @@ export default function ModeratorEditTheme() {
 			questions,
 		};
 	}
-	useEffect(() => {
+
+	const updateLists = () => {
 		fetchData().then(({themes, questions}) => {
 			setThemes(themes);
 			setQuestions(questions);
 		});
+	}
+
+	useEffect(() => {
+		updateLists();
 	}, []);
+
 
 	const buttonClickHandler = (e, type) => {
 		e.preventDefault();
 		switch (type) {
-			case 'competencies': {
-				break;
-			}
 			case 'themes': {
 				if (isDeleteTheme) {
-					api.deleteThemes(selectedIds.themes).then(() => {
-						fetchData().then(({themes, questions}) => {
-							setThemes(themes);
-							setQuestions(questions);
-						});
-					});
-					console.log(selectedIds.themes);
+					api.deleteThemes(selectedIds.themes).then(() => updateLists());
 					e.target.textContent = 'Удалить тему';
 				} else {
 					e.target.textContent = 'Удалить выбранные темы';
@@ -64,12 +63,7 @@ export default function ModeratorEditTheme() {
 			}
 			case 'questions': {
 				if (isDeleteQuestion) {
-					api.deleteQuestions(selectedIds.questions).then(() => {
-						fetchData().then(({themes, questions}) => {
-							setThemes(themes);
-							setQuestions(questions);
-						});
-					});
+					api.deleteQuestions(selectedIds.questions).then(() => updateLists());
 					e.target.textContent = 'Удалить вопрос';
 				} else {
 					e.target.textContent = 'Удалить выбранные вопросы';
@@ -85,9 +79,6 @@ export default function ModeratorEditTheme() {
 
 	const listClickHandler = (e, type) => {
 		switch (type) {
-			case 'competencies': {
-				break;
-			}
 			case 'themes': {
 				isDeleteTheme
 					? addItemIdToDeleteList(e, selectedIds, 'themes')
@@ -116,10 +107,7 @@ export default function ModeratorEditTheme() {
 							btn: (e) => buttonClickHandler(e, TypeEnum.THEMES)
 						}}/>
 			<List size={{xxl: 6, md: 4}}
-						titles={{
-							list: 'Вопросы текущей темы',
-							btn: 'Удалить вопрос'
-						}}
+						titles={{list: 'Вопросы текущей темы', btn: 'Удалить вопрос'}}
 						content={questions}
 						handlers={{
 							list: (e) => listClickHandler(e, TypeEnum.QUESTIONS),

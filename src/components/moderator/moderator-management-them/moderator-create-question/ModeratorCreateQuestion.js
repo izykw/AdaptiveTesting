@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Col, Container, FormGroup, Row } from 'reactstrap';
-import { Form, redirect, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+
 import WrapperFluid
 	from '../../../second-components/wrapper-fluid/WrapperFluid';
 import Header from '../../../header/Header';
@@ -8,29 +10,36 @@ import SelectWithIcon
 	from '../../../second-components/select-with-icon/SelectWithIcon';
 import SvgIcons from '../../../second-components/svg-icons/SvgIcons';
 import { addAnswersInput } from './AnswerInput';
+import {
+	changeCountAnswers,
+	errorMessage,
+	getQuestionOptions,
+	checkAnswersCount,
+	postQuestion
+} from './moderatorCreateQuestions.services';
 
 import styles from './moderatorCreateQuestion.module.css';
 import TestingApi from '../../../../services/testingApi';
 
 const {text_field, image} = styles;
 
-export async function action({request}) {
-	const formData = await request.formData();
-	formDataToRequestData(formData);
-	// return redirect(`/moderator/management-theme`);
-}
-
-function formDataToRequestData(formData) {
-	const {level, theme, type, question, ...otherData} = Object.fromEntries(
-		formData);
-	console.log(otherData)
-}
-
 export default function ModeratorCreateQuestion({header: {title, isFluid}}) {
 	const [countAnswers, setCountAnswers] = useState(4);
+	const [isCorrectAnswersCount, setIsCorrectAnswersCount] = useState(false);
+
 	const [themes, setThemes] = useState([]);
 	const [levels, setLevels] = useState([]);
+
 	const navigate = useNavigate();
+
+	const {
+		register,
+		handleSubmit,
+		formState: {errors, isSubmitSuccessful}
+	} = useForm({
+		reValidateMode: 'onBlur',
+		shouldUnregister: true,
+	});
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -48,35 +57,30 @@ export default function ModeratorCreateQuestion({header: {title, isFluid}}) {
 		});
 	}, []);
 
-	const changeCountAnswers = (e, type) => {
-		e.preventDefault();
-		switch (type) {
-			case 'inc': {
-				setCountAnswers((prevState) => {
-					return prevState === 6 ? prevState : prevState + 1;
-				});
-				break;
-			}
-			case 'dec': {
-				setCountAnswers((prevState) => {
-					return prevState === 0 ? prevState : prevState - 1;
-				});
-				break;
-			}
-			default: {
-				throw new Error(`${type} this type doesnt exist`);
-			}
+	useEffect(() => {
+		if(isSubmitSuccessful) {
+			navigate('/moderator/management-theme');
 		}
+	}, [isSubmitSuccessful])
+
+	const handleForm = {
+		register,
+		required: {
+			theme: 'Пожалуйста, выберите тему вопроса',
+			type: 'Пожалуйста, выберите тип вопроса',
+			level: 'Пожалуйста, выберите уровень сложности вопроса',
+			answer: true,
+			is_correct: true,
+		},
+		errors,
 	};
 
-	const getQuestionOptions = () => {
-		return (
-			[
-				{id: 1, name: 'Один ответ'},
-				{id: 2, name: 'Несколько ответов'},
-			]
-		);
-	};
+	const onClick = () => {
+		const value = checkAnswersCount();
+		if(value !== isCorrectAnswersCount) {
+			setIsCorrectAnswersCount(value);
+		}
+	}
 
 	return (
 		<WrapperFluid>
@@ -91,31 +95,32 @@ export default function ModeratorCreateQuestion({header: {title, isFluid}}) {
 						</span>
 					</span>
 				</Row>
-				<Form method="post"
+				<form onSubmit={handleSubmit(postQuestion)}
 							className="d-flex flex-column justify-content-around flex-grow-1">
 					<FormGroup>
 						<Row>
 							<SelectWithIcon name="theme"
 															title="Выберите тему"
-															handler={null}
+															handleForm={handleForm}
 															options={themes}/>
 							<SelectWithIcon name="type"
 															title="Выберите тип вопроса"
-															handler={null}
+															handleForm={handleForm}
 															options={getQuestionOptions()}/>
 							<SelectWithIcon name="level"
 															title="Выберите уровень сложности"
-															handler={null}
+															handleForm={handleForm}
 															options={levels}/>
 						</Row>
 					</FormGroup>
 					<FormGroup>
 						<Row className="mx-0">
 							<textarea
-								defaultValue="test"
-								name="question"
+								{...register('question',
+									{required: 'Пожалуйста, введите текст вопроса'})}
 								className={`${text_field} form-control bg-transparent border-secondary rounded-3 w-100 p-2`}
 								placeholder="Введите текст"/>
+							{errors.question && errorMessage(errors.question.message)}
 						</Row>
 					</FormGroup>
 					<FormGroup>
@@ -124,15 +129,27 @@ export default function ModeratorCreateQuestion({header: {title, isFluid}}) {
 								<span className="fs-5">Варианты ответов</span>
 								<a href="/"
 									 className="link-secondary ms-3"
-									 onClick={(e) => changeCountAnswers(e, 'inc')}>
+									 onClick={(e) => changeCountAnswers(e, 'inc',
+										 setCountAnswers)}>
 									Добавить вариант ответа
 								</a>
 								<a href="/"
 									 className="link-secondary ms-3"
-									 onClick={(e) => changeCountAnswers(e, 'dec')}>
+									 onClick={(e) => changeCountAnswers(e, 'dec',
+										 setCountAnswers)}>
 									Удалить вариант ответа
 								</a>
-								{addAnswersInput(countAnswers)}
+								<div>
+									{addAnswersInput(countAnswers, isCorrectAnswersCount, handleForm)}
+									{
+										errors.is_correct && errorMessage(
+										'Пожалуйста, укажите количество правильных ответов в соотвтствии с типом вопроса')
+									}
+									{
+										errors.answer && errorMessage(
+											'Пожалуйста, заполните все поля с ответами')
+									}
+								</div>
 							</Col>
 							<Col className="d-flex justify-content-end align-items-center">
 								<div className={image}>
@@ -159,13 +176,14 @@ export default function ModeratorCreateQuestion({header: {title, isFluid}}) {
 							</Col>
 							<Col className="d-flex justify-content-end">
 								<Button type="submit"
+												onClick={onClick}
 												className="shadow_element bg-transparent btn text-dark border border-2 w-50">
 									Добавить
 								</Button>
 							</Col>
 						</Row>
 					</FormGroup>
-				</Form>
+				</form>
 			</Container>
 		</WrapperFluid>
 	);

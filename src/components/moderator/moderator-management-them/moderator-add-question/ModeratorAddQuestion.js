@@ -8,11 +8,12 @@ import TestingApi from '../../../../services/testingApi';
 
 export default function ModeratorAddQuestion() {
 	const [competencies, setCompetencies] = useState([]);
-	const [competenceForTheme, setCompetenceForTheme] = useState('');
-
-	// Themes current competence
 	const [themes, setThemes] = useState([]);
+
+	const [newCompetence, setNewCompetence] = useState('');
 	const [newTheme, setNewTheme] = useState('');
+
+	const [isDeleteComptence, setIsDeleteCompetence] = useState(false);
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -35,7 +36,10 @@ export default function ModeratorAddQuestion() {
 			<List size={{xxl: 3, md: 3}}
 						titles={{list: 'Список компетенций', btn: 'Удалить компетенцию'}}
 						content={competencies}
-						handlers={{}}/>
+						handlers={{
+							list: null,
+							btn: null
+						}}/>
 			<List size={{xxl: 6, md: 4}}
 						titles={{
 							list: 'Список тем текущей компетенции',
@@ -48,22 +52,20 @@ export default function ModeratorAddQuestion() {
 				<div style={{minHeight: '500px'}}
 					 className="d-flex justify-content-between flex-column">
 					<Input
-						onChange={(e) => setCompetenceForTheme(e.target.value)}
-						value={competenceForTheme}
-						className="border-secondary bg-transparent"
-						placeholder="Введите название компетенции"
-					/>
-					<Input
 						onChange={(e) => setNewTheme(e.target.value)}
 						value={newTheme}
 						className="border-secondary bg-transparent"
 						placeholder="Введите название темы"
 					/>
 					<LightButton text="Создать тему" handler={null}/>
-					<img src="/"
-						 style={{height: '350px'}}
-						 className="border border-secondary rounded-3"
-						 alt="Изображение к вопросу"/>
+					<span>-----------------------------------------------------------</span>
+					<Input
+						onChange={null}
+						value={null}
+						className="border-secondary bg-transparent"
+						placeholder="Введите название компетенции"
+					/>
+					<LightButton text="Создать компетенцию" handler={null}/>
 				</div>
 			</Col>
 		</Row>

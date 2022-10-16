@@ -11,10 +11,6 @@ import ModeratorCreateQuestion
 import ErrorPage from '../error/ErrorPage';
 import TestsList from '../testing/tests-list/TestsList';
 
-import {
-	action as actionCreateQuestion
-} from '../moderator/moderator-management-them/moderator-create-question/ModeratorCreateQuestion';
-
 export const router = createBrowserRouter([
 	{
 		path: '/',
@@ -48,7 +44,6 @@ export const router = createBrowserRouter([
 			title: 'Кабинет модератора',
 			isFluid: true
 		}}/>,
-		action: actionCreateQuestion,
 	},
 	{
 		path: '/:role/tests-list',

@@ -15,7 +15,7 @@ export function showQuestionsByTheme(e, setQuestions) {
 	const api = new TestingApi();
 	const id = li.id;
 
-	api.getThemeQuestions(id).then(res => setQuestions(res.results));
+	api.getThemeQuestions(id).then(res => setQuestions(res));
 }
 
 export function sortQuestionsBy(value, questions, setQuestions) {
@@ -69,7 +69,7 @@ export function addItemIdToDeleteList(e, selectedIds, filed) {
 	li.classList.toggle('text-light');
 
 	const id = li.id;
-	console.log(id);
+
 	if(!selectedIds[filed].find((el) => el === id)) {
 		selectedIds[filed].push(id);
 	} else {

@@ -1,22 +1,36 @@
 import React from 'react';
 
-export function AnswerInput({index}) {
+export function AnswerInput(props) {
+	const {index, register, isCorrectAnswersCount, required} = props;
 	return (
-		<div className="d-flex align-items-center">
-			<label className="form-label me-lg-3 me-1">
-				<input name={`is_correct-${index}`} type="checkbox" className="form-check-input"/>
-			</label>
-			<label className="form-label flex-grow-1">
-				<input defaultValue="test" name={`answer-${index}`} type="text" className="form-control my-lg-3 my-1"/>
-			</label>
-		</div>
+		<>
+			<div className="d-flex align-items-center">
+				<label className="form-label">
+					<input {...register(`is_correct[${index}]`,
+						{validate: () => isCorrectAnswersCount || !required['is_correct']})}
+								 type="checkbox"
+								 className="form-check-input mt-lg-2 mt-1 me-lg-3 me-1"/>
+				</label>
+				<label className="form-label flex-grow-1">
+					<input {...register(`answer[${index}]`,
+						{required: required['answer']})}
+								 type="text"
+								 className="form-control mt-lg-2 mt-1"
+								 placeholder="Введите вариант ответа"/>
+				</label>
+			</div>
+		</>
 	);
 }
 
-export const addAnswersInput = (count) => {
+export const addAnswersInput = (count, isCorrectAnswersCount, handleForm) => {
 	let answersInput = [];
 	for (let i = 1; i <= count; i++) {
-		answersInput.push(<AnswerInput key={i} index={i}/>);
+		answersInput.push(<AnswerInput
+			key={i}
+			index={i}
+			isCorrectAnswersCount={isCorrectAnswersCount}
+			{...handleForm}/>);
 	}
 	return answersInput;
-}
+};
