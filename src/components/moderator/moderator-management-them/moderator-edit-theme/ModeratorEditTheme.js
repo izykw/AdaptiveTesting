@@ -43,22 +43,23 @@ export default function ModeratorEditTheme() {
 		// TODO: Разобраться как избавиться от костыля isDelete: false.
 		const fetchData = async () => {
 			const themes = await api.getThemes();
-			const questions = await api.getThemeQuestions(themes[0].pk);
+			const questions = await api.getThemeQuestions(themes[0]?.pk);
 			return {
 				themes,
 				questions,
 			};
 		};
 
-		fetchData().then(({themes, questions}) => {
+		fetchData()
+			.then(({themes, questions}) => {
 			setTheme({
 				themes,
-				activeId: theme.activeId ?? themes[0].pk,
+				activeId: theme.activeId ?? themes[0]?.pk,
 				isDelete: false
 			});
 			setQuestion({
 				questions,
-				activeId: question.activeId ?? questions[0].pk,
+				activeId: question.activeId ?? questions[0]?.pk,
 				isDelete: false
 			});
 		});

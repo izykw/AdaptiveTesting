@@ -43,7 +43,7 @@ export default function ModeratorEditCompetence() {
 			const api = new TestingApi();
 			const newCompetencies = await api.getCompetencies();
 			const newCompetenceThemes = await api.getCompetenceThemes(
-				competence.activeId ?? newCompetencies.results[0].pk);
+				competence.activeId ?? newCompetencies.results[0]?.pk);
 			return {
 				competencies: newCompetencies.results,
 				competenceThemes: newCompetenceThemes
@@ -54,13 +54,13 @@ export default function ModeratorEditCompetence() {
 			//TODO: Пофиксить isControl и newCompetenceName
 			setTheme({
 				competenceThemes,
-				activeId: theme.activeId ?? competenceThemes[0].pk,
+				activeId: theme.activeId ?? competenceThemes[0]?.pk,
 				isControl: false,
 				newThemeName: '',
 			});
 			setCompetence({
 				competencies,
-				activeId: competence.activeId ?? competencies[0].pk,
+				activeId: competence.activeId ?? competencies[0]?.pk,
 				isControl: false,
 				newCompetenceName: '',
 			});
