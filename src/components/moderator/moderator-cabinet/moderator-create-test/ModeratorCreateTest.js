@@ -2,28 +2,30 @@ import React, { useState, useEffect } from 'react';
 import { Button, ListGroup, Row } from 'reactstrap';
 import { ListItemInput } from './ListItemInput';
 import { ListItemSelect } from './ListItemSelect';
+import TestingApi from '../../../../services/testingApi';
 
 export default function ModeratorCreateTest() {
 	const [testSettings, setTestSettings] = useState({});
 
-	useEffect(() => {
+	const [competencies, setCompetencies] = useState([]);
+	const [themes, setThemes] = useState([]);
 
+	useEffect(() => {
+		const fetchData = async () => {
+		}
 	}, []);
 
 	return (
 		<Row>
-			<h4 className="h4 mt-3 mb-4">ИМЯ ПОЛЬЗОВАТЕЛЯ</h4>
 			<ListGroup>
 				<ListItemSelect name="Выбор компетенции"
 												options={[{value: 'date', name: 'темы'}]}/>
 				<ListItemSelect name="Выбор темы"
 												options={[{value: 'date', name: 'темы'}]}/>
-				<ListItemSelect name="Дополнительная тема"
-												options={[{value: 'date', name: 'темы'}]}/>
 				<ListItemInput type="text"
 											 name="Название теста"
 											 placeholder="Введите название"
-											 width="75"/>
+											 width="100"/>
 				<ListItemInput type="number"
 											 name="Длительность теста в минутах"
 											 placeholder="180"

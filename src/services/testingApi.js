@@ -4,6 +4,7 @@ export default class TestingApi {
 	constructor() {
 		this.URL = 'http://localhost:8000';
 	}
+
 	// Questions
 	getQuestion = async (id) => {
 		const res = await axios.get(`${this.URL}/questions/${id}`);
@@ -29,9 +30,7 @@ export default class TestingApi {
 	};
 
 	deleteQuestions = async (ids) => {
-		await axios.delete(`${this.URL}/questions`, {
-			data: ids,
-		});
+		await axios.delete(`${this.URL}/questions`, {data: ids});
 	};
 
 	postQuestion = async (question) => {
@@ -46,8 +45,13 @@ export default class TestingApi {
 
 	getThemes = async () => {
 		const res = await axios.get(`${this.URL}/themes`);
-		return res.data.results;
+		return res.data;
 	};
+
+	getCompetenceThemes = async (id) => {
+		const res = await axios.get(`${this.URL}/themes?competence=${id}`)
+		return res.data;
+	}
 
 	deleteThemes = async (ids) => {
 		await axios.delete(`${this.URL}/themes`, {
@@ -55,15 +59,30 @@ export default class TestingApi {
 		});
 	};
 
-	postTheme = async (theme) => {
-		await axios.post(`${this.URL}/themes`, theme);
+	postTheme = async ({theme, id}) => {
+		console.log(theme)
+		await axios.post(`${this.URL}/themes`, {
+			name: theme,
+			competence: id
+		});
 	};
 
 	// Competencies
 	getCompetencies = async () => {
 		const res = await axios.get(`${this.URL}/competence`);
 		return res.data;
-	}
+	};
+
+	deleteCompetencies = async (ids) => {
+		await axios.delete(`${this.URL}/competence`, {data: ids});
+	};
+
+	postCompetence = async (competence) => {
+		console.log(competence)
+		await axios.post(`${this.URL}/competence`, {
+			competence
+		});
+	};
 
 	// Users
 	getUser = async (id) => {
@@ -88,5 +107,5 @@ export default class TestingApi {
 	getLevels = async () => {
 		const res = await axios.get(`${this.URL}/level`);
 		return res.data;
-	}
+	};
 }

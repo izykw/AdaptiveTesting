@@ -1,24 +1,6 @@
-import TestingApi from '../../../../services/testingApi';
+import { getListElement } from '../moderatorManagementTheme.services';
 
-export const TypeEnum = {
-	COMPETENCIES: 'competencies',
-	THEMES: 'themes',
-	QUESTIONS: 'questions',
-};
-
-export function showQuestionsByTheme(e, setQuestions) {
-	let li = getListElement(e);
-	if (!li) {
-		return;
-	}
-
-	const api = new TestingApi();
-	const id = li.id;
-
-	api.getThemeQuestions(id).then(res => setQuestions(res));
-}
-
-export function sortQuestionsBy(value, questions, setQuestions) {
+export function sortQuestionsBy(value, questions, setQuestion) {
 	const sortByField = (a, b, field) => {
 		if (a[field] < b[field]) return -1;
 		if (a[field] > b[field]) return 1;
@@ -29,19 +11,19 @@ export function sortQuestionsBy(value, questions, setQuestions) {
 		case 'date': {
 			const sortedQuestions = questions.sort(
 				(a, b) => sortByField(a, b, 'pk'));
-			setQuestions([...sortedQuestions]);
+			setQuestion({questions: [...sortedQuestions]});
 			break;
 		}
 		case 'alphabet': {
 			const sortedQuestions = questions.sort(
 				(a, b) => sortByField(a, b, 'question'));
-			setQuestions([...sortedQuestions]);
+			setQuestion({questions: [...sortedQuestions]});
 			break;
 		}
 		case 'level': {
 			const sortedQuestions = questions.sort(
 				(a, b) => sortByField(b, a, 'level'));
-			setQuestions([...sortedQuestions]);
+			setQuestion({questions: [...sortedQuestions]});
 			break;
 		}
 		default: {
@@ -52,37 +34,10 @@ export function sortQuestionsBy(value, questions, setQuestions) {
 
 export function showFullQuestion(e) {
 	const li = getListElement(e);
-	if (!li) {
-		return;
-	}
-	const textArea = document.querySelector('#full-text-question');
-	textArea.textContent = li.textContent;
-}
-
-export function addItemIdToDeleteList(e, selectedIds, filed) {
-	const li = getListElement(e);
-	if (!li) {
-		return;
-	}
-
-	li.classList.toggle('bg-primary');
-	li.classList.toggle('text-light');
-
-	const id = li.id;
-
-	if(!selectedIds[filed].find((el) => el === id)) {
-		selectedIds[filed].push(id);
-	} else {
-		selectedIds[filed] = selectedIds[filed].filter((el) => el !== id);
+	if (li) {
+		const textArea = document.querySelector('#full-text-question');
+		textArea.textContent = li.textContent;
 	}
 }
 
-function getListElement(e) {
-	if (e.target.tagName.toLowerCase() === 'li') {
-		return e.target;
-	} else if (e.target.tagName.toLowerCase() === 'span') {
-		return e.target.parentElement;
-	} else {
-		return null;
-	}
-}
+
