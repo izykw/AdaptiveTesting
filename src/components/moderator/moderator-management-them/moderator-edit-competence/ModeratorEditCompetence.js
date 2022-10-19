@@ -51,15 +51,18 @@ export default function ModeratorEditCompetence() {
 		};
 
 		fetchData().then(({competencies, competenceThemes}) => {
+			//TODO: Пофиксить isControl и newCompetenceName
 			setTheme({
 				competenceThemes,
 				activeId: theme.activeId ?? competenceThemes[0].pk,
-				isControl: false
+				isControl: false,
+				newThemeName: '',
 			});
 			setCompetence({
 				competencies,
 				activeId: competence.activeId ?? competencies[0].pk,
-				isControl: false
+				isControl: false,
+				newCompetenceName: '',
 			});
 		});
 	};
@@ -123,16 +126,18 @@ export default function ModeratorEditCompetence() {
 
 	const createCompetence = () => {
 		if (competence.newCompetenceName) {
-			api.postCompetence(competence.newCompetenceName).then(updateLists);
+			api.postCompetence(competence.newCompetenceName).then(() => {
+				updateLists();
+			});
 		}
 	};
 
 	const createTheme = () => {
 		if (theme.newThemeName) {
-			api.postTheme({
-				theme: theme.newThemeName,
-				id: competence.activeId,
-			}).then(updateLists);
+			api.postTheme({theme: theme.newThemeName, id: competence.activeId})
+				.then(() => {
+					updateLists();
+				});
 		}
 	};
 
