@@ -37,7 +37,7 @@ export function changeActiveListElement(e, setState, type, prevId) {
 	if (current) {
 		const prev = document.querySelector(`#${type} > [id='${prevId}']`);
 
-		prev.classList.remove('border', 'border-secondary');
+		prev && prev.classList.remove('border', 'border-secondary');
 		current.classList.add('border', 'border-secondary');
 
 		setState({activeId: current.id});
