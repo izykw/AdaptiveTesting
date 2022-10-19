@@ -78,7 +78,7 @@ export default function ModeratorEditCompetence() {
 
 		const methodsByType = {
 			[Types.COMPETENCIES]: {
-				request: null,
+				request: api.deleteCompetencies,
 				setState: setCompetence,
 			},
 			[Types.COMPETENCE_THEMES]: {
@@ -116,7 +116,6 @@ export default function ModeratorEditCompetence() {
 		}
 
 		if (type === Types.COMPETENCIES) {
-			console.log(theme);
 			showListBy(e, setTheme, api.getCompetenceThemes, Types.COMPETENCE_THEMES);
 			changeActiveListElement(e, setCompetence, type, competence.activeId);
 		}

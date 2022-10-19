@@ -78,7 +78,6 @@ export default class TestingApi {
 	};
 
 	postCompetence = async (competence) => {
-		console.log(competence)
 		await axios.post(`${this.URL}/competence`, {
 			competence
 		});
