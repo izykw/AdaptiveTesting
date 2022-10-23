@@ -6,6 +6,8 @@ Adaptive testing - testing, where each next question is selected automatically, 
 <li>React</li>
 <li>React Router</li>
 <li>Bootstrap</li>
+<li>HandySvg</li>
+<li>ReactHookForms</li>
 </ul>
 
 # Backend
