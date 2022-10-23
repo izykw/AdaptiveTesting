@@ -6,11 +6,10 @@ import TestingApi from '../../../services/testingApi';
 
 import styles from './testInfo.module.css';
 import {
-	convertTimeToSeconds,
-	convertToCorrectTime
+	convertTimeToSeconds, convertToCorrectTime
 } from './testInfo.services';
 
-const {vertical_line, list_group_column} = styles;
+const { vertical_line, list_group_column } = styles;
 
 export default function TestInfo() {
 	const [info, setInfo] = useState({});
@@ -20,7 +19,7 @@ export default function TestInfo() {
 		const fetchInfo = async () => {
 			const testInfo = await api.getTestResult(1);
 			const user = await api.getUser(testInfo.user_id);
-			const {first_name, last_name} = user.user;
+			const { first_name, last_name } = user.user;
 			return {
 				...testInfo,
 				user: {
@@ -76,13 +75,11 @@ export default function TestInfo() {
 							Прошедшее время - {convertToCorrectTime(timeSpentInSeconds)}
 						</ListGroupItem>
 						<ListGroupItem className="bg-transparent border-0 text-primary">
-							Оставшееся время - {convertToCorrectTime(totalTimeInSeconds - timeSpentInSeconds)}
+							Оставшееся время - {convertToCorrectTime(
+							totalTimeInSeconds - timeSpentInSeconds)}
 						</ListGroupItem>
 					</div>
 				</ListGroup>
-			</Row>
-			<Row className="ps-1 mb-4">
-				Some stats
 			</Row>
 		</>
 	);

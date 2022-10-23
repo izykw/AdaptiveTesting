@@ -1,6 +1,6 @@
 import React from 'react';
 import {Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
-import LightButton from '../light-button/LightButton';
+import LightButton from '../../moderator/moderator-management-them/LightButton';
 
 export default function ModalWindow({ref, title, message, isOpen, close}) {
 	return (

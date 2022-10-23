@@ -8,7 +8,7 @@ import {
 	getHandleFormSettings,
 	postTestSettings
 } from './moderatorCreateTest.services';
-import LightButton from '../../../second-components/light-button/LightButton';
+import LightButton from '../../moderator-management-them/LightButton';
 
 export default function ModeratorCreateTest() {
 	const {

@@ -13,7 +13,7 @@ export default function LightButton({
 		<Button type={type}
 						color="light"
 						className={`${isShadow && 'shadow_element'} 
-						bg-transparent btn text-dark border border-2 w-${width} fs-5`}
+						bg-transparent btn text-dark border border-2 w-${width}`}
 						onClick={handler}>
 			{text}
 		</Button>
