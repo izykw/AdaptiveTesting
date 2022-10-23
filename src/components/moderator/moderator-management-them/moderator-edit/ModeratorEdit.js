@@ -3,7 +3,7 @@ import { Col, Input, Row } from 'reactstrap';
 import List from '../../../second-components/list/List';
 import LightButton from '../LightButton';
 import TestingApi from '../../../../services/testingApi';
-import useListData from '../../../../hooks/use-list-data/useListDara';
+import useListData from '../../../../hooks/use-list-data/useListData';
 import { Link } from 'react-router-dom';
 import {
 	showFullQuestion, markItemSelected, changeActiveListElement, showListBy
@@ -178,21 +178,28 @@ export default function ModeratorEdit() {
 		}
 	};
 
+	const competenceTitles = ['Список компетенций', 'Удалить компетенцию'];
+	const competenceHandlers = [
+		(e) => listClickHandler(e, Types.COMPETENCIES, competence.isDelete),
+		(e) => buttonClickHandler(e, Types.COMPETENCIES, competence.isDelete)];
+
+	const themeTitles = ['Темы текущей компетенции', 'Удалить тему'];
+	const themeHandlers = [
+		(e) => listClickHandler(e, Types.THEMES, theme.isDelete),
+		(e) => buttonClickHandler(e, Types.THEMES, theme.isDelete)];
+
+	const questionTitles = ['Вопросы текущей темы', 'Удалить вопрос'];
+	const questionHandlers = [
+		(e) => listClickHandler(e, Types.QUESTIONS, question.isDelete),
+		(e) => buttonClickHandler(e, Types.QUESTIONS, question.isDelete)];
+
 	return (
 		<Row>
 			<Col md="3">
 				<List id={Types.COMPETENCIES}
-							titles={{
-								list: 'Список компетенций',
-								btn: 'Удалить компетенцию'
-							}}
+							titles={competenceTitles}
 							content={competence.competencies}
-							handlers={{
-								list: (e) =>
-									listClickHandler(e, Types.COMPETENCIES, competence.isDelete),
-								btn: (e) =>
-									buttonClickHandler(e, Types.COMPETENCIES, competence.isDelete),
-							}}/>
+							handlers={competenceHandlers}/>
 				<Input
 					onChange={(e) => setCompetence({ newCompetenceName: e.target.value })}
 					value={competence.newCompetenceName}
@@ -206,12 +213,9 @@ export default function ModeratorEdit() {
 			</Col>
 			<Col xxl="4" md="3">
 				<List id={Types.THEMES}
-							titles={{ list: 'Темы текущей компетенции', btn: 'Удалить тему' }}
+							titles={themeTitles}
 							content={theme.themes}
-							handlers={{
-								list: (e) => listClickHandler(e, Types.THEMES, theme.isDelete),
-								btn: (e) => buttonClickHandler(e, Types.THEMES, theme.isDelete)
-							}}/>
+							handlers={themeHandlers}/>
 				<Input
 					onChange={(e) => setTheme({ newThemeName: e.target.value })}
 					value={theme.newThemeName}
@@ -225,14 +229,9 @@ export default function ModeratorEdit() {
 			</Col>
 			<Col xxl="5" md="4">
 				<List id={Types.QUESTIONS}
-							titles={{ list: 'Вопросы текущей темы', btn: 'Удалить вопрос' }}
+							titles={questionTitles}
 							content={question.questions}
-							handlers={{
-								list: (e) => listClickHandler(e, Types.QUESTIONS,
-									question.isDelete),
-								btn: (e) => buttonClickHandler(e, Types.QUESTIONS,
-									question.isDelete)
-							}}/>
+							handlers={questionHandlers}/>
 				<textarea
 					style={{ minHeight: '87px', resize: 'none' }}
 					id="full-text-question"

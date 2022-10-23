@@ -6,42 +6,20 @@ export default class TestingApi {
 	}
 
 	// Questions
-	getQuestion = async (id) => {
-		const res = await axios.get(`${this.URL}/questions/${id}`);
-		return res.data;
-	};
-
-	getQuestions = async () => {
-		const res = await axios.get(`${this.URL}/questions`);
-		return res.data;
-	};
-
 	getThemeQuestions = async (id) => {
 		const res = await axios.get(`${this.URL}/questions?theme=${id}`);
 		return res.data;
 	};
 
-	getTestQuestion = async (id) => {
-		return await axios.get(`${this.URL}/algorithm/${id}`);
-	};
-
-	getTestQuestions = async () => {
-		return await axios.get(`${this.URL}/testing`);
-	};
-
 	deleteQuestions = async (ids) => {
-		await axios.delete(`${this.URL}/questions`, {data: ids});
+		return await axios.delete(`${this.URL}/questions`, {data: ids});
 	};
 
 	postQuestion = async (question) => {
-		await axios.post(`${this.URL}/questions`, question);
+		return await axios.post(`${this.URL}/questions`, question);
 	};
 
 	// Themes
-	getTheme = async (id) => {
-		const res = await axios.get(`${this.URL}/themes/${id}`);
-		return res.data;
-	};
 
 	getThemes = async () => {
 		const res = await axios.get(`${this.URL}/themes`);
@@ -54,14 +32,13 @@ export default class TestingApi {
 	}
 
 	deleteThemes = async (ids) => {
-		await axios.delete(`${this.URL}/themes`, {
+		return await axios.delete(`${this.URL}/themes`, {
 			data: ids,
 		});
 	};
 
 	postTheme = async ({theme, id}) => {
-		console.log(theme)
-		await axios.post(`${this.URL}/themes`, {
+		return await axios.post(`${this.URL}/themes`, {
 			name: theme,
 			competence: id
 		});
@@ -74,11 +51,11 @@ export default class TestingApi {
 	};
 
 	deleteCompetencies = async (ids) => {
-		await axios.delete(`${this.URL}/competence`, {data: ids});
+		return await axios.delete(`${this.URL}/competence`, {data: ids});
 	};
 
 	postCompetence = async (competence) => {
-		await axios.post(`${this.URL}/competence`, {
+		return await axios.post(`${this.URL}/competence`, {
 			competence
 		});
 	};
@@ -89,12 +66,8 @@ export default class TestingApi {
 		return res.data;
 	};
 
-	getUsers = async () => {
-		return await axios.get(`${this.URL}/users`);
-	};
-
 	updateUser = async (user, id) => {
-		await axios.put(`${this.URL}/users/${id}`, user);
+		return await axios.put(`${this.URL}/users/${id}`, user);
 	};
 
 	// Test result
@@ -103,6 +76,7 @@ export default class TestingApi {
 		return res.data;
 	};
 
+	// Levels
 	getLevels = async () => {
 		const res = await axios.get(`${this.URL}/level`);
 		return res.data;

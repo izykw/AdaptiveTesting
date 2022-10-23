@@ -3,8 +3,17 @@ import WrapperFluid from '../../second-components/wrapper-fluid/WrapperFluid';
 import Header from '../../header/Header';
 import { Button, Col, Container, Row } from 'reactstrap';
 import Timer from '../../timer/Timer';
+import { useNavigate } from 'react-router-dom';
 
 export default function Testing({ header: { title, isFluid } }) {
+	const answers = [
+		'Привет',
+		'Kak',
+		'Dela',
+		'Bro',
+		'??'
+	];
+	const navigate = useNavigate();
 
 	return (
 		<WrapperFluid>
@@ -18,7 +27,7 @@ export default function Testing({ header: { title, isFluid } }) {
 				</Row>
 				<Row>
 					<Col md="8">
-						<Answers/>
+						<Answers isOneCorrect={false} answers={answers}/>
 					</Col>
 					<Col md="4">
 						<img src="/"
@@ -31,6 +40,7 @@ export default function Testing({ header: { title, isFluid } }) {
 					<Timer duration="300"/>
 					<div className="d-flex justify-content-around text-primary p-4">
 						<Button color="light"
+										onClick={() => navigate(-1)}
 										className="shadow_element text-primary bg-transparent fs-5 w-25">
 							Завершить тестирование
 						</Button>
@@ -41,46 +51,29 @@ export default function Testing({ header: { title, isFluid } }) {
 					</div>
 				</Row>
 			</Container>
-
 		</WrapperFluid>
 	);
 }
 
 function Answers({ isOneCorrect, answers }) {
+	const type = isOneCorrect ? 'radio' : 'checkbox';
 	return (
 		<ul className="list-group fs-5">
-			<li className="list-group-item border-0">
-				<label>
-					<input type="checkbox"
-								 className="form-check-input shadow_custom"/>
-					<span className="ms-2">Text answer</span>
-				</label>
-			</li>
-			<li className="list-group-item border-0">
-				<label>
-					<input type="radio"
-								 className="form-check-input shadow_custom"/>
-					<span className="ms-2">Text answer</span>
-				</label>
-			</li>
-			<li className="list-group-item border-0">
-				<label>
-					<input type="radio" className="form-check-input shadow_custom"/>
-					<span className="ms-2">Text answer</span>
-				</label>
-			</li>
-			<li className="list-group-item border-0">
-				<label>
-					<input type="radio" className="form-check-input shadow_custom"/>
-					<span className="ms-2">Text answer</span>
-				</label>
-			</li>
-			<li className="list-group-item border-0">
-				<label>
-					<input type="radio" className="form-check-input shadow_custom"/>
-					<span className="ms-2">Text answer</span>
-				</label>
-			</li>
+			{
+				answers.map(item => {
+					const name = isOneCorrect ? 'answer' : `answer[i]`
+					return (
+						<li className="list-group-item border-0">
+							<label>
+								<input type={type}
+											 name={name}
+											 className="form-check-input shadow_custom"/>
+								<span className="ms-2">{item}</span>
+							</label>
+						</li>
+					);
+				})
+			}
 		</ul>
 	);
 }

@@ -19,10 +19,9 @@ export default function Timer({ duration }) {
 	const { seconds, minutes, hours } = getTimeRemaining(time);
 	const progressFill = (100 - (100 * time) / duration);
 
-
 	return (
 		<div className="progress p-0"
-				 style={{ height: '2rem', position: 'relative' }}>
+				 style={{ height: '2rem' }}>
 			<div className="progress-bar bg-primary p-0"
 					 style={{
 						 background: 'linear-gradient(90deg, #ACBAE6 99.89%, rgba(128, 255, 138, 0) 100%',

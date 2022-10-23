@@ -12,6 +12,10 @@ export default function UserCabinet({header: {title, isFluid}}) {
 	const [activeBtn, setActiveBtn] = useState('user-info');
 
 	const isUserInfoActive = activeBtn === 'user-info';
+
+	const userIcon = <SvgIcons id="person" color="primary" size="20"/>;
+	const infoIcon = <SvgIcons id="bookmark-two-dash" color="primary" size="20"/>;
+
 	return (
 		<Wrapper>
 			<Header title={title} isFluid={isFluid}></Header>
@@ -19,15 +23,11 @@ export default function UserCabinet({header: {title, isFluid}}) {
 				className="shadow_element bg-light border border-2 rounded-3 flex-grow-1">
 				<Row>
 					<NavButton text="Личная информация"
-										 icon={<SvgIcons id="person"
-																		 color="primary"
-																		 size="20"/>}
+										 icon={userIcon}
 										 handler={() => setActiveBtn('user-info')}
 										 isActive={isUserInfoActive}/>
 					<NavButton text="Сведения о тестах"
-										 icon={<SvgIcons id="bookmark-two-dash"
-																		 color="primary"
-																		 size="20"/>}
+										 icon={infoIcon}
 										 handler={() => setActiveBtn('test-info')}
 										 isActive={!isUserInfoActive}/>
 				</Row>
