@@ -20,10 +20,16 @@ import {
 
 import styles from './moderatorCreateQuestion.module.css';
 import TestingApi from '../../../../services/testingApi';
+import LightButton from '../../../second-components/light-button/LightButton';
 
-const {text_field, image} = styles;
+const { text_field, image } = styles;
 
-export default function ModeratorCreateQuestion({header: {title, isFluid}}) {
+export default function ModeratorCreateQuestion({
+	header: {
+		title,
+		isFluid
+	}
+}) {
 	const [countAnswers, setCountAnswers] = useState(4);
 	const [isCorrectAnswersCount, setIsCorrectAnswersCount] = useState(false);
 
@@ -35,7 +41,7 @@ export default function ModeratorCreateQuestion({header: {title, isFluid}}) {
 	const {
 		register,
 		handleSubmit,
-		formState: {errors, isSubmitSuccessful}
+		formState: { errors, isSubmitSuccessful }
 	} = useForm({
 		reValidateMode: 'onBlur',
 		shouldUnregister: true,
@@ -51,7 +57,7 @@ export default function ModeratorCreateQuestion({header: {title, isFluid}}) {
 				levels: levels.results,
 			};
 		};
-		fetchData().then(({themes, levels}) => {
+		fetchData().then(({ themes, levels }) => {
 			setThemes(themes);
 			setLevels(levels);
 		});
@@ -88,7 +94,7 @@ export default function ModeratorCreateQuestion({header: {title, isFluid}}) {
 				<Row>
 					<span className="fs-5 text-primary">
 						<SvgIcons id="bookmark-two-dash" color="primary" size="20"/>
-						<span style={{verticalAlign: 'middle'}} className="ms-1">
+						<span style={{ verticalAlign: 'middle' }} className="ms-1">
 							Создание вопроса
 						</span>
 					</span>
@@ -115,7 +121,7 @@ export default function ModeratorCreateQuestion({header: {title, isFluid}}) {
 						<Row className="mx-0">
 							<textarea
 								{...register('question',
-									{required: 'Пожалуйста, введите текст вопроса'})}
+									{ required: 'Пожалуйста, введите текст вопроса' })}
 								className={`${text_field} form-control bg-transparent border-secondary rounded-3 w-100 p-2`}
 								placeholder="Введите текст"/>
 							{errors.question && errorMessage(errors.question.message)}
@@ -167,18 +173,17 @@ export default function ModeratorCreateQuestion({header: {title, isFluid}}) {
 					<FormGroup>
 						<Row>
 							<Col>
-								<button
-									onClick={() => navigate(-1)}
-									className="shadow_element bg-transparent btn text-dark border border-2 w-50">
-									Выход
-								</button>
+								<LightButton text="Выход"
+														 handler={() => navigate(-1)}
+														 width="50"
+														 isShadow/>
 							</Col>
 							<Col className="d-flex justify-content-end">
-								<Button type="submit"
-												onClick={onClick}
-												className="shadow_element bg-transparent btn text-dark border border-2 w-50">
-									Добавить
-								</Button>
+								<LightButton type="submit"
+														 text="Добавить"
+														 handler={onClick}
+														 width="50"
+														 isShadow/>
 							</Col>
 						</Row>
 					</FormGroup>

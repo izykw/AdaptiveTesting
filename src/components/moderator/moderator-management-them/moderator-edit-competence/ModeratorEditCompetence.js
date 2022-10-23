@@ -12,6 +12,7 @@ import {
 import useListData from '../../../../hooks/use-person-info/use-list-data';
 import { Link } from 'react-router-dom';
 
+
 export default function ModeratorEditCompetence() {
 	const api = new TestingApi();
 	const [theme, setTheme] = useListData({
@@ -50,7 +51,7 @@ export default function ModeratorEditCompetence() {
 			};
 		};
 
-		fetchData().then(({competencies, competenceThemes}) => {
+		fetchData().then(({ competencies, competenceThemes }) => {
 			//TODO: Пофиксить isControl и newCompetenceName
 			setTheme({
 				competenceThemes,
@@ -99,7 +100,7 @@ export default function ModeratorEditCompetence() {
 	const btnClickHandler = (e, type, isControl) => {
 		e.preventDefault();
 
-		const {text, methods} = getDataByType(type);
+		const { text, methods } = getDataByType(type);
 
 		if (isControl) {
 			e.target.textContent = text[0];
@@ -109,7 +110,7 @@ export default function ModeratorEditCompetence() {
 			e.target.textContent = text[1];
 		}
 
-		methods.setState((prevState) => ({isControl: !prevState.isControl}));
+		methods.setState((prevState) => ({ isControl: !prevState.isControl }));
 	};
 
 	const listClickHandler = (e, type, isControl) => {
@@ -134,7 +135,7 @@ export default function ModeratorEditCompetence() {
 
 	const createTheme = () => {
 		if (theme.newThemeName) {
-			api.postTheme({theme: theme.newThemeName, id: competence.activeId})
+			api.postTheme({ theme: theme.newThemeName, id: competence.activeId })
 				.then(() => {
 					updateLists();
 				});
@@ -143,9 +144,9 @@ export default function ModeratorEditCompetence() {
 
 	return (
 		<Row>
-			<List size={{xxl: 3, md: 3}}
+			<List size={{ xxl: 3, md: 3 }}
 						id={Types.COMPETENCIES}
-						titles={{list: 'Список компетенций', btn: 'Удалить компетенцию'}}
+						titles={{ list: 'Список компетенций', btn: 'Удалить компетенцию' }}
 						content={competence.competencies}
 						handlers={{
 							list: (e) => listClickHandler(e, Types.COMPETENCIES,
@@ -153,7 +154,7 @@ export default function ModeratorEditCompetence() {
 							btn: (e) => btnClickHandler(e, Types.COMPETENCIES,
 								competence.isControl),
 						}}/>
-			<List size={{xxl: 6, md: 4}}
+			<List size={{ xxl: 6, md: 4 }}
 						id={Types.COMPETENCE_THEMES}
 						titles={{
 							list: 'Список тем текущей компетенции',
@@ -168,25 +169,26 @@ export default function ModeratorEditCompetence() {
 						}}/>
 			<Col>
 				<span className="fs-5">Создание компетенции и темы</span>
-				<div style={{minHeight: '500px'}}
+				<div style={{ minHeight: '500px' }}
 						 className="d-flex flex-column">
 					<Input
 						onChange={(e) => setCompetence(
-							{newCompetenceName: e.target.value})}
+							{ newCompetenceName: e.target.value })}
 						value={competence.newCompetenceName}
 						className="border-secondary bg-transparent mb-2"
 						placeholder="Введите название компетенции"
 					/>
-					<LightButton text="Создать компетенцию" handler={createCompetence}/>
+					<LightButton text="Создать компетенцию"
+											 handler={createCompetence}
+											 isShadow/>
 					<Input
-						onChange={(e) => setTheme({newThemeName: e.target.value})}
+						onChange={(e) => setTheme({ newThemeName: e.target.value })}
 						value={theme.newThemeName}
 						className="border-secondary bg-transparent mt-5 mb-2"
 						placeholder="Введите название темы"
 					/>
-					<LightButton text="Создать тему" handler={createTheme}/>
-					<Link to="/moderator"
-								className="shadow_element bg-transparent btn text-dark border border-2 mt-5">
+					<LightButton text="Создать тему" handler={createTheme} isShadow/>
+					<Link to="/moderator" className="shadow_element btn btn-light bg-transparent mt-4">
 						Выход
 					</Link>
 				</div>

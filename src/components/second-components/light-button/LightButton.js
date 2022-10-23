@@ -1,13 +1,22 @@
 import React from 'react';
-import {Button} from 'reactstrap';
+import { Button } from 'reactstrap';
 
-export default function LightButton({text, handler, type = 'button'}) {
+export default function LightButton({
+	text,
+	handler = null,
+	type = 'button',
+	width = '',
+	isShadow = false,
+}) {
+
 	return (
 		<Button type={type}
-				color="light"
-				className="shadow_element bg-transparent btn text-dark border border-2"
-				onClick={handler}>
+						color="light"
+						className={`${isShadow && 'shadow_element'} 
+						bg-transparent btn text-dark border border-2 w-${width} fs-5`}
+						onClick={handler}>
 			{text}
 		</Button>
-	)
+	);
+
 }
