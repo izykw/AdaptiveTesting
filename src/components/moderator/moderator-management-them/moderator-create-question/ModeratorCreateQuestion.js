@@ -58,10 +58,8 @@ export default function ModeratorCreateQuestion({header: {title, isFluid}}) {
 	}, []);
 
 	useEffect(() => {
-		if(isSubmitSuccessful) {
-			navigate('/moderator/management-theme');
-		}
-	}, [isSubmitSuccessful])
+		isSubmitSuccessful && navigate('/moderator/management-theme');
+	}, [isSubmitSuccessful]);
 
 	const handleForm = {
 		register,
@@ -77,10 +75,10 @@ export default function ModeratorCreateQuestion({header: {title, isFluid}}) {
 
 	const onClick = () => {
 		const value = checkAnswersCount();
-		if(value !== isCorrectAnswersCount) {
+		if (value !== isCorrectAnswersCount) {
 			setIsCorrectAnswersCount(value);
 		}
-	}
+	};
 
 	return (
 		<WrapperFluid>
@@ -140,10 +138,11 @@ export default function ModeratorCreateQuestion({header: {title, isFluid}}) {
 									Удалить вариант ответа
 								</a>
 								<div>
-									{addAnswersInput(countAnswers, isCorrectAnswersCount, handleForm)}
+									{addAnswersInput(countAnswers, isCorrectAnswersCount,
+										handleForm)}
 									{
 										errors.is_correct && errorMessage(
-										'Пожалуйста, укажите количество правильных ответов в соотвтствии с типом вопроса')
+											'Пожалуйста, укажите количество правильных ответов в соотвтствии с типом вопроса')
 									}
 									{
 										errors.answer && errorMessage(

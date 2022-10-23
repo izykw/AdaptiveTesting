@@ -40,7 +40,7 @@ export default function ModeratorEditTheme() {
 	};
 
 	const updateLists = () => {
-		// TODO: Разобраться как избавиться от костыля isDelete: false.
+		// TODO: Разобраться как избавиться ot isDelete: false.
 		const fetchData = async () => {
 			const themes = await api.getThemes();
 			const questions = await api.getThemeQuestions(themes[0]?.pk);
