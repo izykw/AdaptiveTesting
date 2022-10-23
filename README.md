@@ -8,6 +8,7 @@ Adaptive testing - testing, where each next question is selected automatically, 
 <li>Bootstrap</li>
 <li>HandySvg</li>
 <li>ReactHookForms</li>
+<li>Axios</li>
 </ul>
 
 # Backend
