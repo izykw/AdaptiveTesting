@@ -200,11 +200,11 @@ export default function ModeratorEdit() {
 							titles={competenceTitles}
 							content={competence.competencies}
 							handlers={competenceHandlers}/>
-				<Input
-					onChange={(e) => setCompetence({ newCompetenceName: e.target.value })}
-					value={competence.newCompetenceName}
-					className="border-secondary bg-transparent my-2"
-					placeholder="Введите название компетенции"
+				<Input onChange={(e) => setCompetence(
+					{ newCompetenceName: e.target.value })}
+							 value={competence.newCompetenceName}
+							 className="border-secondary bg-transparent my-2"
+							 placeholder="Введите название компетенции"
 				/>
 				<LightButton text="Создать компетенцию"
 										 handler={createCompetence}
@@ -216,11 +216,10 @@ export default function ModeratorEdit() {
 							titles={themeTitles}
 							content={theme.themes}
 							handlers={themeHandlers}/>
-				<Input
-					onChange={(e) => setTheme({ newThemeName: e.target.value })}
-					value={theme.newThemeName}
-					className="border-secondary bg-transparent my-2"
-					placeholder="Введите название темы"
+				<Input onChange={(e) => setTheme({ newThemeName: e.target.value })}
+							 value={theme.newThemeName}
+							 className="border-secondary bg-transparent my-2"
+							 placeholder="Введите название темы"
 				/>
 				<LightButton text="Создать тему"
 										 handler={createTheme}
@@ -232,12 +231,11 @@ export default function ModeratorEdit() {
 							titles={questionTitles}
 							content={question.questions}
 							handlers={questionHandlers}/>
-				<textarea
-					style={{ minHeight: '87px', resize: 'none' }}
-					id="full-text-question"
-					className="border-1 border-secondary rounded-3 p-2 w-100 mt-2"
-					placeholder="Кликните на вопрос, чтобы увидеть его полностью"
-					disabled
+				<textarea style={{ minHeight: '87px', resize: 'none' }}
+									id="full-text-question"
+									className="border-1 border-secondary rounded-3 p-2 w-100 mt-2"
+									placeholder="Кликните на вопрос, чтобы увидеть его полностью"
+									disabled
 				/>
 			</Col>
 			<Link to="/moderator"

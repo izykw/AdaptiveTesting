@@ -6,22 +6,21 @@ import { ListItemSelect } from './ListItemSelect';
 import TestingApi from '../../../../services/testingApi';
 import {
 	getHandleFormSettings,
-	postTestSettings
 } from './moderatorCreateTest.services';
-import LightButton from '../../moderator-management-them/LightButton';
+import { convertToCorrectTime } from '../../../../services/services';
 
 export default function ModeratorCreateTest() {
+	const api = new TestingApi();
 	const {
 		handleSubmit,
-		watch,
 		register,
-		formState: {errors, isSubmitSuccessful},
+		formState: { errors, isSubmitSuccessful },
 		reset
 	} = useForm({
 		reValidateMode: 'onBlur',
 		defaultValues: {
 			competence: '',
-			theme: '',
+			level: '',
 			testName: '',
 			testTime: 0,
 			questionsCount: 0,
@@ -29,33 +28,38 @@ export default function ModeratorCreateTest() {
 		}
 	});
 
-	const watchCompetence = watch('competence');
-
 	const [competencies, setCompetencies] = useState([]);
-	const [themes, setThemes] = useState([]);
+	const [levels, setLevels] = useState([]);
 
 	useEffect(() => {
 		const fetchData = async () => {
 			const api = new TestingApi();
 			const competencies = await api.getCompetencies();
+			const levels = await api.getLevels();
+			const testSettings = await api.getTestSettings();
+			console.log(testSettings);
 			return {
 				competencies: competencies.results,
+				levels: levels.results,
 			};
 		};
-		fetchData().then(({competencies}) => {
+		fetchData().then(({ competencies, levels }) => {
 			setCompetencies(competencies);
+			setLevels(levels);
 		});
 	}, []);
 
 	useEffect(() => {
-		const api = new TestingApi();
-		api.getCompetenceThemes(watchCompetence)
-			.then(competencies => setThemes(competencies));
-	}, [watchCompetence]);
-
-	useEffect(() => {
 		reset();
 	}, [isSubmitSuccessful]);
+
+	const postTestSettings = (data) => {
+		const api = new TestingApi();
+		const testTime = convertToCorrectTime(data.testTime * 60);
+		const requestData = {...data, testTime };
+		console.log(requestData);
+		api.postTestSettings(requestData);
+	}
 
 	const handleForm = getHandleFormSettings(register);
 
@@ -68,10 +72,10 @@ export default function ModeratorCreateTest() {
 													options={competencies}
 													register={handleForm.competence}
 													errors={errors?.competence}/>
-					<ListItemSelect title="Выбор темы"
-													options={themes}
-													register={handleForm.theme}
-													errors={errors?.theme}/>
+					<ListItemSelect title="Выбор начального уровня"
+													options={levels}
+													register={handleForm.level}
+													errors={errors?.level}/>
 					<ListItemInput type="text"
 												 title="Название теста"
 												 placeholder="Введите название"

@@ -1,19 +1,36 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import WrapperFluid from '../../second-components/wrapper-fluid/WrapperFluid';
 import Header from '../../header/Header';
 import { Button, Col, Container, Row } from 'reactstrap';
 import Timer from '../../timer/Timer';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import TestingApi from '../../../services/testingApi';
 
 export default function Testing({ header: { title, isFluid } }) {
-	const answers = [
-		'Привет',
-		'Kak',
-		'Dela',
-		'Bro',
-		'??'
-	];
 	const navigate = useNavigate();
+	const { testId } = useParams();
+
+	const [testSettings, setTestSettings] = useState();
+	const [questions, setQuestions] = useState();
+	const answers = [];
+
+	useEffect(() => {
+		console.log('useEffect');
+		const fetchData = async () => {
+			const api = new TestingApi();
+			const testSettings = await api.getTestSettings(testId);
+			const testQuestions = await api.getTestingQuestions(testId);
+
+			return {
+				testSettings,
+				questions: testQuestions,
+			}
+		}
+		fetchData().then(({testSettings, questions}) => {
+			setQuestions(questions);
+			setTestSettings(testSettings);
+		})
+	}, [testId])
 
 	return (
 		<WrapperFluid>

@@ -54,7 +54,7 @@ export const router = createBrowserRouter([
 		}}/>
 	},
 	{
-		path: '/testing',
+		path: '/testing/:testId',
 		element: <Testing header={{
 			title: 'Тестирование',
 			isFluid: true,

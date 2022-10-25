@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { ListGroup, ListGroupItem, Row } from 'reactstrap';
-
 import SvgIcons from '../../second-components/svg-icons/SvgIcons';
 import TestingApi from '../../../services/testingApi';
+import {
+	convertToCorrectTime, convertTimeToSeconds
+} from '../../../services/services';
 
 import styles from './testInfo.module.css';
-import {
-	convertTimeToSeconds, convertToCorrectTime
-} from './testInfo.services';
+
 
 const { vertical_line, list_group_column } = styles;
 
@@ -19,6 +19,7 @@ export default function TestInfo() {
 		const fetchInfo = async () => {
 			const testInfo = await api.getTestResult(1);
 			const user = await api.getUser(1);
+			console.log(testInfo);
 			const { first_name, last_name } = user.user;
 			return {
 				...testInfo,
@@ -48,7 +49,7 @@ export default function TestInfo() {
 		<>
 			<Row className="ps-1 mb-4">
 				<h4 className="h4 py-4 fs-3 text-primary">
-					{user?.first_name} {user?.last_name}
+					{user?.first_name ?? 'Неизвестно'} {user?.last_name ?? 'Неизвестно'}
 				</h4>
 				<h5 className="h5">
 					<SvgIcons id="arrow-right" color="primary" size="20"/>

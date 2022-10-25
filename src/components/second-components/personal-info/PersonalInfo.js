@@ -40,7 +40,6 @@ export default function PersonalInfo({ info, updateInfo }) {
 		{ user: { ...user, first_name: e.target.value } });
 	const secondNameHandler = (e) => updateInfo(
 		{ user: { ...user, last_name: e.target.value } });
-	const levelHandler = (e) => updateInfo({ current_level: e.target.value });
 	const mailHandler = (e) => updateInfo(
 		{ user: { ...user, email: e.target.value } });
 
@@ -65,9 +64,7 @@ export default function PersonalInfo({ info, updateInfo }) {
 			<ListGroupItem className="bg-transparent border-0">
 				<SvgIcons id="arrow-right" size="20"/>
 				<span className="ms-1">Текущий уровень:</span>
-				<ListItemInput value={current_level}
-											 handler={levelHandler}
-											 isEdit={isEdit}/>
+				<ListItemInput value={current_level}/>
 			</ListGroupItem>
 			<ListGroupItem className="bg-transparent border-0">
 				<SvgIcons id="arrow-right" size="20"/>

@@ -5,6 +5,6 @@ import usePersonInfo from '../../../hooks/use-person-info/usePersonInfo';
 export default function UserInfo() {
 	const [info, setInfo] = usePersonInfo(1);
 
-	return (<PersonalInfo info={info} updateInfo={setInfo}/>);
+	return <PersonalInfo info={info} updateInfo={setInfo}/>;
 }
 

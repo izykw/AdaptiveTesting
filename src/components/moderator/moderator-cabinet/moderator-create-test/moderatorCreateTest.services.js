@@ -1,12 +1,8 @@
-export function postTestSettings(data) {
-	console.log(data);
-}
-
 export function getHandleFormSettings(register) {
 	return {
 		competence: register('competence',
 			{required: 'Пожалуйста, выберите компетенцию'}),
-		theme: register('theme', {required: 'Пожалуйста, выберите тему'}),
+		level: register('level', {required: 'Пожалуйста, выберите уровень'}),
 		testName: register('testName',
 			{required: 'Пожалуйста, введите название теста'}),
 		testTime: register('testTime',

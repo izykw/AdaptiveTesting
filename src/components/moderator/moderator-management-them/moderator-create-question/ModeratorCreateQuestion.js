@@ -31,7 +31,8 @@ export default function ModeratorCreateQuestion() {
 	const {
 		register,
 		handleSubmit,
-		formState: { errors, isSubmitSuccessful }
+		formState: { errors, isSubmitSuccessful },
+		reset
 	} = useForm({
 		reValidateMode: 'onBlur',
 		shouldUnregister: true,
@@ -54,7 +55,7 @@ export default function ModeratorCreateQuestion() {
 	}, []);
 
 	useEffect(() => {
-		isSubmitSuccessful && navigate('/moderator/management-theme');
+		isSubmitSuccessful && reset();
 	}, [isSubmitSuccessful]);
 
 	const handleForm = {

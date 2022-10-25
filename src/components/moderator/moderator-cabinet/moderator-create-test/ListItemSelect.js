@@ -17,8 +17,10 @@ export function ListItemSelect({title, options, register, errors}) {
 					<option key="empty" value=""></option>
 					{
 						options.map(item => {
-							const {pk, competence, name} = item;
-							return <option key={pk} value={pk}>{name ?? competence}</option>;
+							// levels has id, competence has pk
+							const {pk, id, competence, name} = item;
+							const key = pk ?? id;
+							return <option key={key} value={key}>{name ?? competence}</option>;
 						})
 					}
 				</select>

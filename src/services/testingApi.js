@@ -81,4 +81,24 @@ export default class TestingApi {
 		const res = await axios.get(`${this.URL}/level`);
 		return res.data;
 	};
+
+	// Test settings
+	postTestSettings = async (data) => {
+		return await axios.post(`${this.URL}/test_settings`, data);
+	}
+
+	getTestSettings = async () => {
+		const res = await axios.get(`${this.URL}/test_settings`)
+		return res.data;
+	}
+
+	// Testing
+	getTestingQuestions = async (id) => {
+		const res = await axios.get(`${this.URL}/test?id=${1}`);
+		return res.data;
+	}
+
+	postTestingAnswers = async (id, answers) => {
+		return await axios.post(`${this.URL}/test?id=${id}`, answers);
+	}
 }
