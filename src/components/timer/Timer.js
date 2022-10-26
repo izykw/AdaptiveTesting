@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { getTimeRemaining } from './timer.services';
-import { Row } from 'reactstrap';
 import SvgIcons from '../second-components/svg-icons/SvgIcons';
 
-// Time comes in seconds
+// Time comes in minutes
 export default function Timer({ duration }) {
 	const [time, setTime] = useState(duration);
 
@@ -22,9 +21,9 @@ export default function Timer({ duration }) {
 	return (
 		<div className="progress p-0"
 				 style={{ height: '2rem' }}>
-			<div className="progress-bar bg-primary p-0"
+			<div className="progress-bar p-0"
 					 style={{
-						 background: 'linear-gradient(90deg, #ACBAE6 99.89%, rgba(128, 255, 138, 0) 100%',
+						 background: '#ACBAE5',
 						 width: `${progressFill}%`
 					 }}
 					 role="progressbar">
