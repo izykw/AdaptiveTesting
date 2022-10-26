@@ -15,8 +15,9 @@ export default function TestsListItem({ testSettings, role }) {
 	} = testSettings;
 
 	const pathname = role === 'moderator'
-		? `/moderator/edit-test/${id}`
+		? `/moderator/create-test/${id}`
 		: `/testing/${id}`;
+
 	return (
 		<Row className="shadow_element bg-light border rounded mb-3">
 			<h4 className="h4">{name}</h4>

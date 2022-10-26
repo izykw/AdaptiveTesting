@@ -3,7 +3,7 @@ import PersonalInfo from '../../second-components/personal-info/PersonalInfo';
 import usePersonInfo from '../../../hooks/use-person-info/usePersonInfo';
 
 export default function UserInfo() {
-	const [info, setInfo] = usePersonInfo(1);
+	const [info, setInfo] = usePersonInfo('');
 
 	return <PersonalInfo info={info} updateInfo={setInfo}/>;
 }

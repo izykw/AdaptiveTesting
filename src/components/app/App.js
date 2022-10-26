@@ -11,12 +11,17 @@ import ModeratorCreateQuestion
 import Testing from '../testing/testing/Testing';
 import ErrorPage from '../error/ErrorPage';
 import TestsList from '../testing/tests-list/TestsList';
+import Login from '../login/Login';
 
 export const router = createBrowserRouter([
 	{
 		path: '/',
-		element: <SelectRole/>,
+		element: <Login/>,
 		errorElement: <ErrorPage/>
+	},
+	{
+		path: '/select-role',
+		element: <SelectRole/>,
 	},
 	{
 		path: '/moderator',

@@ -10,7 +10,7 @@ import {
 import { convertToCorrectTime } from '../../../../services/services';
 
 export default function ModeratorCreateTest() {
-	const api = new TestingApi();
+
 	const {
 		handleSubmit,
 		register,
@@ -36,8 +36,6 @@ export default function ModeratorCreateTest() {
 			const api = new TestingApi();
 			const competencies = await api.getCompetencies();
 			const levels = await api.getLevels();
-			const testSettings = await api.getTestSettings();
-			console.log(testSettings);
 			return {
 				competencies: competencies.results,
 				levels: levels.results,
@@ -57,7 +55,6 @@ export default function ModeratorCreateTest() {
 		const api = new TestingApi();
 		const testTime = convertToCorrectTime(data.testTime * 60);
 		const requestData = {...data, testTime };
-		console.log(requestData);
 		api.postTestSettings(requestData);
 	}
 

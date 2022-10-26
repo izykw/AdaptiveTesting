@@ -5,6 +5,17 @@ export default class TestingApi {
 		this.URL = 'http://localhost:8000';
 	}
 
+	// Authorization
+	authorization = async (user) => {
+		return await fetch(`${this.URL}/login/`, {
+			method: 'POST',
+			headers: {
+				'Content-type': 'application/json',
+			},
+			body: JSON.stringify(user),
+		});
+	};
+
 	// Questions
 	getThemeQuestions = async (id) => {
 		const res = await axios.get(`${this.URL}/questions?theme=${id}`);
@@ -12,7 +23,7 @@ export default class TestingApi {
 	};
 
 	deleteQuestions = async (ids) => {
-		return await axios.delete(`${this.URL}/questions`, {data: ids});
+		return await axios.delete(`${this.URL}/questions`, { data: ids });
 	};
 
 	postQuestion = async (question) => {
@@ -27,9 +38,9 @@ export default class TestingApi {
 	};
 
 	getCompetenceThemes = async (id) => {
-		const res = await axios.get(`${this.URL}/themes?competence=${id}`)
+		const res = await axios.get(`${this.URL}/themes?competence=${id}`);
 		return res.data;
-	}
+	};
 
 	deleteThemes = async (ids) => {
 		return await axios.delete(`${this.URL}/themes`, {
@@ -37,7 +48,7 @@ export default class TestingApi {
 		});
 	};
 
-	postTheme = async ({theme, id}) => {
+	postTheme = async ({ theme, id }) => {
 		return await axios.post(`${this.URL}/themes`, {
 			name: theme,
 			competence: id
@@ -51,7 +62,7 @@ export default class TestingApi {
 	};
 
 	deleteCompetencies = async (ids) => {
-		return await axios.delete(`${this.URL}/competence`, {data: ids});
+		return await axios.delete(`${this.URL}/competence`, { data: ids });
 	};
 
 	postCompetence = async (competence) => {
@@ -61,8 +72,8 @@ export default class TestingApi {
 	};
 
 	// Users
-	getUser = async (id) => {
-		const res = await axios.get(`${this.URL}/users/${id}`);
+	getUser = async () => {
+		const res = await axios.get(`${this.URL}/profile`,);
 		return res.data;
 	};
 
@@ -85,20 +96,20 @@ export default class TestingApi {
 	// Test settings
 	postTestSettings = async (data) => {
 		return await axios.post(`${this.URL}/test_settings`, data);
-	}
+	};
 
 	getTestSettings = async () => {
-		const res = await axios.get(`${this.URL}/test_settings`)
+		const res = await axios.get(`${this.URL}/test_settings`);
 		return res.data;
-	}
+	};
 
 	// Testing
 	getTestingQuestions = async (id) => {
 		const res = await axios.get(`${this.URL}/test?id=${1}`);
 		return res.data;
-	}
+	};
 
 	postTestingAnswers = async (id, answers) => {
 		return await axios.post(`${this.URL}/test?id=${id}`, answers);
-	}
+	};
 }

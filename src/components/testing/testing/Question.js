@@ -2,7 +2,7 @@ import { Col, Row } from 'reactstrap';
 import React from 'react';
 import { Answers } from './Answers';
 
-export function Question({ question, type, answers }) {
+export function Question({ question, type, answers, addUserAnswer }) {
 	return (
 		<>
 			<Row>
@@ -12,7 +12,11 @@ export function Question({ question, type, answers }) {
 			</Row>
 			<Row>
 				<Col md="8">
-					<Answers type={type} answers={answers}/>
+					<form onSubmit={null}>
+						<Answers type={type}
+										 answers={answers}
+										 addUserAnswer={addUserAnswer}/>
+					</form>
 				</Col>
 				<Col md="4">
 					<img src="/"
