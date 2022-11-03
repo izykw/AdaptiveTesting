@@ -1,10 +1,8 @@
 export function getHandleFormSettings(register) {
 	return {
-		competence: register('competence',
-			{required: 'Пожалуйста, выберите компетенцию'}),
+		competence: register('competence', {required: 'Пожалуйста, выберите компетенцию'}),
 		level: register('level', {required: 'Пожалуйста, выберите уровень'}),
-		testName: register('testName',
-			{required: 'Пожалуйста, введите название теста'}),
+		testName: register('testName', {required: 'Пожалуйста, введите название теста'}),
 		testTime: register('testTime',
 			{
 				required: 'Пожалуйста, установите длительность теста',

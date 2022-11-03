@@ -83,3 +83,7 @@ export function showFullQuestion(e) {
 		textArea.textContent = li.textContent;
 	}
 }
+
+export function clearTextarea() {
+	document.querySelector('#full-text-question').textContent = '';
+}

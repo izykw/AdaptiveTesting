@@ -11,6 +11,8 @@ import ModeratorCreateQuestion
 import Testing from '../testing/testing/Testing';
 import ErrorPage from '../error/ErrorPage';
 import TestsList from '../testing/tests-list/TestsList';
+import ModeratorEditTest
+	from '../moderator/moderator-cabinet/moderator-edit-test/ModeratorEditTest';
 
 export const router = createBrowserRouter([
 	{
@@ -24,6 +26,10 @@ export const router = createBrowserRouter([
 			title: 'Кабинет модератора',
 			isFluid: false
 		}}/>,
+	},
+	{
+		path: 'moderator/edit-test/:testSettingsId',
+		element: <ModeratorEditTest/>
 	},
 	{
 		path: '/user',

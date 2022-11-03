@@ -40,8 +40,6 @@ export function postQuestion(data) {
 		answers,
 	};
 
-	console.log(requestData);
-
 	new TestingApi().postQuestion(requestData)
 }
 

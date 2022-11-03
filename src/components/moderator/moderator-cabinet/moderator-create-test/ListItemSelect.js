@@ -1,8 +1,8 @@
+import React from 'react';
 import { ListGroupItem } from 'reactstrap';
 import SvgIcons from '../../../second-components/svg-icons/SvgIcons';
-import React from 'react';
 
-export function ListItemSelect({title, options, register, errors}) {
+export function ListItemSelect({ title, options, register, errors }) {
 	if (!Array.isArray(options)) {
 		throw new Error('Options is not array');
 	}
@@ -18,9 +18,13 @@ export function ListItemSelect({title, options, register, errors}) {
 					{
 						options.map(item => {
 							// levels has id, competence has pk
-							const {pk, id, competence, name} = item;
+							const { pk, id, competence, name } = item;
 							const key = pk ?? id;
-							return <option key={key} value={key}>{name ?? competence}</option>;
+							return (
+								<option key={key} value={key}>
+									{name ?? competence}
+								</option>
+							);
 						})
 					}
 				</select>

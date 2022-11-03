@@ -18,8 +18,10 @@ export default function PersonalInfo({ info, updateInfo }) {
 	const postNewInfo = () => {
 		if (deepEqual(initInfo.current, info)) return;
 		const api = new TestingApi();
-		api.updateUser(info, info.id);
-		initInfo.current = {};
+		const requestData = JSON.parse(JSON.stringify(info));
+		delete requestData['current_level'];
+		api.updateUser(requestData, requestData.id)
+			.then(() => initInfo.current = {});
 	};
 
 	const editInfo = (e) => {
@@ -84,7 +86,9 @@ export default function PersonalInfo({ info, updateInfo }) {
 					international
 					withCountryCallingCode
 					value={phone_number}
-					onChange={(e) => {updateInfo({ phone_number: e })}}
+					onChange={(e) => {
+						updateInfo({ phone_number: e });
+					}}
 					disabled={!isEdit}
 					placeholder="Неизвестно"/>
 			</ListGroupItem>

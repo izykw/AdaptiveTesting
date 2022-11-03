@@ -19,7 +19,6 @@ export default function TestInfo() {
 		const fetchInfo = async () => {
 			const testInfo = await api.getTestResult(1);
 			const user = await api.getUser(1);
-			console.log(testInfo);
 			const { first_name, last_name } = user.user;
 			return {
 				...testInfo,

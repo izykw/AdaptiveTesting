@@ -92,6 +92,10 @@ export default class TestingApi {
 		return res.data;
 	}
 
+	updateTestSettings = async (id, data) => {
+		return await axios.put(`${this.URL}/test_settings?id=${id}`, data);
+	}
+
 	// Testing
 	getTestingQuestions = async (id) => {
 		const res = await axios.get(`${this.URL}/test?id=${1}`);

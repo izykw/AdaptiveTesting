@@ -17,7 +17,6 @@ export default function Testing({ header: { title, isFluid } }) {
 	const [questions, setQuestions] = useState(testQuestions);
 
 	// useEffect(() => {
-	// 	console.log('useEffect');
 	// 	const fetchData = async () => {
 	// 		const api = new TestingApi();
 	// 		const testSettings = await api.getTestSettings(testId);

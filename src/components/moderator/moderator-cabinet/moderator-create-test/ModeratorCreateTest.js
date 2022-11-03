@@ -1,16 +1,21 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { Button, ListGroup, Row } from 'reactstrap';
 import { ListItemInput } from './ListItemInput';
 import { ListItemSelect } from './ListItemSelect';
-import TestingApi from '../../../../services/testingApi';
+import { getHandleFormSettings, } from './moderatorCreateTest.services';
 import {
-	getHandleFormSettings,
-} from './moderatorCreateTest.services';
-import { convertToCorrectTime } from '../../../../services/services';
+	convertTimeToSeconds, convertToCorrectTime
+} from '../../../../services/services';
+import TestingApi from '../../../../services/testingApi';
 
-export default function ModeratorCreateTest() {
-	const api = new TestingApi();
+export default function ModeratorCreateTest({ testSettings: defaultSettings }) {
+	const navigate = useNavigate();
+
+	const [competencies, setCompetencies] = useState([]);
+	const [levels, setLevels] = useState([]);
+
 	const {
 		handleSubmit,
 		register,
@@ -19,25 +24,20 @@ export default function ModeratorCreateTest() {
 	} = useForm({
 		reValidateMode: 'onBlur',
 		defaultValues: {
-			competence: '',
-			level: '',
-			testName: '',
-			testTime: 0,
-			questionsCount: 0,
-			thresholdScore: 0,
+			competence: defaultSettings.competence.pk ?? '',
+			level: defaultSettings.level.id ?? '',
+			testName: defaultSettings.name ?? '',
+			testTime: convertTimeToSeconds(defaultSettings.time) / 60 ?? '',
+			questionsCount: defaultSettings.questions_count ?? '',
+			thresholdScore: defaultSettings.next_level_score ?? '',
 		}
 	});
-
-	const [competencies, setCompetencies] = useState([]);
-	const [levels, setLevels] = useState([]);
 
 	useEffect(() => {
 		const fetchData = async () => {
 			const api = new TestingApi();
 			const competencies = await api.getCompetencies();
 			const levels = await api.getLevels();
-			const testSettings = await api.getTestSettings();
-			console.log(testSettings);
 			return {
 				competencies: competencies.results,
 				levels: levels.results,
@@ -50,16 +50,21 @@ export default function ModeratorCreateTest() {
 	}, []);
 
 	useEffect(() => {
-		reset();
+		if (isSubmitSuccessful) {
+			defaultSettings ? navigate('/moderator/tests-list') : reset();
+		}
 	}, [isSubmitSuccessful]);
 
 	const postTestSettings = (data) => {
 		const api = new TestingApi();
 		const testTime = convertToCorrectTime(data.testTime * 60);
-		const requestData = {...data, testTime };
-		console.log(requestData);
-		api.postTestSettings(requestData);
-	}
+		const requestData = { ...data, testTime };
+		if (defaultSettings?.id) {
+			api.updateTestSettings(defaultSettings.id, requestData);
+		} else {
+			api.postTestSettings(requestData);
+		}
+	};
 
 	const handleForm = getHandleFormSettings(register);
 

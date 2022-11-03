@@ -3,7 +3,8 @@ import SvgIcons from '../../../second-components/svg-icons/SvgIcons';
 import React from 'react';
 
 export function ListItemInput(props) {
-	const {type, title, placeholder, width, register, errors} = props;
+	const { type, title, placeholder, width, register, errors } = props;
+
 	return (
 		<ListGroupItem className="bg-transparent border-0 text-primary">
 			<SvgIcons id="arrow-right" color="primary" size="20"/>
