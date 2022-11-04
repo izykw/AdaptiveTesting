@@ -16,22 +16,24 @@ export default function ModeratorCreateTest({ testSettings: defaultSettings }) {
 	const [competencies, setCompetencies] = useState([]);
 	const [levels, setLevels] = useState([]);
 
+
+	const competenceId = defaultSettings?.competence && '1';
+	const levelId = defaultSettings?.level && '1';
+	const defaultValues = {
+		competence:  competenceId,
+		level:  levelId,
+		testName: defaultSettings?.name ?? '',
+		testTime: convertTimeToSeconds(defaultSettings?.time) / 60 ?? '',
+		questionsCount: defaultSettings?.questions_count ?? '',
+		thresholdScore: defaultSettings?.next_level_score ?? '',
+	};
+
 	const {
 		handleSubmit,
 		register,
 		formState: { errors, isSubmitSuccessful },
 		reset
-	} = useForm({
-		reValidateMode: 'onBlur',
-		defaultValues: {
-			competence: defaultSettings?.competence?.pk ?? '',
-			level: defaultSettings?.level?.id ?? '',
-			testName: defaultSettings?.name ?? '',
-			testTime: convertTimeToSeconds(defaultSettings?.time) / 60 ?? '',
-			questionsCount: defaultSettings?.questions_count ?? '',
-			thresholdScore: defaultSettings?.next_level_score ?? '',
-		}
-	});
+	} = useForm({ reValidateMode: 'onBlur', defaultValues: defaultValues, });
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -75,10 +77,12 @@ export default function ModeratorCreateTest({ testSettings: defaultSettings }) {
 				<ListGroup>
 					<ListItemSelect title="Выбор компетенции"
 													options={competencies}
+													defaultValue={competenceId}
 													register={handleForm.competence}
 													errors={errors?.competence}/>
 					<ListItemSelect title="Выбор начального уровня"
 													options={levels}
+													defaultValue={levelId}
 													register={handleForm.level}
 													errors={errors?.level}/>
 					<ListItemInput type="text"

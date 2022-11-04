@@ -87,8 +87,8 @@ export default class TestingApi {
 		return await axios.post(`${this.URL}/test_settings`, data);
 	}
 
-	getTestSettings = async () => {
-		const res = await axios.get(`${this.URL}/test_settings`)
+	getTestSettings = async (id) => {
+		const res = await axios.get(`${this.URL}/test_settings?id=${id}`)
 		return res.data;
 	}
 

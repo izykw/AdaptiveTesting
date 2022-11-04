@@ -15,6 +15,8 @@ import ModeratorManagementThem
 import ModeratorCreateQuestion
 	from '../moderator/moderator-management-them/moderator-create-question/ModeratorCreateQuestion';
 import Registration from '../registration/Registration';
+import ModeratorEditQuestion
+	from '../moderator/moderator-management-them/moderator-edit-question/ModeratorEditQuestion';
 
 export const router = createBrowserRouter([
 	{
@@ -59,6 +61,13 @@ export const router = createBrowserRouter([
 		path: '/moderator/create-question',
 		element: <ModeratorCreateQuestion header={{
 			title: 'Кабинет модератора',
+			isFluid: true
+		}}/>,
+	},
+	{
+		path: '/moderator/edit-question/:questionId',
+		element: <ModeratorEditQuestion header={{
+			title: 'Редактирование вопроса',
 			isFluid: true
 		}}/>,
 	},
