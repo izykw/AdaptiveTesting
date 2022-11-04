@@ -1,4 +1,6 @@
 // time = seconds
+import React from 'react';
+
 export function convertToCorrectTime(time) {
 	const hours = `${Math.floor(((time / 3600) % 24) / 10)}${Math.floor(
 		((time / 3600) % 24) % 10)}`;
@@ -17,4 +19,8 @@ export function convertTimeToSeconds(time) {
 	const temp = time.split(':');
 	return Math.floor((temp[0] * 3600)) + Math.floor(temp[1] * 60) +
 		Number.parseInt(temp[2]);
+}
+
+export function errorMessage(message) {
+	return <span className="text-danger ms-2 fs-6">{message}</span>
 }

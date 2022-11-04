@@ -1,9 +1,7 @@
 import React from 'react';
 import { Col } from 'reactstrap';
 import SvgIcons from '../svg-icons/SvgIcons';
-import {
-	errorMessage
-} from '../../moderator/moderator-management-them/moderator-create-question/moderatorCreateQuestions.services';
+import {errorMessage} from '../../../services/services';
 
 export default function SelectWithIcon({name, title, handleForm, options}) {
 	const {register, errors, required} = handleForm;
@@ -15,7 +13,7 @@ export default function SelectWithIcon({name, title, handleForm, options}) {
 				{...register(name, {required: required[name]})}
 				className="form-select border-1 border-secondary bg-transparent w-50">
 				<option key="empty" value="">{''}</option>
-				{options.map(({id, pk, name}, i) => {
+				{options.map(({id, pk, name}) => {
 					// if not id, then pk
 					return <option key={id ?? pk} value={id ?? pk}>{name}</option>;
 				})}

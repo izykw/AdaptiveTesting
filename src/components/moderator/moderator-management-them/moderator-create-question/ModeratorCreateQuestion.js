@@ -7,11 +7,11 @@ import SelectWithIcon
 import { addAnswersInput } from './AnswerInput';
 import {
 	changeCountAnswers,
-	errorMessage,
 	getQuestionOptions,
 	checkAnswersCount,
 	postQuestion
 } from './moderatorCreateQuestions.services';
+import { errorMessage } from '../../../../services/services';
 
 import styles from './moderatorCreateQuestion.module.css';
 import TestingApi from '../../../../services/testingApi';

@@ -24,12 +24,12 @@ export default function ModeratorCreateTest({ testSettings: defaultSettings }) {
 	} = useForm({
 		reValidateMode: 'onBlur',
 		defaultValues: {
-			competence: defaultSettings.competence.pk ?? '',
-			level: defaultSettings.level.id ?? '',
-			testName: defaultSettings.name ?? '',
-			testTime: convertTimeToSeconds(defaultSettings.time) / 60 ?? '',
-			questionsCount: defaultSettings.questions_count ?? '',
-			thresholdScore: defaultSettings.next_level_score ?? '',
+			competence: defaultSettings?.competence?.pk ?? '',
+			level: defaultSettings?.level?.id ?? '',
+			testName: defaultSettings?.name ?? '',
+			testTime: convertTimeToSeconds(defaultSettings?.time) / 60 ?? '',
+			questionsCount: defaultSettings?.questions_count ?? '',
+			thresholdScore: defaultSettings?.next_level_score ?? '',
 		}
 	});
 

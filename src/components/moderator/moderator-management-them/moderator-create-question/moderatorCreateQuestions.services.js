@@ -51,10 +51,6 @@ export function getQuestionOptions() {
 	);
 }
 
-export function errorMessage(message) {
-	return <p className="text-danger p-1 m-0">{message}</p>;
-}
-
 export function checkAnswersCount() {
 	const type = document.querySelector('[name="type"]')?.value;
 	const isCorrects = document.querySelectorAll('[type="checkbox"]');
