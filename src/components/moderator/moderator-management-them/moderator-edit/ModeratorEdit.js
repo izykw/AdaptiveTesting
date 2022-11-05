@@ -30,6 +30,7 @@ export default function ModeratorEdit() {
 		questions: [],
 		isDelete: false,
 		activeId: null,
+		activeText: ''
 	});
 
 	const Types = {
@@ -75,6 +76,7 @@ export default function ModeratorEdit() {
 			setQuestion({
 				questions,
 				activeId: question.activeId ?? question[0]?.pk,
+				activeText: '',
 				isDelete: false,
 			});
 		});
@@ -151,7 +153,6 @@ export default function ModeratorEdit() {
 				break;
 			}
 			case Types.QUESTIONS: {
-				showFullQuestion(e);
 				changeActiveListElement(e, setQuestion, type, question.activeId);
 				break;
 			}
@@ -171,6 +172,7 @@ export default function ModeratorEdit() {
 
 	const createTheme = () => {
 		if (theme.newThemeName) {
+			console.log(theme.newThemeName, competence.activeId)
 			api.postTheme({ theme: theme.newThemeName, id: competence.activeId })
 				.then(() => {
 					updateLists();
@@ -233,6 +235,7 @@ export default function ModeratorEdit() {
 							handlers={questionHandlers}/>
 				<textarea style={{ minHeight: '87px', resize: 'none' }}
 									id="full-text-question"
+									value={question.activeText}
 									className="border-1 border-secondary rounded-3 p-2 w-100 mt-2"
 									placeholder="Кликните на вопрос, чтобы увидеть его полностью"
 									disabled

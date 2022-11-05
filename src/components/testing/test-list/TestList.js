@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import WrapperFluid from '../../second-components/wrapper-fluid/WrapperFluid';
 import Header from '../../header/Header';
 import { Container } from 'reactstrap';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import TestingApi from '../../../services/testingApi';
-import TestsListItem from './TestsListItem';
+import TestListItem from './TestListItem';
+import SvgIcons from '../../second-components/svg-icons/SvgIcons';
 
-export default function TestsList({ header: { title, isFluid } }) {
+export default function TestList({ header: { title, isFluid } }) {
 	const { role } = useParams();
 	const [testSettings, setTestSettings] = useState([]);
 
@@ -20,16 +21,23 @@ export default function TestsList({ header: { title, isFluid } }) {
 			return <p className="fs-4">Тестов нет</p>;
 		}
 		return testSettings.map(item => {
-			return <TestsListItem key={item.id} testSettings={item} role={role}/>;
+			return <TestListItem key={item.id} testSettings={item} role={role}/>;
 		});
 	};
 
+	const prevPathname = role === 'user' ? '/user' : '/moderator'
 	return (
 		<WrapperFluid>
 			<Header title={title} isFluid={isFluid}/>
-			<p className="h3 mt-lg-3">
-				В соответствии с компетенциями Вам доступны следующие тесты:
-			</p>
+			<div>
+				<Link to={prevPathname} className="text-primary fs-5 ms-1">
+					<SvgIcons id="arrow-left" color="primary" size="20"/>
+					Вернуться в кабинет
+				</Link>
+				<p className="h3 mt-lg-3">
+					В соответствии с компетенциями Вам доступны следующие тесты:
+				</p>
+			</div>
 			<Container fluid className="flex-grow-1">
 				{
 					createTestList()

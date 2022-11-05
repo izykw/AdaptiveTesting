@@ -10,7 +10,6 @@ export default function ModeratorEditTest() {
 	const { testSettingsId } = useParams();
 	const [testSettings, setTestSettings] = useState(null);
 
-
 	useEffect(() => {
 		const api = new TestingApi();
 		api.getTestSettings(testSettingsId).then(res => setTestSettings(res?.[0]));

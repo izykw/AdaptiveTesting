@@ -53,7 +53,7 @@ export default function ModeratorCreateTest({ testSettings: defaultSettings }) {
 
 	useEffect(() => {
 		if (isSubmitSuccessful) {
-			defaultSettings ? navigate('/moderator/tests-list') : reset();
+			defaultSettings ? navigate('/moderator/test-list') : reset();
 		}
 	}, [isSubmitSuccessful]);
 

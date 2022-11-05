@@ -3,7 +3,7 @@ import { Col, Row } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
 //TODO: Использовать URL параметры для
-export default function TestsListItem({ testSettings, role }) {
+export default function TestListItem({ testSettings, role }) {
 	const {
 		id,
 		level,
@@ -18,7 +18,7 @@ export default function TestsListItem({ testSettings, role }) {
 		? `/moderator/edit-test/${id}`
 		: `/testing/${id}`;
 	return (
-		<Row className="shadow_element bg-light border rounded mb-3">
+		<Row className="shadow_element bg-light border rounded mb-3 p-2">
 			<h4 className="h4">{name}</h4>
 			<Col className="text-primary ps-5">
 				<p>Компетенция: {competence}</p>

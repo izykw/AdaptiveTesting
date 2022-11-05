@@ -14,6 +14,7 @@ import fileText from '../../../icons/file-earmark-text.svg';
 import filePlus from '../../../icons/file-earmark-plus.svg';
 import person from '../../../icons/person-circle.svg';
 import timeCircle from '../../../icons/time-circle.svg';
+import arrowLeft from '../../../icons/arrow-left.svg';
 
 export default function SvgIcons({ id, color, size }) {
 	const colors = {
@@ -102,6 +103,12 @@ export default function SvgIcons({ id, color, size }) {
 		}
 		case 'time-circle': {
 			return <HandySvg src={timeCircle}
+											 width={size}
+											 height={size}
+											 fill={colors[color]}/>;
+		}
+		case 'arrow-left': {
+			return <HandySvg src={arrowLeft}
 											 width={size}
 											 height={size}
 											 fill={colors[color]}/>;

@@ -6,6 +6,11 @@ export default class TestingApi {
 	}
 
 	// Questions
+	getQuestion = async (id) => {
+		const res = await axios.get(`${this.URL}/questions/${id}`);
+		return res.data;
+	}
+
 	getThemeQuestions = async (id) => {
 		const res = await axios.get(`${this.URL}/questions?theme=${id}`);
 		return res.data;

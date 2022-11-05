@@ -1,16 +1,21 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { UserContext } from '../app/App';
+import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import Wrapper from '../second-components/wrapper/Wrapper';
 import { Container } from 'reactstrap';
-import styles from './authorization.module.css';
+import TestingApi from '../../services/testingApi';
 import {
 	InputWithLabel
 } from '../second-components/form-autorization-inputs/InputWithLabel';
+import styles from './authorization.module.css';
 
 const { horizontal_line } = styles;
 
 export default function Authorization() {
+	const context = useContext(UserContext);
+	const navigate = useNavigate();
+
 	const {
 		register,
 		handleSubmit,
@@ -23,7 +28,17 @@ export default function Authorization() {
 	});
 
 	const authorization = (data) => {
-		console.log(data);
+		const api = new TestingApi();
+		const response = {
+			token: 'newToken',
+			role: 'user',
+		};
+
+		if (response) {
+			const { token, role } = response;
+			context.changeToken(token);
+			navigate(`/${role}`);
+		}
 	};
 
 	const emailErrorMessage = 'Пожалуйста, введите электронную почту';
@@ -40,11 +55,13 @@ export default function Authorization() {
 						<InputWithLabel errors={errors}
 														type="email"
 														title="Электронная почта"
-														register={register('email', { required: emailErrorMessage })}/>
+														register={register('email',
+															{ required: emailErrorMessage })}/>
 						<InputWithLabel errors={errors}
 														type="password"
 														title="Пароль"
-														register={register('password', { required: passwordErrorMessage })}/>
+														register={register('password',
+															{ required: passwordErrorMessage })}/>
 						<Link to="/recovery-password" className="text-primary mx-auto">
 							Восстановление пароля
 						</Link>

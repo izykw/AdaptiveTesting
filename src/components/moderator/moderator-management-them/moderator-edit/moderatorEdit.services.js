@@ -18,7 +18,7 @@ export function showListBy(e, setState, apiMethod, type) {
 	let currentListElement = getListElement(e);
 	if (currentListElement) {
 		const id = currentListElement.id;
-		apiMethod(id).then(res => setState({[type]: res,}));
+		apiMethod(id).then(res => setState({ [type]: res, }));
 	}
 }
 
@@ -40,7 +40,7 @@ export function changeActiveListElement(e, setState, type, prevId) {
 		prev && prev.classList.remove('border', 'border-secondary');
 		current.classList.add('border', 'border-secondary');
 
-		setState({activeId: current.id});
+		setState({ activeId: current.id, activeText: current.textContent });
 	}
 }
 
@@ -55,19 +55,19 @@ export function sortQuestionsBy(value, questions, setQuestion) {
 		case 'date': {
 			const sortedQuestions = questions.sort(
 				(a, b) => sortByField(a, b, 'pk'));
-			setQuestion({questions: [...sortedQuestions]});
+			setQuestion({ questions: [...sortedQuestions] });
 			break;
 		}
 		case 'alphabet': {
 			const sortedQuestions = questions.sort(
 				(a, b) => sortByField(a, b, 'question'));
-			setQuestion({questions: [...sortedQuestions]});
+			setQuestion({ questions: [...sortedQuestions] });
 			break;
 		}
 		case 'level': {
 			const sortedQuestions = questions.sort(
 				(a, b) => sortByField(b, a, 'level'));
-			setQuestion({questions: [...sortedQuestions]});
+			setQuestion({ questions: [...sortedQuestions] });
 			break;
 		}
 		default: {
@@ -76,14 +76,9 @@ export function sortQuestionsBy(value, questions, setQuestion) {
 	}
 }
 
-export function showFullQuestion(e) {
+export function showFullQuestion(e, setQuestion) {
 	const li = getListElement(e);
 	if (li) {
-		const textArea = document.querySelector('#full-text-question');
-		textArea.textContent = li.textContent;
+		setQuestion({ activeText: li.textContent });
 	}
-}
-
-export function clearTextarea() {
-	document.querySelector('#full-text-question').textContent = '';
 }

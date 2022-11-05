@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import {
 	InputWithLabel
 } from '../second-components/form-autorization-inputs/InputWithLabel';
+import SvgIcons from '../second-components/svg-icons/SvgIcons';
 
 export default function Registration() {
 	const { register, handleSubmit, formState: { errors }, setError } = useForm({
@@ -31,6 +32,7 @@ export default function Registration() {
 		<Wrapper>
 			<Container className="shadow_element bg-light rounded-3">
 				<Link to="/" className="text-primary p-2 position-fixed">
+					<SvgIcons id="arrow-left" color="primary" size="20"/>
 					Вернуться
 				</Link>
 				<form onSubmit={handleSubmit(registration)}
