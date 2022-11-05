@@ -6,10 +6,10 @@ import TestingApi from '../../../../services/testingApi';
 import useListData from '../../../../hooks/use-list-data/useListData';
 import { Link } from 'react-router-dom';
 import {
-	showFullQuestion, markItemSelected, changeActiveListElement, showListBy
+	markItemSelected, changeActiveListElement, showListBy
 } from './moderatorEdit.services';
 
-//TODO: Разобраться с этим окном
+//TODO: Разобраться с этим окном. (Может стоит разделить все 3 списка на разные компоненты)
 export default function ModeratorEdit() {
 	const api = new TestingApi();
 	const [theme, setTheme] = useListData({
@@ -172,7 +172,7 @@ export default function ModeratorEdit() {
 
 	const createTheme = () => {
 		if (theme.newThemeName) {
-			console.log(theme.newThemeName, competence.activeId)
+			console.log(theme.newThemeName, competence.activeId);
 			api.postTheme({ theme: theme.newThemeName, id: competence.activeId })
 				.then(() => {
 					updateLists();

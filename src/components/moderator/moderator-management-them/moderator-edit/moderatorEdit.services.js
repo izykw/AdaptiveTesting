@@ -75,10 +75,3 @@ export function sortQuestionsBy(value, questions, setQuestion) {
 		}
 	}
 }
-
-export function showFullQuestion(e, setQuestion) {
-	const li = getListElement(e);
-	if (li) {
-		setQuestion({ activeText: li.textContent });
-	}
-}
