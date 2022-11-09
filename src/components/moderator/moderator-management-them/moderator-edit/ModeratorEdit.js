@@ -9,7 +9,7 @@ import {
 	markItemSelected, changeActiveListElement, showListBy
 } from './moderatorEdit.services';
 
-//TODO: Разобраться с этим окном. (Может стоит разделить все 3 списка на разные компоненты)
+//TODO: Разобраться с этим окном. (стоит разделить все 3 списка на разные компоненты)
 export default function ModeratorEdit() {
 	const api = new TestingApi();
 	const [theme, setTheme] = useListData({
@@ -166,7 +166,7 @@ export default function ModeratorEdit() {
 		if (competence.newCompetenceName) {
 			api.postCompetence(competence.newCompetenceName).then(() => {
 				updateLists();
-			});
+			}).catch(e => console.error(e.message));
 		}
 	};
 
@@ -176,7 +176,8 @@ export default function ModeratorEdit() {
 			api.postTheme({ theme: theme.newThemeName, id: competence.activeId })
 				.then(() => {
 					updateLists();
-				});
+				})
+				.catch(e => console.error(e.message));
 		}
 	};
 

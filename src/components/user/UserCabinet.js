@@ -36,7 +36,7 @@ export default function UserCabinet({header: {title, isFluid}}) {
 					<div className="d-flex flex-column w-75">
 						<Link to="/user/test-list"
 									className="btn bg-transparent border border-2 mb-2">
-							Начать тестирование
+							Список тестов
 						</Link>
 						<Link to="/"
 									className="btn bg-transparent border border-2 mt-2">

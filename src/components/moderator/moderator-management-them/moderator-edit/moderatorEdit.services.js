@@ -40,7 +40,14 @@ export function changeActiveListElement(e, setState, type, prevId) {
 		prev && prev.classList.remove('border', 'border-secondary');
 		current.classList.add('border', 'border-secondary');
 
-		setState({ activeId: current.id, activeText: current.textContent });
+		let newState;
+		if(type === 'questions') {
+			newState = { activeId: current.id, activeText: current.textContent };
+		} else {
+			newState = { activeId: current.id}
+		}
+
+		setState(newState);
 	}
 }
 

@@ -1,5 +1,4 @@
-import React, { useContext } from 'react';
-import { UserContext } from '../app/App';
+import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import Wrapper from '../second-components/wrapper/Wrapper';
@@ -13,7 +12,6 @@ import styles from './authorization.module.css';
 const { horizontal_line } = styles;
 
 export default function Authorization() {
-	const context = useContext(UserContext);
 	const navigate = useNavigate();
 
 	const {
@@ -27,18 +25,13 @@ export default function Authorization() {
 		}
 	});
 
-	const authorization = (data) => {
+	const authorization = async (data) => {
 		const api = new TestingApi();
-		const response = {
-			token: 'newToken',
-			role: 'user',
-		};
-
-		if (response) {
-			const { token, role } = response;
-			context.changeToken(token);
-			navigate(`/${role}`);
-		}
+		await api.authorization(data).then(({ access, refresh }) => {
+			localStorage.setItem('jwt_token', access)
+			localStorage.setItem('refresh_token', refresh)
+			navigate('/user');
+		}).catch(err => console.log('err', err));
 	};
 
 	const emailErrorMessage = 'Пожалуйста, введите электронную почту';

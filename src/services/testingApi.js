@@ -6,10 +6,11 @@ export default class TestingApi {
 	}
 
 	// Questions
-	getQuestion = async (id) => {
-		const res = await axios.get(`${this.URL}/questions/${id}`);
+	getQuestion = async (id, token) => {
+		const res = await axios.get(`${this.URL}/questions/${id}`,
+			{ headers: { Authorization: `Bearer ${token}` } });
 		return res.data;
-	}
+	};
 
 	getThemeQuestions = async (id) => {
 		const res = await axios.get(`${this.URL}/questions?theme=${id}`);
@@ -17,7 +18,7 @@ export default class TestingApi {
 	};
 
 	deleteQuestions = async (ids) => {
-		return await axios.delete(`${this.URL}/questions`, {data: ids});
+		return await axios.delete(`${this.URL}/questions`, { data: ids });
 	};
 
 	postQuestion = async (question) => {
@@ -32,9 +33,9 @@ export default class TestingApi {
 	};
 
 	getCompetenceThemes = async (id) => {
-		const res = await axios.get(`${this.URL}/themes?competence=${id}`)
+		const res = await axios.get(`${this.URL}/themes?competence=${id}`);
 		return res.data;
-	}
+	};
 
 	deleteThemes = async (ids) => {
 		return await axios.delete(`${this.URL}/themes`, {
@@ -42,7 +43,7 @@ export default class TestingApi {
 		});
 	};
 
-	postTheme = async ({theme, id}) => {
+	postTheme = async ({ theme, id }) => {
 		return await axios.post(`${this.URL}/themes`, {
 			name: theme,
 			competence: id
@@ -56,7 +57,7 @@ export default class TestingApi {
 	};
 
 	deleteCompetencies = async (ids) => {
-		return await axios.delete(`${this.URL}/competence`, {data: ids});
+		return await axios.delete(`${this.URL}/competence`, { data: ids });
 	};
 
 	postCompetence = async (competence) => {
@@ -66,13 +67,21 @@ export default class TestingApi {
 	};
 
 	// Users
-	getUser = async (id) => {
-		const res = await axios.get(`${this.URL}/users/${id}`);
+	getUser = async (token) => {
+		const res = await axios.get(`${this.URL}/me`, {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		});
 		return res.data;
 	};
 
-	updateUser = async (user, id) => {
-		return await axios.put(`${this.URL}/users/${id}`, user);
+	updateUser = async (user, token) => {
+		return await axios.put(`${this.URL}/me`, user, {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			}
+		});
 	};
 
 	// Test result
@@ -90,24 +99,38 @@ export default class TestingApi {
 	// Test settings
 	postTestSettings = async (data) => {
 		return await axios.post(`${this.URL}/test_settings`, data);
-	}
+	};
 
 	getTestSettings = async (id) => {
-		const res = await axios.get(`${this.URL}/test_settings?id=${id}`)
+		const res = await axios.get(`${this.URL}/test_settings?id=${id}`);
 		return res.data;
-	}
+	};
 
 	updateTestSettings = async (id, data) => {
-		return await axios.put(`${this.URL}/test_settings?id=${id}`, data);
-	}
+		return await axios.put(`${this.URL}/test_settings/${id}`, data);
+	};
 
 	// Testing
-	getTestingQuestions = async (id) => {
-		const res = await axios.get(`${this.URL}/test?id=${1}`);
+	getTestingQuestions = async (id, token) => {
+		const res = await axios.get(`${this.URL}/test?id=${id}`, {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			}
+		});
 		return res.data;
-	}
+	};
 
-	postTestingAnswers = async (id, answers) => {
-		return await axios.post(`${this.URL}/test?id=${id}`, answers);
-	}
+	postTestingAnswers = async (id, answers, token) => {
+		return await axios.post(`${this.URL}/test?id=${id}`, answers, {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			}
+		});
+	};
+
+	// Authorization
+	authorization = async (data) => {
+		const res = await axios.post(`${this.URL}/api/token/`, data);
+		return res.data;
+	};
 }

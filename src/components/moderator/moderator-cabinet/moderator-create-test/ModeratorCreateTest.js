@@ -16,16 +16,13 @@ export default function ModeratorCreateTest({ testSettings: defaultSettings }) {
 	const [competencies, setCompetencies] = useState([]);
 	const [levels, setLevels] = useState([]);
 
-
-	const competenceId = defaultSettings?.competence && '1';
-	const levelId = defaultSettings?.level && '1';
 	const defaultValues = {
-		competence:  competenceId,
-		level:  levelId,
-		testName: defaultSettings?.name ?? '',
-		testTime: convertTimeToSeconds(defaultSettings?.time) / 60 ?? '',
-		questionsCount: defaultSettings?.questions_count ?? '',
-		thresholdScore: defaultSettings?.next_level_score ?? '',
+		competence_id: defaultSettings?.competence_id,
+		level_id: defaultSettings?.level_id,
+		name: defaultSettings?.name ?? '',
+		time: convertTimeToSeconds(defaultSettings?.time) / 60 ?? '',
+		questions_count: defaultSettings?.questions_count ?? '',
+		next_level_score: defaultSettings?.next_level_score ?? '',
 	};
 
 	const {
@@ -59,12 +56,13 @@ export default function ModeratorCreateTest({ testSettings: defaultSettings }) {
 
 	const postTestSettings = (data) => {
 		const api = new TestingApi();
-		const testTime = convertToCorrectTime(data.testTime * 60);
-		const requestData = { ...data, testTime };
+		const time = convertToCorrectTime(data.time * 60);
+		const requestData = { ...data, time };
 		if (defaultSettings?.id) {
-			api.updateTestSettings(defaultSettings.id, requestData);
+			api.updateTestSettings(defaultSettings.id, requestData)
+				.catch(e => console.error(e.message));
 		} else {
-			api.postTestSettings(requestData);
+			api.postTestSettings(requestData).catch(e => console.error(e.message));
 		}
 	};
 
@@ -77,38 +75,38 @@ export default function ModeratorCreateTest({ testSettings: defaultSettings }) {
 				<ListGroup>
 					<ListItemSelect title="Выбор компетенции"
 													options={competencies}
-													defaultValue={competenceId}
+													defaultValue={defaultValues?.competence_id}
 													register={handleForm.competence}
-													errors={errors?.competence}/>
+													errors={errors?.competence_id}/>
 					<ListItemSelect title="Выбор начального уровня"
 													options={levels}
-													defaultValue={levelId}
+													defaultValue={defaultValues?.level_id}
 													register={handleForm.level}
-													errors={errors?.level}/>
+													errors={errors?.level_id}/>
 					<ListItemInput type="text"
 												 title="Название теста"
 												 placeholder="Введите название"
 												 width="100"
 												 register={handleForm.testName}
-												 errors={errors?.testName}/>
+												 errors={errors?.name}/>
 					<ListItemInput type="number"
 												 title="Длительность теста в минутах"
 												 placeholder="180"
 												 width="25"
 												 register={handleForm.testTime}
-												 errors={errors?.testTime}/>
+												 errors={errors?.time}/>
 					<ListItemInput type="number"
 												 title="Количество вопросов"
 												 placeholder="150"
 												 width="25"
 												 register={handleForm.questionsCount}
-												 errors={errors?.questionsCount}/>
+												 errors={errors?.questions_count}/>
 					<ListItemInput type="number"
 												 title="Пороговый балл"
 												 placeholder="40"
 												 width="25"
-												 register={handleForm.thresholdScore}
-												 errors={errors?.thresholdScore}/>
+												 register={handleForm.nextLevelScore}
+												 errors={errors?.next_level_score}/>
 				</ListGroup>
 				<Button color="light"
 								type="submit"

@@ -1,4 +1,7 @@
-export default async function apiProxy (method) {
-	const jwt_token = localStorage.getItem('jwt_token');
-	return method(jwt_token);
+export async function middleWare (method, params) {
+	const token = localStorage.getItem('jwt_token');
+	if(!token) {
+		throw new Error('User not authorized');
+	}
+	return method(params, token);
 }

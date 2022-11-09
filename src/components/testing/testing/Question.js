@@ -2,7 +2,7 @@ import { Col, Row } from 'reactstrap';
 import React from 'react';
 import { Answers } from './Answers';
 
-export function Question({ question, type, answers }) {
+export function Question({ question, type, answers, register, onSubmit }) {
 	return (
 		<>
 			<Row>
@@ -12,10 +12,12 @@ export function Question({ question, type, answers }) {
 			</Row>
 			<Row>
 				<Col md="8">
-					<Answers type={type} answers={answers}/>
+					<form id="question" onSubmit={onSubmit}>
+						<Answers type={type} answers={answers} register={register}/>
+					</form>
 				</Col>
 				<Col md="4">
-					<img src="/"
+					<img src="#"
 							 alt="картинка к вопросу"
 							 style={{ height: '230px', width: '300px' }}
 							 className="d-none shadow_element border border-secondary rounded"/>

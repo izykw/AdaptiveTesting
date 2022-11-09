@@ -3,7 +3,7 @@ import { getTimeRemaining } from './timer.services';
 import SvgIcons from '../second-components/svg-icons/SvgIcons';
 
 // Time comes in minutes
-export default function Timer({ duration }) {
+export default function Timer({ duration, isStop }) {
 	const [time, setTime] = useState(duration);
 
 	useEffect(() => {
@@ -12,6 +12,11 @@ export default function Timer({ duration }) {
 				setTime(time - 1);
 			}
 		}, 1000);
+
+		if(isStop) {
+			clearInterval(timerId);
+		}
+
 		return () => clearInterval(timerId);
 	});
 

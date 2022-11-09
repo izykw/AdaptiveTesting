@@ -15,6 +15,8 @@ export default function ModeratorEditTest() {
 		api.getTestSettings(testSettingsId).then(res => setTestSettings(res?.[0]));
 	}, [testSettingsId]);
 
+	console.log(testSettings);
+
 	return (
 		<Wrapper>
 			<Header title="Редактирование теста" isFluid={false}/>
