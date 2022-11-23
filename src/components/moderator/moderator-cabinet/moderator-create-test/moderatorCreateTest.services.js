@@ -1,10 +1,10 @@
 export function getHandleFormSettings(register) {
 	return {
-		competence: register('competence_id',
+		competence_id: register('competence_id',
 			{ required: 'Пожалуйста, выберите компетенцию' }),
-		level: register('level_id', { required: 'Пожалуйста, выберите уровень' }),
-		testName: register('name', { required: 'Пожалуйста, введите название теста' }),
-		testTime: register('time',
+		level_id: register('level_id', { required: 'Пожалуйста, выберите уровень' }),
+		name: register('name', { required: 'Пожалуйста, введите название теста' }),
+		time: register('time',
 			{
 				required: 'Пожалуйста, установите длительность теста',
 				max: { value: 240, message: 'Максимальная длительность теста 240мин' },
@@ -13,13 +13,13 @@ export function getHandleFormSettings(register) {
 					message: 'Длительность теста не может быть меньше 5мин'
 				}
 			}),
-		questionsCount: register('questions_count',
+		questions_count: register('questions_count',
 			{
 				required: 'Пожалуйста, установите нужное количество вопросов',
 				max: { value: 50, message: 'Максимальное количество вопросов 50' },
 				min: { value: 1, message: 'Минимальное количество вопросов 1' }
 			}),
-		nextLevelScore: register('next_level_score',
+		next_level_score: register('next_level_score',
 			{
 				required: 'Пожалуйста, установите пороговый балл',
 				max: {

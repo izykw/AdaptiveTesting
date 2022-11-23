@@ -85,8 +85,12 @@ export default class TestingApi {
 	};
 
 	// Test result
-	getTestResult = async (id) => {
-		const res = await axios.get(`${this.URL}/test_result/${id}`);
+	getTestResult = async (token) => {
+		const res = await axios.get(`${this.URL}/test_result/last`, {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			}
+		});
 		return res.data;
 	};
 
@@ -101,8 +105,13 @@ export default class TestingApi {
 		return await axios.post(`${this.URL}/test_settings`, data);
 	};
 
-	getTestSettings = async (id) => {
-		const res = await axios.get(`${this.URL}/test_settings?id=${id}`);
+	getTestSettings = async () => {
+		const res = await axios.get(`${this.URL}/test_settings`);
+		return res.data;
+	};
+
+	getTestSettingsById = async (id) => {
+		const res = await axios.get(`${this.URL}/test_settings/${id}`);
 		return res.data;
 	};
 
@@ -121,11 +130,12 @@ export default class TestingApi {
 	};
 
 	postTestingAnswers = async (id, answers, token) => {
-		return await axios.post(`${this.URL}/test?id=${id}`, answers, {
+		const res = await axios.post(`${this.URL}/test?id=${id}`, answers, {
 			headers: {
 				Authorization: `Bearer ${token}`,
 			}
 		});
+		return res.data;
 	};
 
 	// Authorization

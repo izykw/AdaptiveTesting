@@ -79,7 +79,7 @@ export default function ModeratorEdit() {
 				activeText: '',
 				isDelete: false,
 			});
-		});
+		}).catch(err => console.error(err));
 	};
 
 	useEffect(() => {
@@ -164,19 +164,16 @@ export default function ModeratorEdit() {
 
 	const createCompetence = () => {
 		if (competence.newCompetenceName) {
-			api.postCompetence(competence.newCompetenceName).then(() => {
-				updateLists();
-			}).catch(e => console.error(e.message));
+			api.postCompetence(competence.newCompetenceName)
+				.then(updateLists)
+				.catch(e => console.error(e.message));
 		}
 	};
 
 	const createTheme = () => {
 		if (theme.newThemeName) {
-			console.log(theme.newThemeName, competence.activeId);
 			api.postTheme({ theme: theme.newThemeName, id: competence.activeId })
-				.then(() => {
-					updateLists();
-				})
+				.then(updateLists)
 				.catch(e => console.error(e.message));
 		}
 	};
@@ -200,50 +197,50 @@ export default function ModeratorEdit() {
 		<Row>
 			<Col md="3">
 				<List id={Types.COMPETENCIES}
-							titles={competenceTitles}
-							content={competence.competencies}
-							handlers={competenceHandlers}/>
+				      titles={competenceTitles}
+				      content={competence.competencies}
+				      handlers={competenceHandlers}/>
 				<Input onChange={(e) => setCompetence(
 					{ newCompetenceName: e.target.value })}
-							 value={competence.newCompetenceName}
-							 className="border-secondary bg-transparent my-2"
-							 placeholder="Введите название компетенции"
+				       value={competence.newCompetenceName}
+				       className="border-secondary bg-transparent my-2"
+				       placeholder="Введите название компетенции"
 				/>
 				<LightButton text="Создать компетенцию"
-										 handler={createCompetence}
-										 isShadow
-										 width="100"/>
+				             handler={createCompetence}
+				             isShadow
+				             width="100"/>
 			</Col>
 			<Col xxl="4" md="3">
 				<List id={Types.THEMES}
-							titles={themeTitles}
-							content={theme.themes}
-							handlers={themeHandlers}/>
+				      titles={themeTitles}
+				      content={theme.themes}
+				      handlers={themeHandlers}/>
 				<Input onChange={(e) => setTheme({ newThemeName: e.target.value })}
-							 value={theme.newThemeName}
-							 className="border-secondary bg-transparent my-2"
-							 placeholder="Введите название темы"
+				       value={theme.newThemeName}
+				       className="border-secondary bg-transparent my-2"
+				       placeholder="Введите название темы"
 				/>
 				<LightButton text="Создать тему"
-										 handler={createTheme}
-										 isShadow
-										 width="100"/>
+				             handler={createTheme}
+				             isShadow
+				             width="100"/>
 			</Col>
 			<Col xxl="5" md="4">
 				<List id={Types.QUESTIONS}
-							titles={questionTitles}
-							content={question.questions}
-							handlers={questionHandlers}/>
+				      titles={questionTitles}
+				      content={question.questions}
+				      handlers={questionHandlers}/>
 				<textarea style={{ minHeight: '87px', resize: 'none' }}
-									id="full-text-question"
-									value={question.activeText}
-									className="border-1 border-secondary rounded-3 p-2 w-100 mt-2"
-									placeholder="Кликните на вопрос, чтобы увидеть его полностью"
-									disabled
+				          id="full-text-question"
+				          value={question.activeText}
+				          className="border-1 border-secondary rounded-3 p-2 w-100 mt-2"
+				          placeholder="Кликните на вопрос, чтобы увидеть его полностью"
+				          disabled
 				/>
 			</Col>
 			<Link to="/moderator"
-						className="shadow_element btn btn-light bg-transparent mt-4">
+			      className="shadow_element btn btn-light bg-transparent mt-4">
 				Выход
 			</Link>
 		</Row>

@@ -2,14 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { getTimeRemaining } from './timer.services';
 import SvgIcons from '../second-components/svg-icons/SvgIcons';
 
-// Time comes in minutes
-export default function Timer({ duration, isStop }) {
+// Time comes in seconds
+export default function Timer({ duration, isStop, passTime }) {
 	const [time, setTime] = useState(duration);
 
 	useEffect(() => {
 		const timerId = setInterval(() => {
 			if (time > 0) {
 				setTime(time - 1);
+				passTime.current = time;
 			}
 		}, 1000);
 

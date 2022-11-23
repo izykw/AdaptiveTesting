@@ -8,8 +8,10 @@ import { Question } from './Question';
 import { TestResult } from './TestResult';
 import TestingApi from '../../../services/testingApi';
 import { getToken } from '../../../services/getToken';
-import { middleWare } from '../../../services/middleWare';
-import { convertTimeToSeconds } from '../../../services/services';
+import {
+	convertTimeToSeconds,
+	convertToCorrectTime
+} from '../../../services/services';
 
 export default function Testing({ header: { title, isFluid } }) {
 	const api = new TestingApi();
@@ -18,54 +20,63 @@ export default function Testing({ header: { title, isFluid } }) {
 
 	const [testSettings, setTestSettings] = useState();
 	const [questions, setQuestions] = useState({});
+	const [level, setLevel] = useState(0);
 	const [isTestCompleted, setIsTestCompleted] = useState(false);
+	const [testResult, setTestResult] = useState({});
+
 
 	const userAnswers = useRef([]);
+	const passTime = useRef(0);
 
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
 				const token = getToken();
-				const testSettings = await api.getTestSettings(testId, token);
+				const testSettings = await api.getTestSettingsById(testId, token);
 				const testQuestions = await api.getTestingQuestions(testId, token);
 				return {
 					testSettings,
-					questions: testQuestions
+					questions: testQuestions.questions,
+					level: testQuestions.level
 				};
 			} catch (e) {
 				console.error(e.message);
 			}
 		};
-		if(!testId) {
+		if (!testId) {
 			return;
 		}
-		fetchData().then(({ testSettings, questions }) => {
+		fetchData().then(({ testSettings, questions, level }) => {
 			setQuestions(questions);
 			setTestSettings(testSettings);
+			setLevel(level)
 		});
 	}, [testId]);
 
 
 	const nextQuestion = () => {
-		if (questions.questions.length === 1) {
+		if (questions.length === 1) {
 			const token = getToken();
 			const requestData = {
-				level: questions.level,
+				level: level,
+				time: convertToCorrectTime(Math.round(
+					convertTimeToSeconds(testSettings.time) - passTime.current)),
 				answers: userAnswers.current
 			}
 			console.log(requestData);
-			api.postTestingAnswers(testId, requestData, token);
-			api.getTestingQuestions(testId, token).then(questions => {
-				console.log(questions);
-				setQuestions(questions);
-				userAnswers.current = [];
+			api.postTestingAnswers(testId, requestData, token).then((res) => {
+				if (res?.questions) {
+					setQuestions(res.questions);
+					setLevel(res.level);
+					userAnswers.current = [];
+				} else {
+					setIsTestCompleted(true);
+					setTestResult(res[0]);
+				}
 			});
 			return;
 		}
-		setQuestions(prevState => ({
-			...prevState,
-			questions: questions.questions.filter((question, i) => i !== 0)
-		}));
+		setQuestions(questions.filter((question, i) => i !== 0));
 	};
 
 	const onSubmit = (e) => {
@@ -81,31 +92,38 @@ export default function Testing({ header: { title, isFluid } }) {
 		nextQuestion();
 	};
 
-	console.log('5'*5);
+	const testDuration = convertTimeToSeconds(testSettings?.time);
 
-	const testDuration = convertTimeToSeconds(testSettings?.time) * 60;
 	return (
 		<WrapperFluid>
 			<Header isFluid={isFluid} title={title}/>
 			<Container fluid
-								 className="d-flex flex-column justify-content-between flex-grow-1 bg-light border border-2 rounded-3">
-				<Question question={questions?.questions?.[0]?.question}
-									type={questions?.questions?.[0]?.type}
-									answers={questions?.questions?.[0]?.answers}
-									onSubmit={onSubmit}/>
-				{/*<TestResult/>*/}
+			           className="d-flex flex-column justify-content-between flex-grow-1 bg-light border border-2 rounded-3">
+				{
+					isTestCompleted ?
+						<TestResult title="Результаты тестирования"
+						            testResult={testResult}/> :
+						<Question question={questions?.[0]?.question}
+						          type={questions?.[0]?.type}
+						          answers={questions?.[0]?.answers}
+						          onSubmit={onSubmit}/>
+				}
 				<Row>
-					<Timer duration={testDuration ?? 0} isStop={false}/>
+					{testDuration &&
+						<Timer duration={testDuration}
+						       isStop={isTestCompleted}
+						       passTime={passTime}/>}
 					<div className="d-flex justify-content-around text-primary p-4">
 						<Button color="light"
-										onClick={() => navigate(-1)}
-										className="shadow_element text-primary bg-transparent fs-5 w-25">
+						        onClick={() => navigate(-1)}
+						        className="shadow_element text-primary bg-transparent fs-5 w-25">
 							Завершить тестирование
 						</Button>
+						<p className="fs-3 fw-bold text-primary">level {level}</p>
 						<Button type="submit"
-										form="question"
-										color="light"
-										className="shadow_element text-primary bg-transparent fs-5 w-25">
+						        form="question"
+						        color="light"
+						        className="shadow_element text-primary bg-transparent fs-5 w-25">
 							Далее
 						</Button>
 					</div>

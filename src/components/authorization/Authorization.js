@@ -27,10 +27,11 @@ export default function Authorization() {
 
 	const authorization = async (data) => {
 		const api = new TestingApi();
-		await api.authorization(data).then(({ access, refresh }) => {
+		await api.authorization(data).then(({ access, refresh, is_moderator }) => {
 			localStorage.setItem('jwt_token', access)
 			localStorage.setItem('refresh_token', refresh)
-			navigate('/user');
+			const pathname = is_moderator ? '/moderator' : '/user';
+			navigate(pathname);
 		}).catch(err => console.log('err', err));
 	};
 

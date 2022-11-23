@@ -17,8 +17,8 @@ export default function ModeratorCreateTest({ testSettings: defaultSettings }) {
 	const [levels, setLevels] = useState([]);
 
 	const defaultValues = {
-		competence_id: defaultSettings?.competence_id,
-		level_id: defaultSettings?.level_id,
+		competence_id: defaultSettings?.competence_id ?? '',
+		level_id: defaultSettings?.level_id ?? '',
 		name: defaultSettings?.name ?? '',
 		time: convertTimeToSeconds(defaultSettings?.time) / 60 ?? '',
 		questions_count: defaultSettings?.questions_count ?? '',
@@ -58,6 +58,7 @@ export default function ModeratorCreateTest({ testSettings: defaultSettings }) {
 		const api = new TestingApi();
 		const time = convertToCorrectTime(data.time * 60);
 		const requestData = { ...data, time };
+		console.log(requestData);
 		if (defaultSettings?.id) {
 			api.updateTestSettings(defaultSettings.id, requestData)
 				.catch(e => console.error(e.message));
@@ -76,36 +77,36 @@ export default function ModeratorCreateTest({ testSettings: defaultSettings }) {
 					<ListItemSelect title="Выбор компетенции"
 													options={competencies}
 													defaultValue={defaultValues?.competence_id}
-													register={handleForm.competence}
+													register={handleForm.competence_id}
 													errors={errors?.competence_id}/>
 					<ListItemSelect title="Выбор начального уровня"
 													options={levels}
 													defaultValue={defaultValues?.level_id}
-													register={handleForm.level}
+													register={handleForm.level_id}
 													errors={errors?.level_id}/>
 					<ListItemInput type="text"
 												 title="Название теста"
 												 placeholder="Введите название"
 												 width="100"
-												 register={handleForm.testName}
+												 register={handleForm.name}
 												 errors={errors?.name}/>
 					<ListItemInput type="number"
 												 title="Длительность теста в минутах"
 												 placeholder="180"
 												 width="25"
-												 register={handleForm.testTime}
+												 register={handleForm.time}
 												 errors={errors?.time}/>
 					<ListItemInput type="number"
 												 title="Количество вопросов"
 												 placeholder="150"
 												 width="25"
-												 register={handleForm.questionsCount}
+												 register={handleForm.questions_count}
 												 errors={errors?.questions_count}/>
 					<ListItemInput type="number"
 												 title="Пороговый балл"
 												 placeholder="40"
 												 width="25"
-												 register={handleForm.nextLevelScore}
+												 register={handleForm.next_level_score}
 												 errors={errors?.next_level_score}/>
 				</ListGroup>
 				<Button color="light"

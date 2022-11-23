@@ -7,6 +7,7 @@ import {
 } from '../../../services/services';
 
 import styles from './testInfo.module.css';
+import { getToken } from "../../../services/getToken";
 
 
 const { vertical_line, list_group_column } = styles;
@@ -17,28 +18,37 @@ export default function TestInfo() {
 	useEffect(() => {
 		const api = new TestingApi();
 		const fetchInfo = async () => {
-			const testInfo = await api.getTestResult(1);
-			const user = await api.getUser(1);
-			const { first_name, last_name } = user.user;
-			return {
-				...testInfo,
-				user: {
-					first_name,
-					last_name
-				}
-			};
+			try {
+				const token = getToken();
+				const testInfo = await api.getTestResult(token);
+				debugger
+				const user = await api.getUser(token);
+				const { first_name, last_name } = user.user;
+				return {
+					...testInfo.pop(),
+					user: {
+						first_name,
+						last_name
+					}
+				};
+			} catch (err) {
+				console.error(err.message);
+			}
 		};
-		fetchInfo().then(info => setInfo(info));
+		fetchInfo().then(info => {
+			if(info) {
+				setInfo(info)
+			}
+		});
 	}, []);
 
 	const {
 		question_summary: totalQuestions,
-		skipped_question_summary: skippedQuestions,
 		time_spent: timeSpent,
 		time_summary: totalTime,
 		wrong_questions: wrongAnswers,
 		user,
-	} = info;
+	} = info
 
 	const totalTimeInSeconds = convertTimeToSeconds(totalTime);
 	const timeSpentInSeconds = convertTimeToSeconds(timeSpent);
@@ -56,7 +66,8 @@ export default function TestInfo() {
 				</h5>
 				<ListGroup className={`${list_group_column} ps-4 my-2`}>
 					<div className={`${vertical_line} text-primary`}>
-						<ListGroupItem className="bg-transparent border-0 text-primary pt-0">
+						<ListGroupItem
+							className="bg-transparent border-0 text-primary pt-0">
 							Всего вопрсов - {totalQuestions || unknown}
 						</ListGroupItem>
 						<ListGroupItem className="bg-transparent border-0 text-primary">
@@ -65,12 +76,10 @@ export default function TestInfo() {
 						<ListGroupItem className="bg-transparent border-0 text-primary">
 							Неверно отвечено - {wrongAnswers || unknown}
 						</ListGroupItem>
-						<ListGroupItem className="bg-transparent border-0 text-primary pb-0">
-							Пропущено - {skippedQuestions || unknown}
-						</ListGroupItem>
 					</div>
 					<div>
-						<ListGroupItem className="bg-transparent border-0 text-primary pt-0">
+						<ListGroupItem
+							className="bg-transparent border-0 text-primary pt-0">
 							Всего времени - {convertToCorrectTime(totalTimeInSeconds)}
 						</ListGroupItem>
 						<ListGroupItem className="bg-transparent border-0 text-primary">
