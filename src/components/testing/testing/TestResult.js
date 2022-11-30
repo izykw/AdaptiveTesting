@@ -73,7 +73,8 @@ export function TestResult({ testResult }) {
 			<Row className="fs-4">
 				<p>
 					Достигнут
-					<span className="text-primary"> "{level}"</span>
+					<span className="text-primary"> "{level}" </span>
+					Уровень
 				</p>
 			</Row>
 		</div>

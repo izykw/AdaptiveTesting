@@ -9,7 +9,6 @@ import {
 	convertTimeToSeconds, convertToCorrectTime
 } from '../../../../services/services';
 import TestingApi from '../../../../services/testingApi';
-import { type } from "@testing-library/user-event/dist/type";
 
 export default function ModeratorCreateTest({ testSettings: defaultSettings }) {
 	const navigate = useNavigate();
