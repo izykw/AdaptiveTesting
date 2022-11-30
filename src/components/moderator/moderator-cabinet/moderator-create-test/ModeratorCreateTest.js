@@ -37,9 +37,12 @@ export default function ModeratorCreateTest({ testSettings: defaultSettings }) {
 			const api = new TestingApi();
 			const competencies = await api.getCompetencies();
 			const levels = await api.getLevels();
+			const maxLevel = levels[levels.length - 1];
+			const startLevels = levels.results
+				.filter(level => level.id <= (maxLevel / 2) && level.id !== 0);
 			return {
 				competencies: competencies.results,
-				levels: levels.results,
+				levels: startLevels,
 			};
 		};
 		fetchData().then(({ competencies, levels }) => {
@@ -97,13 +100,13 @@ export default function ModeratorCreateTest({ testSettings: defaultSettings }) {
 												 register={handleForm.time}
 												 errors={errors?.time}/>
 					<ListItemInput type="number"
-												 title="Количество вопросов"
+												 title="Количество вопросов для уровня"
 												 placeholder="150"
 												 width="25"
 												 register={handleForm.questions_count}
 												 errors={errors?.questions_count}/>
 					<ListItemInput type="number"
-												 title="Пороговый балл"
+												 title="Пороговый балл уровня"
 												 placeholder="40"
 												 width="25"
 												 register={handleForm.next_level_score}

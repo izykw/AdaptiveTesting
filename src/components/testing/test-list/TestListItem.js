@@ -24,8 +24,8 @@ export default function TestListItem({ testSettings, role, deleteTest }) {
 				<p>Компетенция: {competence}</p>
 				<p>Начальный уровень: {level}</p>
 				<p>Ограничение по времени: {time}</p>
-				<p>Количество вопросов: {questions_count}</p>
-				<p>Пороговый балл: {next_level_score}</p>
+				<p>Количество вопросов для уровня: {questions_count}</p>
+				<p>Пороговый балл уровня: {next_level_score}</p>
 			</Col>
 			<Col className="d-flex flex-column gap-5">
 				<Link to={pathname} className="btn border w-50">
