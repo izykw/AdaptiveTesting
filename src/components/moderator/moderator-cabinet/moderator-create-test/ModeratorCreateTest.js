@@ -9,6 +9,7 @@ import {
 	convertTimeToSeconds, convertToCorrectTime
 } from '../../../../services/services';
 import TestingApi from '../../../../services/testingApi';
+import { type } from "@testing-library/user-event/dist/type";
 
 export default function ModeratorCreateTest({ testSettings: defaultSettings }) {
 	const navigate = useNavigate();
@@ -36,10 +37,10 @@ export default function ModeratorCreateTest({ testSettings: defaultSettings }) {
 		const fetchData = async () => {
 			const api = new TestingApi();
 			const competencies = await api.getCompetencies();
-			const levels = await api.getLevels();
-			const maxLevel = levels[levels.length - 1];
-			const startLevels = levels.results
-				.filter(level => level.id <= (maxLevel / 2) && level.id !== 0);
+			const {results: levels} = await api.getLevels();
+			const maxLevel = levels[levels.length - 1].id;
+			const startLevels = levels
+				.filter(level => level.id <= (Math.ceil(maxLevel / 2)) && level.id !== 0);
 			return {
 				competencies: competencies.results,
 				levels: startLevels,
