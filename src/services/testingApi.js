@@ -26,7 +26,6 @@ export default class TestingApi {
 	};
 
 	// Themes
-
 	getThemes = async () => {
 		const res = await axios.get(`${this.URL}/themes`);
 		return res.data;
@@ -117,6 +116,10 @@ export default class TestingApi {
 
 	updateTestSettings = async (id, data) => {
 		return await axios.put(`${this.URL}/test_settings/${id}`, data);
+	};
+
+	deleteTestSettings = async (id) => {
+		return await axios.delete(`${this.URL}/test_settings/${id}`);
 	};
 
 	// Testing

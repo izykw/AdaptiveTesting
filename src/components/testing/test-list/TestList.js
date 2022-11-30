@@ -8,20 +8,29 @@ import TestListItem from './TestListItem';
 import SvgIcons from '../../second-components/svg-icons/SvgIcons';
 
 export default function TestList({ header: { title, isFluid } }) {
+	const api = new TestingApi();
 	const { role } = useParams();
 	const [testSettings, setTestSettings] = useState([]);
 
 	useEffect(() => {
-		const api = new TestingApi();
 		api.getTestSettings().then(setTestSettings);
 	}, []);
+
+	const deleteTest = (id) => {
+		api.deleteTestSettings(id)
+			.then(() => api.getTestSettings().then(setTestSettings))
+			.catch(err => console.error(err));
+	}
 
 	const createTestList = () => {
 		if (testSettings.length === 0) {
 			return <p className="fs-4">Тестов нет</p>;
 		}
 		return testSettings.map(item => {
-			return <TestListItem key={item.id} testSettings={item} role={role}/>;
+			return <TestListItem key={item.id}
+			                     testSettings={item}
+			                     role={role}
+			                     deleteTest={deleteTest}/>;
 		});
 	};
 
