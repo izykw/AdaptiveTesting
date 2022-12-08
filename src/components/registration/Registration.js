@@ -58,7 +58,7 @@ export default function Registration() {
 					</div>
 					<button type="submit"
 									className="btn text-primary border border-2 fs-5 p-3">
-						{'Зарегестрироваться'.toUpperCase()}
+						{'Зарегистрироваться'.toUpperCase()}
 					</button>
 				</form>
 			</Container>

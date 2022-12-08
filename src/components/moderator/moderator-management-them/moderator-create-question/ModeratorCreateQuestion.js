@@ -136,18 +136,18 @@ export default function ModeratorCreateQuestion() {
 								}
 							</div>
 						</Col>
-						<Col className="d-flex justify-content-end align-items-center">
-							<div className={image}>
-								<img src="/"
-										 className="border border-secondary rounded-3 w-25`"
-										 alt="Изображение к вопросу"/>
-								<a href="/"
-									 onClick={(e) => e.preventDefault()}
-									 className="link-secondary border border-secondary rounded-top py-1 px-2">
-									Удалить
-								</a>
-							</div>
-						</Col>
+						{/*<Col className="d-flex justify-content-end align-items-center">*/}
+						{/*	<div className={image}>*/}
+						{/*		<img src="/"*/}
+						{/*				 className="border border-secondary rounded-3 w-25`"*/}
+						{/*				 alt="Изображение к вопросу"/>*/}
+						{/*		<a href="/"*/}
+						{/*			 onClick={(e) => e.preventDefault()}*/}
+						{/*			 className="link-secondary border border-secondary rounded-top py-1 px-2">*/}
+						{/*			Удалить*/}
+						{/*		</a>*/}
+						{/*	</div>*/}
+						{/*</Col>*/}
 					</Row>
 				</FormGroup>
 				<FormGroup>

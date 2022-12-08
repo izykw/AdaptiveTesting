@@ -33,3 +33,10 @@
 .list_block li:nth-child(odd) {
 	background-color: rgba(255, 255, 255, 1);
 }
+
+@media (max-width: 1400px) {
+	.list_block {
+		min-height: 350px;
+		max-height: 350px;
+	}
+}

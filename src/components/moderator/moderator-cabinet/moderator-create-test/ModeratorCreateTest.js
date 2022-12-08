@@ -29,8 +29,12 @@ export default function ModeratorCreateTest({ testSettings: defaultSettings }) {
 		handleSubmit,
 		register,
 		formState: { errors, isSubmitSuccessful },
-		reset
+		reset,
+		watch
 	} = useForm({ reValidateMode: 'onBlur', defaultValues: defaultValues, });
+
+	const questionsCount = watch('questions_count');
+	const nextLevelScore = watch('next_level_score');
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -70,8 +74,22 @@ export default function ModeratorCreateTest({ testSettings: defaultSettings }) {
 		}
 	};
 
-	const handleForm = getHandleFormSettings(register);
+	const validateDependentValues = (value, name) => {
+		const errorMessage = '"Пороговый балл уровня" не может превышать "Количество вопросов для уровня"';
+		switch (name) {
+			case 'next_level_score': {
+				return Number(value) <= Number(questionsCount) || errorMessage;
+			}
+			case 'questions_count': {
+				return Number(value) >= Number(nextLevelScore) || errorMessage;
+			}
+			default: {
+				break;
+			}
+		}
+	}
 
+	const handleForm = getHandleFormSettings(register, validateDependentValues);
 	return (
 		<Row>
 			<form onSubmit={handleSubmit(postTestSettings)}

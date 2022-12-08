@@ -21,7 +21,7 @@ export default function Testing({ header: { title, isFluid } }) {
 	const [testSettings, setTestSettings] = useState();
 	const [questions, setQuestions] = useState({});
 	const [level, setLevel] = useState(0);
-	const [isTestCompleted, setIsTestCompleted] = useState(false);
+	const [isTestCompleted, setIsTestCompleted] = useState(true);
 	const [testResult, setTestResult] = useState({});
 
 
@@ -119,11 +119,13 @@ export default function Testing({ header: { title, isFluid } }) {
 						        className="shadow_element text-primary bg-transparent fs-5 w-25">
 							Завершить тестирование
 						</Button>
-						<p className="fs-3 fw-bold text-primary">level {level}</p>
+						<p className={`${isTestCompleted ? 'd-none' : ''} fs-3 fw-bold text-primary`}>
+							level {level}
+						</p>
 						<Button type="submit"
 						        form="question"
 						        color="light"
-						        className="shadow_element text-primary bg-transparent fs-5 w-25">
+						        className={`${isTestCompleted ? 'd-none' : ''} shadow_element text-primary bg-transparent fs-5 w-25`}>
 							Далее
 						</Button>
 					</div>

@@ -65,13 +65,13 @@ export default function Authorization() {
 										className="btn text-primary border border-2 fs-5 p-3">
 							{'Войти'.toUpperCase()}
 						</button>
-						<span className={`${horizontal_line} text-dark text-center py-3`}>
-						Или
-					</span>
-						<Link to="/registration"
-									className="btn text-primary border border-2 fs-5 p-3">
-							{'Пройти регестрацию'.toUpperCase()}
-						</Link>
+						{/*<span className={`${horizontal_line} text-dark text-center py-3`}>*/}
+						{/*Или*/}
+						{/*</span>*/}
+						{/*<Link to="/registration"*/}
+						{/*			className="btn text-primary border border-2 fs-5 p-3">*/}
+						{/*	{'Пройти регистрацию'.toUpperCase()}*/}
+						{/*</Link>*/}
 					</div>
 				</form>
 			</Container>
