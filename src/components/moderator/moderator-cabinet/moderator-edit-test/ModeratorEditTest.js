@@ -12,8 +12,10 @@ export default function ModeratorEditTest() {
 
 	useEffect(() => {
 		const api = new TestingApi();
-		api.getTestSettings(testSettingsId).then(res => setTestSettings(res?.[0]));
+		api.getTestSettingsById(testSettingsId).then(res => setTestSettings(res));
 	}, [testSettingsId]);
+
+	console.log(testSettings);
 
 	return (
 		<Wrapper>

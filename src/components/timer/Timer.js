@@ -2,16 +2,22 @@ import React, { useEffect, useState } from 'react';
 import { getTimeRemaining } from './timer.services';
 import SvgIcons from '../second-components/svg-icons/SvgIcons';
 
-// Time comes in minutes
-export default function Timer({ duration }) {
+// Time comes in seconds
+export default function Timer({ duration, isStop, passTime }) {
 	const [time, setTime] = useState(duration);
 
 	useEffect(() => {
 		const timerId = setInterval(() => {
 			if (time > 0) {
 				setTime(time - 1);
+				passTime.current = time;
 			}
 		}, 1000);
+
+		if(isStop) {
+			clearInterval(timerId);
+		}
+
 		return () => clearInterval(timerId);
 	});
 
@@ -24,7 +30,7 @@ export default function Timer({ duration }) {
 			<div className="progress-bar p-0"
 					 style={{
 						 background: '#ACBAE5',
-						 width: `${progressFill}%`
+						 width: `${progressFill}%`,
 					 }}
 					 role="progressbar">
 			</div>

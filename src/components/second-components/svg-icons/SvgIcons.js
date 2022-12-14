@@ -18,7 +18,8 @@ import arrowLeft from '../../../icons/arrow-left.svg';
 
 export default function SvgIcons({ id, color, size }) {
 	const colors = {
-		'primary': '#3D5499FF',
+		primary: '#3D5499FF',
+		secondary: '#6c757d'
 	};
 
 	switch (id) {

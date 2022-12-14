@@ -1,5 +1,4 @@
-import React, { useContext } from 'react';
-import { UserContext } from '../app/App';
+import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import Wrapper from '../second-components/wrapper/Wrapper';
@@ -13,13 +12,13 @@ import styles from './authorization.module.css';
 const { horizontal_line } = styles;
 
 export default function Authorization() {
-	const context = useContext(UserContext);
 	const navigate = useNavigate();
 
 	const {
 		register,
 		handleSubmit,
-		formState: { errors }
+		formState: { errors },
+		setError
 	} = useForm({
 		defaultValues: {
 			email: '',
@@ -27,18 +26,17 @@ export default function Authorization() {
 		}
 	});
 
-	const authorization = (data) => {
+	const authorization = async (data) => {
 		const api = new TestingApi();
-		const response = {
-			token: 'newToken',
-			role: 'user',
-		};
-
-		if (response) {
-			const { token, role } = response;
-			context.changeToken(token);
-			navigate(`/${role}`);
-		}
+		await api.authorization(data).then(({ access, refresh, is_moderator }) => {
+			localStorage.setItem('jwt_token', access)
+			localStorage.setItem('refresh_token', refresh)
+			const pathname = is_moderator ? '/moderator' : '/user';
+			navigate(pathname);
+		}).catch(err => {
+			console.log('err', err)
+			setError('email', {message: 'Неверно введен логин или пароль'});
+		});
 	};
 
 	const emailErrorMessage = 'Пожалуйста, введите электронную почту';
@@ -71,13 +69,6 @@ export default function Authorization() {
 										className="btn text-primary border border-2 fs-5 p-3">
 							{'Войти'.toUpperCase()}
 						</button>
-						<span className={`${horizontal_line} text-dark text-center py-3`}>
-						Или
-					</span>
-						<Link to="/registration"
-									className="btn text-primary border border-2 fs-5 p-3">
-							{'Пройти регестрацию'.toUpperCase()}
-						</Link>
 					</div>
 				</form>
 			</Container>

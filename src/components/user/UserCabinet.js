@@ -34,12 +34,15 @@ export default function UserCabinet({header: {title, isFluid}}) {
 				{isUserInfoActive ? <UserInfo/> : <TestInfo/>}
 				<Row className="d-flex justify-content-center mt-5">
 					<div className="d-flex flex-column w-75">
+						<Link to="/user/tests-info" className="btn bg-transparent border border-2 mb-3">
+							Результат оценки за текущий период
+						</Link>
 						<Link to="/user/test-list"
-									className="btn bg-transparent border border-2 mb-2">
-							Начать тестирование
+									className="btn bg-transparent border border-2 mb-3">
+							Список тестов
 						</Link>
 						<Link to="/"
-									className="btn bg-transparent border border-2 mt-2">
+									className="btn bg-transparent border border-2">
 							Выход
 						</Link>
 					</div>

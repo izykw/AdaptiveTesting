@@ -4,7 +4,7 @@ export function AnswerInput(props) {
 	const {index, register, isCorrectAnswersCount, required} = props;
 	return (
 		<>
-			<div className="d-flex align-items-center">
+			<div className="d-flex align-items-center w-50">
 				<label className="form-label">
 					<input {...register(`is_correct[${index}]`,
 						{validate: () => isCorrectAnswersCount || !required['is_correct']})}

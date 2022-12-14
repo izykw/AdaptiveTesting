@@ -16,6 +16,7 @@ import ModeratorEditQuestion
 	from '../components/moderator/moderator-management-them/moderator-edit-question/ModeratorEditQuestion';
 import TestList from '../components/testing/test-list/TestList';
 import Testing from '../components/testing/testing/Testing';
+import TestsInfo from "../components/user/tests-info/TestsInfo";
 
 export const router = createBrowserRouter([
 	{
@@ -47,6 +48,13 @@ export const router = createBrowserRouter([
 		element: <UserCabinet header={{
 			title: 'Кабинет пользователя',
 			isFluid: false
+		}}/>
+	},
+	{
+		path: '/user/tests-info',
+		element: <TestsInfo header={{
+			title: 'Результат оценки за текущий период',
+			isFluid: true,
 		}}/>
 	},
 	{

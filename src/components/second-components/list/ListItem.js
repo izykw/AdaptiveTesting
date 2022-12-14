@@ -2,13 +2,12 @@ import { ListGroupItem } from 'reactstrap';
 import SvgIcons from '../svg-icons/SvgIcons';
 import React from 'react';
 
-export function ListItems({list, listId}) {
+export function ListItems({list}) {
 	if (!Array.isArray(list)) {
-		//throw new Error(`List: ${list} is not array`)
 		return;
 	}
 
-	return list.map((el, i) => {
+	return list.map((el) => {
 		// Theme list include name. Question list include question. Competence list include competence
 		const {pk, name, question, competence, level} = el;
 		return (

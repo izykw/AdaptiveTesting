@@ -6,6 +6,7 @@ import TestingApi from '../../../services/testingApi';
 import { ListItemInput } from './ListItemInput';
 import { isObjectEmpty } from './personalInfo.service';
 import { deepEqual, linkChangeTextContent } from './personalInfo.service';
+import { getToken } from '../../../services/getToken';
 
 export default function PersonalInfo({ info, updateInfo }) {
 	const [isEdit, setIsEdit] = useState(false);
@@ -20,8 +21,14 @@ export default function PersonalInfo({ info, updateInfo }) {
 		const api = new TestingApi();
 		const requestData = JSON.parse(JSON.stringify(info));
 		delete requestData['current_level'];
-		api.updateUser(requestData, requestData.id)
-			.then(() => initInfo.current = {});
+		try {
+			const token = getToken();
+			api.updateUser(requestData, token)
+				.then(() => initInfo.current = {})
+				.catch(e => console.error(e.message));
+		} catch (e) {
+			console.error(e.message);
+		}
 	};
 
 	const editInfo = (e) => {
@@ -38,21 +45,23 @@ export default function PersonalInfo({ info, updateInfo }) {
 		setIsEdit((prevState) => !prevState);
 	};
 
-	const firstNameHandler = (e) => updateInfo(
-		{ user: { ...user, first_name: e.target.value } });
-	const secondNameHandler = (e) => updateInfo(
-		{ user: { ...user, last_name: e.target.value } });
-	const mailHandler = (e) => updateInfo(
-		{ user: { ...user, email: e.target.value } });
+	const {
+		email,
+		first_name,
+		last_name,
+		current_level,
+		phone_number,
+		post,
+		address
+	} = info;
 
-	const { user, current_level, phone_number, post, address } = info;
 	return (<Row className="mb-md-5 mb-sm-3">
 		<h4 className="my-2 fs-2">
-			<ListItemInput value={user?.first_name}
-										 handler={firstNameHandler}
+			<ListItemInput value={first_name}
+										 handler={(e) => updateInfo({ first_name: e.target.value })}
 										 isEdit={isEdit}/>
-			<ListItemInput value={user?.last_name}
-										 handler={secondNameHandler}
+			<ListItemInput value={last_name}
+										 handler={(e) => updateInfo({ last_name: e.target.value })}
 										 isEdit={isEdit}/>
 		</h4>
 		<ListGroup className="fs-5">
@@ -72,8 +81,8 @@ export default function PersonalInfo({ info, updateInfo }) {
 				<SvgIcons id="arrow-right" size="20"/>
 				<span className="ms-1">Электронная почта:</span>
 				<ListItemInput
-					value={user?.email}
-					handler={mailHandler}
+					value={email}
+					handler={(e) => updateInfo({ email: e.target.value })}
 					isEdit={isEdit}/>
 			</ListGroupItem>
 			<ListGroupItem className="bg-transparent border-0">
