@@ -20,8 +20,7 @@ export default function TestInfo() {
 		const fetchInfo = async () => {
 			try {
 				const token = getToken();
-				const testInfo = await api.getTestResult(token);
-				debugger
+				const testInfo = await api.getTestsResult(token);
 				const user = await api.getUser(token);
 				const { first_name, last_name } = user.user;
 				return {

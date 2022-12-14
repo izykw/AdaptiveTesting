@@ -15,9 +15,6 @@ export function TestResult({ testResult }) {
 		level,
 	} = testResult;
 
-	console.log(testResult);
-
-
 	const timeLeft = convertToCorrectTime(convertTimeToSeconds(time_summary) -
 		convertTimeToSeconds(time_spent));
 	const questionsProgress = Math.round(correct_answers / question_summary * 100);

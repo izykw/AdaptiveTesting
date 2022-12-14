@@ -10,7 +10,8 @@ code {
 	font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
-select {
+select,
+a{
 	cursor: pointer;
 }
 
@@ -18,10 +19,20 @@ select {
 	background-color: rgba(255, 255, 255, 1) !important;
 }
 
-.btn-primary {
-	background-color: rgb(87, 119, 217);
-	border-color: rgb(87, 119, 217);
+.bg-success {
+	background-color: rgba(115, 229, 153, 1) !important;
 }
+
+.bg-primary {
+	background-color: rgba(85, 111, 189, 1) !important;
+}
+
+
+.btn-primary {
+	background-color: rgb(87, 119, 217) !important;
+	border-color: rgb(87, 119, 217) !important;
+}
+
 
 .text-primary {
 	color: rgba(61, 84, 153, 1) !important;
@@ -39,6 +50,7 @@ select {
 	box-shadow: 0 6px 3px rgba(0, 0, 0, 0.1);
 }
 
-svg[aria-hidden="true"] {
+svg[aria-hidden="true"],
+svg[style*="overflow: hidden;"]{
 	display: none;
 }

@@ -183,19 +183,19 @@ export default function ModeratorEdit() {
 		(e) => listClickHandler(e, Types.COMPETENCIES, competence.isDelete),
 		(e) => buttonClickHandler(e, Types.COMPETENCIES, competence.isDelete)];
 
-	const themeTitles = ['Темы текущей компетенции', 'Удалить тему'];
+	const themeTitles = ['Темы компетенции', 'Удалить тему'];
 	const themeHandlers = [
 		(e) => listClickHandler(e, Types.THEMES, theme.isDelete),
 		(e) => buttonClickHandler(e, Types.THEMES, theme.isDelete)];
 
-	const questionTitles = ['Вопросы текущей темы', 'Удалить вопрос'];
+	const questionTitles = ['Вопросы темы', 'Удалить вопрос'];
 	const questionHandlers = [
 		(e) => listClickHandler(e, Types.QUESTIONS, question.isDelete),
 		(e) => buttonClickHandler(e, Types.QUESTIONS, question.isDelete)];
 
 	return (
 		<Row>
-			<Col md="3">
+			<Col md="4">
 				<List id={Types.COMPETENCIES}
 				      titles={competenceTitles}
 				      content={competence.competencies}
@@ -211,7 +211,7 @@ export default function ModeratorEdit() {
 				             isShadow
 				             width="100"/>
 			</Col>
-			<Col xxl="4" md="3">
+			<Col md="4">
 				<List id={Types.THEMES}
 				      titles={themeTitles}
 				      content={theme.themes}
@@ -226,7 +226,7 @@ export default function ModeratorEdit() {
 				             isShadow
 				             width="100"/>
 			</Col>
-			<Col xxl="5" md="4">
+			<Col md="4">
 				<List id={Types.QUESTIONS}
 				      titles={questionTitles}
 				      content={question.questions}

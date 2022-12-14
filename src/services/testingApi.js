@@ -83,8 +83,8 @@ export default class TestingApi {
 		});
 	};
 
-	// Test result
-	getTestResult = async (token) => {
+	// Tests result
+	getTestsResult = async (token) => {
 		const res = await axios.get(`${this.URL}/test_result/last`, {
 			headers: {
 				Authorization: `Bearer ${token}`,

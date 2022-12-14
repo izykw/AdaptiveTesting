@@ -30,7 +30,7 @@ export default function Timer({ duration, isStop, passTime }) {
 			<div className="progress-bar p-0"
 					 style={{
 						 background: '#ACBAE5',
-						 width: `${progressFill}%`
+						 width: `${progressFill}%`,
 					 }}
 					 role="progressbar">
 			</div>

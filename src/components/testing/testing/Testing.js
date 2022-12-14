@@ -21,7 +21,7 @@ export default function Testing({ header: { title, isFluid } }) {
 	const [testSettings, setTestSettings] = useState();
 	const [questions, setQuestions] = useState({});
 	const [level, setLevel] = useState(0);
-	const [isTestCompleted, setIsTestCompleted] = useState(true);
+	const [isTestCompleted, setIsTestCompleted] = useState(false);
 	const [testResult, setTestResult] = useState({});
 
 
@@ -63,7 +63,6 @@ export default function Testing({ header: { title, isFluid } }) {
 					convertTimeToSeconds(testSettings.time) - passTime.current)),
 				answers: userAnswers.current
 			}
-			console.log(requestData);
 			api.postTestingAnswers(testId, requestData, token).then((res) => {
 				if (res?.questions) {
 					setQuestions(res.questions);
@@ -109,10 +108,12 @@ export default function Testing({ header: { title, isFluid } }) {
 						          onSubmit={onSubmit}/>
 				}
 				<Row>
-					{testDuration &&
+					{
+						testDuration &&
 						<Timer duration={testDuration}
 						       isStop={isTestCompleted}
-						       passTime={passTime}/>}
+						       passTime={passTime}/>
+					}
 					<div className="d-flex justify-content-around text-primary p-4">
 						<Button color="light"
 						        onClick={() => navigate(-1)}

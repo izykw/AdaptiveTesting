@@ -3,19 +3,19 @@
 	max-height: 500px;
 }
 
-.list_block ::-webkit-scrollbar {
+.list_block::-webkit-scrollbar {
 	background-color: rgba(255, 255, 255, 0.3);
 	border-left: 1px solid #333;
 	border-radius: 0 0.25rem 0 0;
 }
 
-.list_block ::-webkit-scrollbar-thumb {
+.list_block::-webkit-scrollbar-thumb {
 	background-color: rgba(255, 255, 255, 0.3);
 	border-radius: 0 0.25rem 0 0;
 	border: 1px solid #333;
 }
 
-.list_block ::-webkit-scrollbar-thumb:hover {
+.list_block::-webkit-scrollbar-thumb:hover {
 	background-color: rgba(255, 255, 255, 0.8);
 }
 
@@ -38,5 +38,12 @@
 	.list_block {
 		min-height: 350px;
 		max-height: 350px;
+	}
+}
+
+@media (max-width: 992px) {
+	.list_block {
+		min-height: 250px;
+		max-height: 250px;
 	}
 }

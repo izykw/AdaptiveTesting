@@ -2,7 +2,6 @@ import React from 'react';
 import { Button, Col, Row } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
-//TODO: Использовать URL параметры для
 export default function TestListItem({ testSettings, role, deleteTest }) {
 	const {
 		id,

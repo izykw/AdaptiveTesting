@@ -17,7 +17,8 @@ export default function Authorization() {
 	const {
 		register,
 		handleSubmit,
-		formState: { errors }
+		formState: { errors },
+		setError
 	} = useForm({
 		defaultValues: {
 			email: '',
@@ -32,7 +33,10 @@ export default function Authorization() {
 			localStorage.setItem('refresh_token', refresh)
 			const pathname = is_moderator ? '/moderator' : '/user';
 			navigate(pathname);
-		}).catch(err => console.log('err', err));
+		}).catch(err => {
+			console.log('err', err)
+			setError('email', {message: 'Неверно введен логин или пароль'});
+		});
 	};
 
 	const emailErrorMessage = 'Пожалуйста, введите электронную почту';
@@ -65,13 +69,6 @@ export default function Authorization() {
 										className="btn text-primary border border-2 fs-5 p-3">
 							{'Войти'.toUpperCase()}
 						</button>
-						{/*<span className={`${horizontal_line} text-dark text-center py-3`}>*/}
-						{/*Или*/}
-						{/*</span>*/}
-						{/*<Link to="/registration"*/}
-						{/*			className="btn text-primary border border-2 fs-5 p-3">*/}
-						{/*	{'Пройти регистрацию'.toUpperCase()}*/}
-						{/*</Link>*/}
 					</div>
 				</form>
 			</Container>
