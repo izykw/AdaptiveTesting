@@ -13,9 +13,10 @@ export default function TestListItem({ testSettings, role, deleteTest }) {
 		questions_count
 	} = testSettings;
 
-	const pathname = role === 'moderator'
-		? `/moderator/edit-test/${id}`
-		: `/testing/${id}`;
+	const isModerator = role === 'moderator';
+	const pathname = isModerator ?
+		`/moderator/edit-test/${id}` :
+		`/testing/${id}`;
 	return (
 		<Row className="shadow_element bg-light border rounded mb-3 p-2">
 			<h4 className="h4">{name}</h4>
@@ -28,10 +29,10 @@ export default function TestListItem({ testSettings, role, deleteTest }) {
 			</Col>
 			<Col className="d-flex flex-column gap-5">
 				<Link to={pathname} className="btn border w-50">
-					{role === 'moderator' ? 'Редактировать тест' : 'Начать тест'}
+					{isModerator ? 'Редактировать тест' : 'Начать тест'}
 				</Link>
 				<Button color="light"
-				        className="bg-transparent border w-50"
+				        className={`${isModerator ? '' : 'd-none'} bg-transparent border w-50`}
 				        onClick={() => deleteTest(id)}>
 					Удалить тест
 				</Button>

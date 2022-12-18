@@ -34,11 +34,7 @@ export default function TestInfo() {
 				console.error(err.message);
 			}
 		};
-		fetchInfo().then(info => {
-			if(info) {
-				setInfo(info)
-			}
-		});
+		fetchInfo().then(setInfo).catch(err => console.log(err));
 	}, []);
 
 	const {
@@ -67,13 +63,13 @@ export default function TestInfo() {
 					<div className={`${vertical_line} text-primary`}>
 						<ListGroupItem
 							className="bg-transparent border-0 text-primary pt-0">
-							Всего вопрсов - {totalQuestions || unknown}
+							Всего вопрсов - {totalQuestions ?? unknown}
 						</ListGroupItem>
 						<ListGroupItem className="bg-transparent border-0 text-primary">
-							Верно отвчено - {(totalQuestions - wrongAnswers) || unknown}
+							Верно отвчено - {(totalQuestions - wrongAnswers) ?? unknown}
 						</ListGroupItem>
 						<ListGroupItem className="bg-transparent border-0 text-primary">
-							Неверно отвечено - {wrongAnswers || unknown}
+							Неверно отвечено - {wrongAnswers ?? unknown}
 						</ListGroupItem>
 					</div>
 					<div>

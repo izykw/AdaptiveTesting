@@ -22,12 +22,12 @@ export function TestResult({ testResult }) {
 		convertTimeToSeconds(time_spent) / convertTimeToSeconds(time_summary) *
 		100);
 	return (
-		<div className="p-5">
-			<Row className="fs-5 mb-lg-5 mb-3">
+		<div className="p-xxl-4 p-3">
+			<Row className="fs-5 mb-xxl-4 mb-3">
 				<div>
 					<h3 className="text-primary">Прогресс - {questionsProgress}%</h3>
 					<div className="d-flex align-items-center">
-						<ProgressBar progressFill="40" color="#73E5AC"/>
+						<ProgressBar progressFill={questionsProgress} color="#73E5AC"/>
 						<ul className="list-group">
 							<li
 								className="list-group-item border-0 bg-transparent text-primary">
@@ -45,11 +45,11 @@ export function TestResult({ testResult }) {
 					</div>
 				</div>
 			</Row>
-			<Row className="fs-5 mb-lg-5 mb-3">
+			<Row className="fs-5 mb-xxl-4 mb-3">
 				<div>
 					<h3 className="text-primary">Время - {timeProgress}%</h3>
 					<div className="d-flex align-items-center">
-						<ProgressBar progressFill="100" color="#FF8095"/>
+						<ProgressBar progressFill={timeProgress} color="#FF8095"/>
 						<ul className="list-group">
 							<li
 								className="list-group-item border-0 bg-transparent text-primary">

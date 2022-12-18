@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../../header/Header";
 import WrapperFluid from "../../second-components/wrapper-fluid/WrapperFluid";
-import { Button, Container, Row } from "reactstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { Container, Row } from "reactstrap";
+import { Link} from "react-router-dom";
 import SvgIcons from "../../second-components/svg-icons/SvgIcons";
 import TestingApi from "../../../services/testingApi";
 import { getToken } from "../../../services/getToken";
@@ -11,7 +11,6 @@ import styles from './TestsInfo.module.css';
 const { list_block } = styles;
 
 export default function TestsInfo({ header: { title, isFluid } }) {
-	const navigate = useNavigate();
 	const [testsInfo, setTestsInfo] = useState([]);
 	const [levels, setLevels] = useState([]);
 	let knowledgePercentageOverall = 0;
@@ -33,11 +32,6 @@ export default function TestsInfo({ header: { title, isFluid } }) {
 		})
 	}, [])
 
-	const prevPage = (e) => {
-		e.preventDefault();
-		navigate(-1);
-	}
-
 	const CompetenceResult = (temp) => {
 		const { competence, level, test_id, user_id } = temp;
 		const [currentLevel] = levels.filter((item) => item.name === level);
@@ -54,7 +48,6 @@ export default function TestsInfo({ header: { title, isFluid } }) {
 					<SvgIcons id="arrow-right" size="24" color="secondary"/>
 					<span className="ms-2">
 							{`${competence} (${knowledgePercentage}%)`}
-						</span>
 				</div>
 				<div className="d-flex">
 					{
@@ -80,11 +73,11 @@ export default function TestsInfo({ header: { title, isFluid } }) {
 		<WrapperFluid>
 			<Header isFluid={isFluid} title={title}/>
 			<div className="mb-4">
-				<a href="\" onClick={prevPage}
+				<Link to="/user"
 				   className="text-primary fs-5 ms-1 bg-transparent border-0 text-decoration-underline ">
 					<SvgIcons id="arrow-left" color="primary" size="20"/>
 					Вернуться в кабинет
-				</a>
+				</Link>
 			</div>
 			<Container fluid
 			           className="flex-grow-1 bg-light rounded-3 shadow_element ">
@@ -113,11 +106,10 @@ export default function TestsInfo({ header: { title, isFluid } }) {
 				</Row>
 				<Row>
 					<div className="d-flex justify-content-around text-primary p-4">
-						<Button color="light"
-						        onClick={() => navigate(-1)}
-						        className="shadow_element text-primary bg-transparent fs-5 w-25">
+						<Link   to="/user"
+						        className="btn btn-light shadow_element text-primary bg-transparent fs-5 w-25">
 							Личный кабинет
-						</Button>
+						</Link>
 						<Link to="/"
 						      color="light"
 						      className="btn btn-light shadow_element text-primary bg-transparent fs-5 w-25">

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import WrapperFluid from '../../second-components/wrapper-fluid/WrapperFluid';
 import Header from '../../header/Header';
-import { Button, Container } from 'reactstrap';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Container } from 'reactstrap';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import TestingApi from '../../../services/testingApi';
 import TestListItem from './TestListItem';
 import SvgIcons from '../../second-components/svg-icons/SvgIcons';
@@ -35,17 +35,12 @@ export default function TestList({ header: { title, isFluid } }) {
 		});
 	};
 
-	const prevPage = (e) => {
-		e.preventDefault();
-		navigate(-1);
-	}
 
 	return (
 		<WrapperFluid>
 			<Header title={title} isFluid={isFluid}/>
 			<div>
-				<a href="\" onClick={prevPage}
-				        className="text-primary fs-5 ms-1 bg-transparent border-0 text-decoration-underline ">
+				<Link to={`/${role}`} className="text-primary fs-5 ms-1 bg-transparent border-0 text-decoration-underline ">
 					<SvgIcons id="arrow-left" color="primary" size="20"/>
 					Вернуться в кабинет
 				</a>
