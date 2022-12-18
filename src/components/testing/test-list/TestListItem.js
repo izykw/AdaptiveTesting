@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Col, Row } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import ModalWindow from "../../second-components/modal-window/ModalWindow";
 
 export default function TestListItem({ testSettings, role, deleteTest }) {
 	const {
@@ -12,6 +13,10 @@ export default function TestListItem({ testSettings, role, deleteTest }) {
 		time,
 		questions_count
 	} = testSettings;
+	const [isModalOpen, setIsModalOpen] = useState(false);
+
+	const closeModal = () => setIsModalOpen(false);
+	const deleteTestItem = () => deleteTest(id);
 
 	const isModerator = role === 'moderator';
 	const pathname = isModerator ?
@@ -32,10 +37,15 @@ export default function TestListItem({ testSettings, role, deleteTest }) {
 					{isModerator ? 'Редактировать тест' : 'Начать тест'}
 				</Link>
 				<Button color="light"
-				        className={`${isModerator ? '' : 'd-none'} bg-transparent border w-50`}
-				        onClick={() => deleteTest(id)}>
+				        className={`${isModerator ?
+					        '' :
+					        'd-none'} bg-transparent border w-50`}
+				        onClick={() => setIsModalOpen(true)}>
 					Удалить тест
 				</Button>
 			</Col>
+			<ModalWindow title="Вы уверены что хотите удалить тест?"
+			             isOpen={isModalOpen} close={closeModal}
+			             doSomething={deleteTestItem}/>
 		</Row>);
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Button, Container, Row } from 'reactstrap';
 import WrapperFluid from '../../second-components/wrapper-fluid/WrapperFluid';
@@ -12,6 +12,7 @@ import {
 	convertTimeToSeconds,
 	convertToCorrectTime
 } from '../../../services/services';
+import ModalWindow from "../../second-components/modal-window/ModalWindow";
 
 export default function Testing({ header: { title, isFluid } }) {
 	const api = new TestingApi();
@@ -24,6 +25,7 @@ export default function Testing({ header: { title, isFluid } }) {
 	const [isTestCompleted, setIsTestCompleted] = useState(false);
 	const [testResult, setTestResult] = useState({});
 
+	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	const userAnswers = useRef([]);
 	const passTime = useRef(0);
@@ -91,8 +93,21 @@ export default function Testing({ header: { title, isFluid } }) {
 		nextQuestion();
 	};
 
+	const openModal = () => setIsModalOpen(true);
+	const closeModal = () => setIsModalOpen(false);
+	const completeTest = () => {
+		// do something
+		navigate(-1);
+		closeModal();
+	}
+
 	const testDuration = convertTimeToSeconds(testSettings?.time);
 
+	const timerMemo = useMemo(() =>
+			(<Timer duration={testDuration}
+			        isStop={isTestCompleted}
+			        passTime={passTime}/>),
+		[testDuration, isTestCompleted])
 	return (
 		<WrapperFluid>
 			<Header isFluid={isFluid} title={title}/>
@@ -109,28 +124,33 @@ export default function Testing({ header: { title, isFluid } }) {
 				}
 				<Row>
 					{
-						testDuration &&
-						<Timer duration={testDuration}
-						       isStop={isTestCompleted}
-						       passTime={passTime}/>
+						testDuration && timerMemo
 					}
 					<div className="d-flex justify-content-around text-primary p-4">
 						<Button color="light"
-						        onClick={() => navigate(-1)}
+						        onClick={isTestCompleted ? completeTest : openModal}
 						        className="shadow_element text-primary bg-transparent fs-5 w-25">
 							Завершить тестирование
 						</Button>
-						<p className={`${isTestCompleted ? 'd-none' : ''} fs-3 fw-bold text-primary`}>
+						<p className={`${isTestCompleted ?
+							'd-none' :
+							''} fs-3 fw-bold text-primary`}>
 							level {level}
 						</p>
 						<Button type="submit"
 						        form="question"
 						        color="light"
-						        className={`${isTestCompleted ? 'd-none' : ''} shadow_element text-primary bg-transparent fs-5 w-25`}>
+						        className={`${isTestCompleted ?
+							        'd-none' :
+							        ''} shadow_element text-primary bg-transparent fs-5 w-25`}>
 							Далее
 						</Button>
 					</div>
 				</Row>
+				<ModalWindow title="Вы уверены что хотите завершить тест?"
+				             isOpen={isModalOpen}
+				             close={closeModal}
+				             doSomething={completeTest}/>
 			</Container>
 		</WrapperFluid>
 	);
