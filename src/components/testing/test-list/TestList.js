@@ -43,7 +43,7 @@ export default function TestList({ header: { title, isFluid } }) {
 				<Link to={`/${role}`} className="text-primary fs-5 ms-1 bg-transparent border-0 text-decoration-underline ">
 					<SvgIcons id="arrow-left" color="primary" size="20"/>
 					Вернуться в кабинет
-				</a>
+				</Link>
 				<p className="h3 mt-lg-3">
 					В соответствии с компетенциями Вам доступны следующие тесты:
 				</p>
