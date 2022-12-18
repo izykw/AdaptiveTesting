@@ -53,7 +53,7 @@ export const router = createBrowserRouter([
 	{
 		path: '/user/tests-info',
 		element: <TestsInfo header={{
-			title: 'Результат оценки за текущий период',
+			title: 'Результаты тестирования компетенций',
 			isFluid: true,
 		}}/>
 	},

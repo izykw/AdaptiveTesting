@@ -22,8 +22,8 @@ export function TestResult({ testResult }) {
 		convertTimeToSeconds(time_spent) / convertTimeToSeconds(time_summary) *
 		100);
 	return (
-		<div className="p-5">
-			<Row className="fs-5 mb-lg-5 mb-3">
+		<div className="p-xxl-4 p-3">
+			<Row className="fs-5 mb-xxl-4 mb-3">
 				<div>
 					<h3 className="text-primary">Прогресс - {questionsProgress}%</h3>
 					<div className="d-flex align-items-center">
@@ -45,7 +45,7 @@ export function TestResult({ testResult }) {
 					</div>
 				</div>
 			</Row>
-			<Row className="fs-5 mb-lg-5 mb-3">
+			<Row className="fs-5 mb-xxl-4 mb-3">
 				<div>
 					<h3 className="text-primary">Время - {timeProgress}%</h3>
 					<div className="d-flex align-items-center">
