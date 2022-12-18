@@ -48,7 +48,6 @@ export default function TestsInfo({ header: { title, isFluid } }) {
 					<SvgIcons id="arrow-right" size="24" color="secondary"/>
 					<span className="ms-2">
 							{`${competence} (${knowledgePercentage}%)`}
-					</span>
 				</div>
 				<div className="d-flex">
 					{
