@@ -57,10 +57,12 @@ export default function PersonalInfo({ info, updateInfo }) {
 
 	return (<Row className="mb-md-5 mb-sm-3">
 		<h4 className="my-2 fs-2">
-			<ListItemInput value={first_name}
+			<ListItemInput width="25"
+				value={first_name}
 										 handler={(e) => updateInfo({ first_name: e.target.value })}
 										 isEdit={isEdit}/>
-			<ListItemInput value={last_name}
+			<ListItemInput width="25"
+				value={last_name}
 										 handler={(e) => updateInfo({ last_name: e.target.value })}
 										 isEdit={isEdit}/>
 		</h4>
