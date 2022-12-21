@@ -57,22 +57,22 @@ export default function PersonalInfo({ info, updateInfo }) {
 
 	return (<Row className="mb-md-5 mb-sm-3">
 		<h4 className="my-2 fs-2">
-			<ListItemInput width="25"
+			<ListItemInput
 				value={first_name}
-										 handler={(e) => updateInfo({ first_name: e.target.value })}
-										 isEdit={isEdit}/>
-			<ListItemInput width="25"
+				handler={(e) => updateInfo({ first_name: e.target.value })}
+				isEdit={isEdit}/>
+			<ListItemInput
 				value={last_name}
-										 handler={(e) => updateInfo({ last_name: e.target.value })}
-										 isEdit={isEdit}/>
+				handler={(e) => updateInfo({ last_name: e.target.value })}
+				isEdit={isEdit}/>
 		</h4>
 		<ListGroup className="fs-5">
 			<ListGroupItem className="bg-transparent border-0">
 				<SvgIcons id="arrow-right" size="20"/>
 				<span className="ms-1">Должность:</span>
 				<ListItemInput value={post}
-											 handler={(e) => updateInfo({ post: e.target.value })}
-											 isEdit={isEdit}/>
+				               handler={(e) => updateInfo({ post: e.target.value })}
+				               isEdit={isEdit}/>
 			</ListGroupItem>
 			<ListGroupItem className="bg-transparent border-0">
 				<SvgIcons id="arrow-right" size="20"/>
@@ -121,9 +121,9 @@ export default function PersonalInfo({ info, updateInfo }) {
 			<span>Редактировать данные</span>
 		</a>
 		<a href="/"
-			 style={{ display: isEdit ? 'inline' : 'none' }}
-			 className="link-secondary w-25"
-			 onClick={undoEdit}>
+		   style={{ display: isEdit ? 'inline' : 'none' }}
+		   className="link-secondary w-25"
+		   onClick={undoEdit}>
 			<span>Отменить изменения</span>
 		</a>
 	</Row>);
